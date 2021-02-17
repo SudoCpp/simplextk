@@ -31,7 +31,10 @@
 */
 
 #include "string.hpp"
+#include "Exception.hpp"
 #include <locale>
+
+#define __class__ "simplex::string"
 
 namespace simplex
 {
@@ -265,6 +268,7 @@ namespace simplex
         else if (start + lengthOfSub <= length())
             return string{data.substr(start, lengthOfSub)};
         
+        throw IndexOutOfBoundsException{"String length is less than substring length requested.", __ExceptionParams__};
         return string{};
     }
 
@@ -285,3 +289,5 @@ namespace simplex
         return string{copy};
     }
 }
+
+#undef __class__

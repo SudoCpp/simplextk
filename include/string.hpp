@@ -34,10 +34,11 @@
 #define SIMPLEX_STRING_HPP
 
 #include <string>
+#include "object.hpp"
 
 namespace simplex
 {
-    class string
+    class string : public object
 	{
 		::std::string data;
 
