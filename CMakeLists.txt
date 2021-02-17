@@ -19,11 +19,14 @@ project(simplex-toolkit VERSION 1.0.0)
 
 #Add all the source files to build library
 set(SourceFiles
+    src/CFileWrapper.cpp
     src/Console.cpp
     src/ConsoleReader.cpp
     src/ConsoleWriter.cpp
     src/DateTime.cpp
     src/Exception.cpp
+    src/FileReader.cpp
+    src/FileWriter.cpp
     src/Logger.cpp
     src/Singleton.cpp
     src/string.cpp
