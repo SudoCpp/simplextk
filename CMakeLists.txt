@@ -24,6 +24,8 @@ set(SourceFiles
     src/ConsoleWriter.cpp
     src/Exception.cpp
     src/string.cpp
+    src/StringReader.cpp
+    src/StringWriter.cpp
     src/SupportsSignals.cpp)
 
     add_library(${PROJECT_NAME} SHARED ${SourceFiles})
