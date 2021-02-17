@@ -33,11 +33,14 @@
 #ifndef SIMPLEX_OBJECT_HPP
 #define SIMPLEX_OBJECT_HPP
 
+#include <cstddef>
+#include "SupportsSignals.hpp"
+
 namespace simplex
 {
 	class string;
     
-    class object
+    class object : public SupportsSignals
 	{
 		public:
             object() {}
