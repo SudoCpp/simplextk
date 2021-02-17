@@ -19,6 +19,9 @@ project(simplex-toolkit VERSION 1.0.0)
 
 #Add all the source files to build library
 set(SourceFiles
+    src/Console.cpp
+    src/ConsoleReader.cpp
+    src/ConsoleWriter.cpp
     src/Exception.cpp
     src/string.cpp
     src/SupportsSignals.cpp)
