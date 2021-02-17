@@ -33,6 +33,7 @@
 #include "string.hpp"
 #include "Exception.hpp"
 #include <locale>
+#include "Array.hpp"
 
 #define __class__ "simplex::string"
 
@@ -245,6 +246,24 @@ namespace simplex
         return string{duplicate};
     }
 
+    Array<string> string::split(const char characterToSplit) const noexcept
+    {
+        Array<string> temp{};
+        int previousLocation = 0;
+        int location = 0;
+        do
+        {
+            previousLocation = location;
+            location = indexOf(characterToSplit, location);
+            if(location != -1)
+                temp.add(subString((unsigned int)previousLocation, (unsigned int)location));
+            else
+                temp.add(subString(previousLocation));
+        } while (location != -1);
+
+        return temp;
+    }
+
     string string::subString(unsigned int start) const
     {
         if (start < 0)
@@ -287,6 +306,11 @@ namespace simplex
         std::string copy{data};
         copy.erase(copy.find_last_not_of(" \t\n\r\f\v")+1);
         return string{copy};
+    }
+
+    size_t string::getHash() const noexcept
+    {
+        return std::hash<std::string>()(data);
     }
 }
 

@@ -38,6 +38,8 @@
 
 namespace simplex
 {
+	template<typename ArrayMemberType> class Array;
+    
     class string : public object
 	{
 		::std::string data;
@@ -85,12 +87,23 @@ namespace simplex
         bool contains(const string& subString) const noexcept;
         int containsCount(const string& subString) const noexcept;
         string replace(const string& find, const string& replace);
+        Array<string> split(const char characterToSplit) const noexcept;
         string subString(unsigned int start) const;
         string subString(unsigned int start, unsigned int lengthOfSub) const;
         string trim() const noexcept;
         string trimBeginning() const noexcept;
         string trimEnd() const noexcept;
+
+        virtual size_t getHash() const noexcept;
     };
 }
+
+template<> struct std::hash<simplex::string>
+{
+    size_t operator()(const simplex::string& str) const noexcept
+    {
+        return str.getHash();
+    }
+};
 
 #endif //SIMPLEX_STRING_HPP

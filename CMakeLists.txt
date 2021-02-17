@@ -7,6 +7,7 @@ project(simplex-toolkit VERSION 1.0.0)
 
 #Add all the source files to build library
 set(SourceFiles
+    src/Exception.cpp
     src/string.cpp)
 
     add_library(${PROJECT_NAME} SHARED ${SourceFiles})
