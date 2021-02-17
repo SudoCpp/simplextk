@@ -22,6 +22,7 @@ set(SourceFiles
     src/Console.cpp
     src/ConsoleReader.cpp
     src/ConsoleWriter.cpp
+    src/DateTime.cpp
     src/Exception.cpp
     src/Singleton.cpp
     src/string.cpp
