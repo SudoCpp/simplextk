@@ -32,7 +32,8 @@ set(SourceFiles
     src/string.cpp
     src/StringReader.cpp
     src/StringWriter.cpp
-    src/SupportsSignals.cpp)
+    src/SupportsSignals.cpp
+    src/XmlWriter.cpp)
 
     add_library(${PROJECT_NAME} SHARED ${SourceFiles})
     
