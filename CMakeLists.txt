@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(simplex-toolkit VERSION 1.0.0)
+project(simplex-toolkit VERSION 2.8.0)
 
     #Determine if 32 or 64 bit
     set(OSBitness 32)
