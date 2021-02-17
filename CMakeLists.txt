@@ -23,6 +23,7 @@ set(SourceFiles
     src/ConsoleReader.cpp
     src/ConsoleWriter.cpp
     src/Exception.cpp
+    src/Singleton.cpp
     src/string.cpp
     src/StringReader.cpp
     src/StringWriter.cpp
