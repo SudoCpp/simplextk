@@ -32,6 +32,12 @@ set(SourceFiles
     src/SupportsSignals.cpp)
 
     add_library(${PROJECT_NAME} SHARED ${SourceFiles})
+    
+    #Set up links for all dependancies
+    set (${PROJECT_NAME}_LIBS "m")
+
+    #Link the libraries
+    target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LIBS})
 
     include(CTest)
     enable_testing()
