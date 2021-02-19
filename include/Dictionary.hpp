@@ -51,13 +51,14 @@ namespace simplex
         Dictionary(::std::initializer_list<::std::pair<KeyType const, ValueType>> bracedPairs);
 
         //Operators
-        ValueType operator [](KeyType key) const;
-        ValueType& operator [](KeyType key);
+        ValueType operator [](const KeyType& key) const;
+        ValueType& operator [](const KeyType& key);
 
         //Methods
         Dictionary<KeyType, ValueType>& add(KeyType key, ValueType value);
         Dictionary<KeyType, ValueType>&  add(::std::initializer_list<::std::pair<KeyType, ValueType>> bracedPairs);
-        ValueType& at(KeyType key);
+        ValueType& at(const KeyType& key);
+        ValueType at(const KeyType& key) const;
         ValueType at(int index) const;
 
         bool containsKey(KeyType key) const;
@@ -109,12 +110,12 @@ namespace simplex
 
     //Operators
     template <typename KeyType, typename ValueType>
-    ValueType Dictionary<KeyType, ValueType>::operator [](KeyType key) const
+    ValueType Dictionary<KeyType, ValueType>::operator [](const KeyType& key) const
     {
         return at(key);
     }
     template <typename KeyType, typename ValueType>
-    ValueType& Dictionary<KeyType, ValueType>::operator [](KeyType key)
+    ValueType& Dictionary<KeyType, ValueType>::operator [](const KeyType& key)
     {
         return at(key);
     }
@@ -134,7 +135,22 @@ namespace simplex
         return *this;
     }
     template <typename KeyType, typename ValueType>
-    ValueType& Dictionary<KeyType, ValueType>::at(KeyType key)
+    ValueType& Dictionary<KeyType, ValueType>::at(const KeyType& key)
+    {
+        try
+        {
+            if(containsKey(key))
+                return dictionary_.at(key);
+            else
+                throw Exception{"Key not found.", __ExceptionParams__};
+        }
+        catch (...)
+        {
+            throw Exception{"Key not found.", __ExceptionParams__};
+        }
+    }
+    template <typename KeyType, typename ValueType>
+    ValueType Dictionary<KeyType, ValueType>::at(const KeyType& key) const
     {
         try
         {
