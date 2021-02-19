@@ -30,6 +30,9 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#ifndef SIMPLEX_TYPEARRAY_HPP
+#define SIMPLEX_TYPEARRAY_HPP
+
 //This saves on the typing :D
 #define getType(typeArray, index) decltype(simplex::typeArrayGet<(index)>(typeArray))::type
 
@@ -63,3 +66,5 @@ namespace simplex
     template<typename... Types>
     using TypeArray = TypeElement<0, Types...>;
 }
+
+#endif //SIMPLEX_TYPEARRAY_HPP
