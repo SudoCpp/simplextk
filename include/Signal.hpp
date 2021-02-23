@@ -57,6 +57,8 @@ namespace simplex
         Signal<Args...>& emit(Args... args);
         unsigned int connect(std::function<void(Args...)> slot);
         Signal<Args...>& disconnect(unsigned int handle);
+        template<typename SlotClassType>
+        Signal<Args...>& disconnect(SlotClassType* slotInstance);
 
         template<typename SlotClassType>
         unsigned int connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
@@ -120,6 +122,15 @@ namespace simplex
     {
         slots.removeByKey(handle);
         slotParents.removeByKey(handle);
+        return *this;
+    }
+
+    template<typename ... Args>
+    template<typename SlotClassType>
+    Signal<Args...>& Signal<Args...>::disconnect(SlotClassType* slotInstance)
+    {
+        //slots.removeByKey(handle);
+        //slotParents.removeByKey(handle);
         return *this;
     }
 }
