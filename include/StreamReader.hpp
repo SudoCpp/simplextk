@@ -45,6 +45,7 @@ namespace simplex
             virtual string readLine() const = 0;
             virtual void rewind(unsigned int numberOfCharacters) const = 0;
             virtual void rewind() const = 0;
+            virtual ~StreamReader() = default;
 	};
 }
 

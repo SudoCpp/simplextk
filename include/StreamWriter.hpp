@@ -46,6 +46,7 @@ namespace simplex
 		public:
 			virtual void writeLine(const string& toWrite) = 0;
 			virtual void write(const string& toWrite) = 0;
+            virtual ~StreamWriter() = default;
 	};
 }
 

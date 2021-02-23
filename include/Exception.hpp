@@ -70,18 +70,21 @@ namespace simplex
 	{
 		public:
             IndexOutOfBoundsException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName);
+            virtual ~IndexOutOfBoundsException() = default;
 	};
 
 	class NotImplementedException : public Exception
 	{
 		public:
             NotImplementedException(const char* fileName, const int lineNumber, const char* className, const char* methodName);
+            virtual ~NotImplementedException() = default;
 	};
 
 	class NullException : public Exception
 	{
 		public:
             NullException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName);
+            virtual ~NullException() = default;
 	};
 }
 

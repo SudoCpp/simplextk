@@ -71,7 +71,7 @@ namespace simplex
         public:
         static LoggerLevel DisplayLevel;
 
-        ~Logger();
+        virtual ~Logger() = default;
 
         static void CreateLogger(StreamWriter* debugStream, StreamWriter* infoStream, 
             StreamWriter* warningStream, StreamWriter* errorStream, StreamWriter* fatalErrorStream, 
