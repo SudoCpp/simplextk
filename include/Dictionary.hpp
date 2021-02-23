@@ -59,7 +59,8 @@ namespace simplex
         Dictionary<KeyType, ValueType>&  add(::std::initializer_list<::std::pair<KeyType, ValueType>> bracedPairs);
         ValueType& at(const KeyType& key);
         ValueType at(const KeyType& key) const;
-        ValueType at(int index) const;
+        // ValueType at(int index) const;
+        // ValueType& at(int index);
 
         bool containsKey(KeyType key) const;
         Dictionary<KeyType, ValueType>& removeByKey(KeyType key);
@@ -94,7 +95,11 @@ namespace simplex
     class KeyNotFoundException : public Exception
 	{
 		public:
-            KeyNotFoundException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName);
+            KeyNotFoundException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+            : Exception{text, fileName, lineNumber, className, methodName}
+            { 
+                exceptionType = "IndexOutOfBoundsException";
+            }
 	};
     
     template <typename KeyType, typename ValueType>
@@ -164,18 +169,32 @@ namespace simplex
             throw Exception{"Key not found.", __ExceptionParams__};
         }
     }
-    template <typename KeyType, typename ValueType>
-    ValueType Dictionary<KeyType, ValueType>::at(int index) const
-    {
-        try
-        {
-            return dictionary_.at(index);
-        }
-        catch (...)
-        {
-            throw KeyNotFoundException{__ExceptionParams__};
-        }
-    }
+    // template <typename KeyType, typename ValueType>
+    // ValueType Dictionary<KeyType, ValueType>::at(int index) const
+    // {
+    //     try
+    //     {
+    //         auto keys = this->keys();
+    //         return dictionary_.at(keys[index]);
+    //     }
+    //     catch (...)
+    //     {
+    //         throw KeyNotFoundException{"Unable to use this index in Dictionary", __ExceptionParams__};
+    //     }
+    // }
+    // template <typename KeyType, typename ValueType>
+    // ValueType& Dictionary<KeyType, ValueType>::at(int index)
+    // {
+    //     try
+    //     {
+    //         auto keys = this->keys();
+    //         return dictionary_.at(keys[index]);
+    //     }
+    //     catch (...)
+    //     {
+    //         throw KeyNotFoundException{"Unable to use this index in Dictionary", __ExceptionParams__};
+    //     }
+    // }
     template <typename KeyType, typename ValueType>
     bool Dictionary<KeyType, ValueType>::containsKey(KeyType key) const
     {
