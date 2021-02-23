@@ -23,6 +23,7 @@ set(SourceFiles
     src/Console.cpp
     src/ConsoleReader.cpp
     src/ConsoleWriter.cpp
+    src/DataTable.cpp
     src/DateTime.cpp
     src/Exception.cpp
     src/FileReader.cpp
@@ -42,6 +43,9 @@ set(SourceFiles
 
     #Link the libraries
     target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LIBS})
+
+    add_executable(testing "main.cpp")
+    target_link_libraries(testing ${PROJECT_NAME})
 
     include(CTest)
     enable_testing()
