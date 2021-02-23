@@ -34,6 +34,7 @@
 #define SIMPLEX_PRIMITIVE_HPP
 
 #include "object.hpp"
+#include "string.hpp"
 
 namespace simplex
 {
@@ -114,6 +115,11 @@ namespace simplex
         PrimativeType toPrimitive()
         {
             return data;
+        }
+
+        string toString()
+        {
+            return string::FromNumber(data);
         }
     };
 }
