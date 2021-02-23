@@ -44,9 +44,6 @@ set(SourceFiles
     #Link the libraries
     target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LIBS})
 
-    add_executable(testing "main.cpp")
-    target_link_libraries(testing ${PROJECT_NAME})
-
     include(CTest)
     enable_testing()
     #Add testing executables
