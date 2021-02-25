@@ -127,29 +127,40 @@ namespace simplex
     #define __class__ "simplex::DataTable"
     DataTable::DataTable(){}
     DataTable::DataTable(Array<string> columnNames) : ColumnNames{columnNames} {}
-    DataTable& DataTable::addRow(DataRow row)
+    DataTable::~DataTable()
+    {
+        for(DataRow* row : Rows)
+            delete row;
+    }
+    DataTable& DataTable::addRow(DataRow* row)
     {
         Rows.add(row);
         return *this;
     }
-    DataTable& DataTable::addRow(Array<string> values)
+    DataTable& DataTable::addRow(const DataRow& row)
     {
-        Rows.add(DataRow{ColumnNames, values});
+        DataRow* temp = new DataRow{row};
+        Rows.add(temp);
+        return *this;
+    }
+    DataTable& DataTable::addRow(const Array<string>& values)
+    {
+        Rows.add(new DataRow{ColumnNames, values});
         return *this;
     }
     DataTable& DataTable::addColumn(string columnName)
     {
         for(auto row : Rows)
-            row.addColumn(columnName);
+            row->addColumn(columnName);
         return *this;
     }
     DataRow& DataTable::getRow(int index)
     {
-        return Rows[index];
+        return *Rows[index];
     }
     DataRow DataTable::getRow(int index) const
     {
-        return Rows[index];
+        return *Rows[index];
     }
     DataRow DataTable::operator[](int index) const
     {

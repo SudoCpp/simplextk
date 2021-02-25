@@ -65,13 +65,16 @@ namespace simplex
 
     class DataTable : public object
     {
-        Array<DataRow> Rows;
+        Array<DataRow*> Rows;
         Array<string> ColumnNames;
         public:
         DataTable();
         DataTable(Array<string> columnNames);
-        DataTable& addRow(DataRow row);
-        DataTable& addRow(Array<string> values);
+        virtual ~DataTable();
+        //Ownership is taken and auto deleted when DataTable is destructed
+        DataTable& addRow(DataRow* row);
+        DataTable& addRow(const DataRow& row);
+        DataTable& addRow(const Array<string>& values);
         DataTable& addColumn(string columnName);
         DataRow& getRow(int index);
         DataRow getRow(int index) const;
