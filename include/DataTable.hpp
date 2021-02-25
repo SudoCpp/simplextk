@@ -51,8 +51,8 @@ namespace simplex
         DataRow();
 
         Array<string> getColumnNames();
-        void addColumn(string name);
-        void addColumn(string name, string value);
+        DataRow& addColumn(string name);
+        DataRow& addColumn(string name, string value);
         string& getCell(string name);
         string& getCell(int index);
         string getCell(string name) const;
@@ -70,9 +70,9 @@ namespace simplex
         public:
         DataTable();
         DataTable(Array<string> columnNames);
-        void addRow(DataRow row);
-        void addRow(Array<string> values);
-        void addColumn(string columnName);
+        DataTable& addRow(DataRow row);
+        DataTable& addRow(Array<string> values);
+        DataTable& addColumn(string columnName);
         DataRow& getRow(int index);
         DataRow getRow(int index) const;
         DataRow operator[](int index) const;

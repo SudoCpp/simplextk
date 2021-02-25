@@ -61,17 +61,18 @@ namespace simplex
         return ColumnNames;
     }
 
-    void DataRow::addColumn(string name)
+    DataRow& DataRow::addColumn(string name)
     {
-        addColumn(name, "");
+        return addColumn(name, "");
     }
 
-    void DataRow::addColumn(string name, string value)
+    DataRow& DataRow::addColumn(string name, string value)
     {
         if(!ColumnNames.contains(name))
         {
             ColumnNames.add(name);
             Columns.add(name, value);
+            return *this;
         }
         else
             throw Exception("Column Names must be unique. A column name '" + name + "' already exists.", __ExceptionParams__);
@@ -126,18 +127,21 @@ namespace simplex
     #define __class__ "simplex::DataTable"
     DataTable::DataTable(){}
     DataTable::DataTable(Array<string> columnNames) : ColumnNames{columnNames} {}
-    void DataTable::addRow(DataRow row)
+    DataTable& DataTable::addRow(DataRow row)
     {
         Rows.add(row);
+        return *this;
     }
-    void DataTable::addRow(Array<string> values)
+    DataTable& DataTable::addRow(Array<string> values)
     {
         Rows.add(DataRow{ColumnNames, values});
+        return *this;
     }
-    void DataTable::addColumn(string columnName)
+    DataTable& DataTable::addColumn(string columnName)
     {
         for(auto row : Rows)
             row.addColumn(columnName);
+        return *this;
     }
     DataRow& DataTable::getRow(int index)
     {
