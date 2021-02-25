@@ -36,9 +36,21 @@
 #include "string.hpp"
 #include "DataTable.hpp"
 #include "object.hpp"
+#include <memory>
+#include "Exception.hpp"
 
 namespace simplex
 {
+    class DatabaseException : public Exception
+	{
+		public:
+            DatabaseException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+            : Exception{text, fileName, lineNumber, className, methodName}
+            { 
+                exceptionType = "DatabaseException";
+            }
+	};
+
     class DatabaseStatement : public object
     {
         public:
@@ -47,9 +59,11 @@ namespace simplex
         : StatementQuery{statementQuery}
         {}
         virtual ~DatabaseStatement() = default;
-        virtual void bind(const string& text) = 0;
-        virtual void bind(double number) = 0;
-        virtual void bind(const char* blob) = 0;
+        virtual DatabaseStatement& bind(const string& text) = 0;
+        virtual DatabaseStatement& bind(int number) = 0;
+        virtual DatabaseStatement& bind(double number) = 0;
+        virtual DatabaseStatement& bind(const char* blob, int blobSize) = 0;
+        //Relying on RVO haha
         virtual DataTable execute() = 0;
     };
 
@@ -74,7 +88,7 @@ namespace simplex
         virtual ~Database() = default;
         
         virtual DataTable query(const string& sqlQuery) = 0;
-        virtual DatabaseStatement prepare(const string& sqlQuery) = 0;
+        virtual std::shared_ptr<DatabaseStatement> prepare(const string& sqlQuery) = 0;
     };
 }
 
