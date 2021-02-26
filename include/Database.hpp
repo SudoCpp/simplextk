@@ -36,7 +36,6 @@
 #include "string.hpp"
 #include "DataTable.hpp"
 #include "object.hpp"
-#include <memory>
 #include "Exception.hpp"
 
 namespace simplex
@@ -67,28 +66,31 @@ namespace simplex
         virtual DataTable execute() = 0;
     };
 
-    class DatabaseConnection : public object
+    class DatabaseCredentials : public object
     {
         public:
-        string Username;
-        string Password;
-        string DatabaseName;
-        DatabaseConnection(string username, string password, string databaseName) 
-        : Username{username}, Password{password}, DatabaseName{databaseName} 
+        string username;
+        string password;
+        string databaseAddress;
+        string databaseName;
+        DatabaseCredentials(string username, string password, string databaseAddress, string databaseName) 
+        : username{username}, password{password}, databaseAddress{databaseAddress}, databaseName{databaseName} 
         {}
     };
 
     class Database : public object
     {
-        DatabaseConnection Connection;
+        DatabaseCredentials credentials;
         public:
-        Database(const DatabaseConnection& connectionSettings) 
-        : Connection{connectionSettings} 
+        Database(const DatabaseCredentials& connectionSettings) 
+        : credentials{connectionSettings} 
         {}
         virtual ~Database() = default;
         
         virtual DataTable query(const string& sqlQuery) = 0;
-        virtual std::shared_ptr<DatabaseStatement> prepare(const string& sqlQuery) = 0;
+        //Creates a new Prepared statement
+        //*Passing By Pointer, which means you now own this pointer*
+        virtual DatabaseStatement* prepare(const string& sqlQuery) = 0;
     };
 }
 
