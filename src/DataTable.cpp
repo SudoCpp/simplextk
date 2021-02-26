@@ -37,11 +37,11 @@ namespace simplex
 {
     #define __class__ "simplex::DataRow"
 
-    DataRow::DataRow(Dictionary<string, string> columnsAndData) : Columns{columnsAndData} {}
+    DataRow::DataRow(Dictionary<string, string> columnsAndData) : columns{columnsAndData} {}
     DataRow::DataRow(Array<string> columnNames)
     {
         for(auto name : columnNames)
-            Columns.add(name, "");
+            columns.add(name, "");
     }
     DataRow::DataRow(Array<string> columnNames, Array<string> columnValues)
     {
@@ -49,7 +49,7 @@ namespace simplex
         {
             int numberColumns = columnNames.size();
             for(int loop = 0; loop < numberColumns; loop++)
-                Columns.add(columnNames[loop], columnValues[loop]);
+                columns.add(columnNames[loop], columnValues[loop]);
         }
         else
             throw Exception("Mismatch: There are not the same amount of columns and values.", __ExceptionParams__);
@@ -58,7 +58,7 @@ namespace simplex
 
     Array<string> DataRow::getColumnNames()
     {
-        return ColumnNames;
+        return columnNames;
     }
 
     DataRow& DataRow::addColumn(string name)
@@ -68,10 +68,10 @@ namespace simplex
 
     DataRow& DataRow::addColumn(string name, string value)
     {
-        if(!ColumnNames.contains(name))
+        if(!columnNames.contains(name))
         {
-            ColumnNames.add(name);
-            Columns.add(name, value);
+            columnNames.add(name);
+            columns.add(name, value);
             return *this;
         }
         else
@@ -80,26 +80,26 @@ namespace simplex
 
     string& DataRow::getCell(string name)
     {
-        return Columns[name];
+        return columns[name];
     }
 
     string& DataRow::getCell(int index)
     {
-        if(ColumnNames.size() > index)
-            return Columns.at(ColumnNames[index]);
+        if(columnNames.size() > index)
+            return columns.at(columnNames[index]);
         else
             throw IndexOutOfBoundsException("Unable to get cell, index out of bounds.", __ExceptionParams__);
     }
 
     string DataRow::getCell(string name) const
     {
-        return Columns[name];
+        return columns[name];
     }
 
     string DataRow::getCell(int index) const
     {
-        if(ColumnNames.size() > index)
-            return Columns.at(ColumnNames[index]);
+        if(columnNames.size() > index)
+            return columns.at(columnNames[index]);
         else
             throw IndexOutOfBoundsException("Unable to get cell, index out of bounds.", __ExceptionParams__);
     }
@@ -126,41 +126,41 @@ namespace simplex
     #undef __class__
     #define __class__ "simplex::DataTable"
     DataTable::DataTable(){}
-    DataTable::DataTable(Array<string> columnNames) : ColumnNames{columnNames} {}
+    DataTable::DataTable(Array<string> columnNames) : columnNames{columnNames} {}
     DataTable::~DataTable()
     {
-        for(DataRow* row : Rows)
+        for(DataRow* row : rows)
             delete row;
     }
     DataTable& DataTable::addRow(DataRow* row)
     {
-        Rows.add(row);
+        rows.add(row);
         return *this;
     }
     DataTable& DataTable::addRow(const DataRow& row)
     {
         DataRow* temp = new DataRow{row};
-        Rows.add(temp);
+        rows.add(temp);
         return *this;
     }
     DataTable& DataTable::addRow(const Array<string>& values)
     {
-        Rows.add(new DataRow{ColumnNames, values});
+        rows.add(new DataRow{columnNames, values});
         return *this;
     }
     DataTable& DataTable::addColumn(string columnName)
     {
-        for(auto row : Rows)
+        for(auto row : rows)
             row->addColumn(columnName);
         return *this;
     }
     DataRow& DataTable::getRow(int index)
     {
-        return *Rows[index];
+        return *rows[index];
     }
     DataRow DataTable::getRow(int index) const
     {
-        return *Rows[index];
+        return *rows[index];
     }
     DataRow DataTable::operator[](int index) const
     {
