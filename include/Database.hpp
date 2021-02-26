@@ -36,8 +36,8 @@
 #include "string.hpp"
 #include "DataTable.hpp"
 #include "object.hpp"
-#include <memory>
 #include "Exception.hpp"
+#include "Array.hpp"
 
 namespace simplex
 {
@@ -54,9 +54,9 @@ namespace simplex
     class DatabaseStatement : public object
     {
         public:
-        const string StatementQuery;
+        const string statementQuery;
         DatabaseStatement(const string& statementQuery) 
-        : StatementQuery{statementQuery}
+        : statementQuery{statementQuery}
         {}
         virtual ~DatabaseStatement() = default;
         virtual DatabaseStatement& bind(const string& text) = 0;
@@ -67,28 +67,32 @@ namespace simplex
         virtual DataTable execute() = 0;
     };
 
-    class DatabaseConnection : public object
+    class DatabaseCredentials : public object
     {
         public:
-        string Username;
-        string Password;
-        string DatabaseName;
-        DatabaseConnection(string username, string password, string databaseName) 
-        : Username{username}, Password{password}, DatabaseName{databaseName} 
+        string username;
+        string password;
+        string databaseAddress;
+        string databaseName;
+        DatabaseCredentials(string username, string password, string databaseAddress, string databaseName) 
+        : username{username}, password{password}, databaseAddress{databaseAddress}, databaseName{databaseName} 
         {}
     };
 
     class Database : public object
     {
-        DatabaseConnection Connection;
+        DatabaseCredentials credentials;
         public:
-        Database(const DatabaseConnection& connectionSettings) 
-        : Connection{connectionSettings} 
+        Database(const DatabaseCredentials& connectionSettings) 
+        : credentials{connectionSettings} 
         {}
         virtual ~Database() = default;
         
         virtual DataTable query(const string& sqlQuery) = 0;
-        virtual std::shared_ptr<DatabaseStatement> prepare(const string& sqlQuery) = 0;
+        virtual DatabaseStatement* prepare(const string& sqlQuery) = 0;
+        virtual Array<string> getTableNames() = 0;
+        virtual Array<string> getColumnNames(const string& tableName) = 0;
+        virtual string getColumnType(const string& tableName, const string& columnName) = 0;
     };
 }
 
