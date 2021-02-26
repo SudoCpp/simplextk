@@ -42,8 +42,8 @@ namespace simplex
 {
     class DataRow : public object
     {
-        Dictionary<string, string> Columns;
-        Array<string> ColumnNames;
+        Dictionary<string, string> columns;
+        Array<string> columnNames;
         public:
         DataRow(Dictionary<string, string> columnsAndData);
         DataRow(Array<string> columnNames);
@@ -65,8 +65,8 @@ namespace simplex
 
     class DataTable : public object
     {
-        Array<DataRow*> Rows;
-        Array<string> ColumnNames;
+        Array<DataRow*> rows;
+        Array<string> columnNames;
         public:
         DataTable();
         DataTable(Array<string> columnNames);

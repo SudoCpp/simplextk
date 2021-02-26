@@ -37,6 +37,7 @@
 #include "DataTable.hpp"
 #include "object.hpp"
 #include "Exception.hpp"
+#include "Array.hpp"
 
 namespace simplex
 {
@@ -53,9 +54,9 @@ namespace simplex
     class DatabaseStatement : public object
     {
         public:
-        const string StatementQuery;
+        const string statementQuery;
         DatabaseStatement(const string& statementQuery) 
-        : StatementQuery{statementQuery}
+        : statementQuery{statementQuery}
         {}
         virtual ~DatabaseStatement() = default;
         virtual DatabaseStatement& bind(const string& text) = 0;
@@ -88,9 +89,10 @@ namespace simplex
         virtual ~Database() = default;
         
         virtual DataTable query(const string& sqlQuery) = 0;
-        //Creates a new Prepared statement
-        //*Passing By Pointer, which means you now own this pointer*
         virtual DatabaseStatement* prepare(const string& sqlQuery) = 0;
+        virtual Array<string> getTableNames() = 0;
+        virtual Array<string> getColumnNames(const string& tableName) = 0;
+        virtual string getColumnType(const string& tableName, const string& columnName) = 0;
     };
 }
 
