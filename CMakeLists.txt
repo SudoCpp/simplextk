@@ -27,6 +27,7 @@ set(SourceFiles
     src/Common/DateTime.cpp
     src/Common/Exception.cpp
     src/Common/FileReader.cpp
+    src/Common/FileSystem.cpp
     src/Common/FileWriter.cpp
     src/Common/Logger.cpp
     src/Common/Singleton.cpp
