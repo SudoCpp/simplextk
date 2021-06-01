@@ -34,6 +34,7 @@
 #define SIMPLEX_SMARTREF_HPP
 
 #include "object.hpp"
+#include "Array.hpp"
 
 namespace simplex
 {
@@ -51,6 +52,19 @@ namespace simplex
         classType& getRef();
         classType* stopManaging();
         classType& startManaging(classType* pointer);
+    };
+
+    class SmartRefManager : public object
+    {
+        Array<SmartRef<object>> refs;
+        public:
+        template<typename type>
+        type* add(SmartRef<type>& smartRef)
+        {
+            type* temp = smartRef.stopManaging();
+            refs.add(SmartRef<object>{temp});
+            return temp;
+        }
     };
 }
 

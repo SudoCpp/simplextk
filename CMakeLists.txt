@@ -19,22 +19,22 @@ project(simplex-toolkit VERSION 2.8.0)
 
 #Add all the source files to build library
 set(SourceFiles
-    src/CFileWrapper.cpp
-    src/Console.cpp
-    src/ConsoleReader.cpp
-    src/ConsoleWriter.cpp
-    src/DataTable.cpp
-    src/DateTime.cpp
-    src/Exception.cpp
-    src/FileReader.cpp
-    src/FileWriter.cpp
-    src/Logger.cpp
-    src/Singleton.cpp
-    src/string.cpp
-    src/StringReader.cpp
-    src/StringWriter.cpp
-    src/SupportsSignals.cpp
-    src/XmlWriter.cpp)
+    src/Common/CFileWrapper.cpp
+    src/Common/Console.cpp
+    src/Common/ConsoleReader.cpp
+    src/Common/ConsoleWriter.cpp
+    src/Common/DataTable.cpp
+    src/Common/DateTime.cpp
+    src/Common/Exception.cpp
+    src/Common/FileReader.cpp
+    src/Common/FileWriter.cpp
+    src/Common/Logger.cpp
+    src/Common/Singleton.cpp
+    src/Common/string.cpp
+    src/Common/StringReader.cpp
+    src/Common/StringWriter.cpp
+    src/Common/SupportsSignals.cpp
+    src/Common/XmlWriter.cpp)
 
     add_library(${PROJECT_NAME} SHARED ${SourceFiles})
     
