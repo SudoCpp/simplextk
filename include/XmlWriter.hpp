@@ -40,7 +40,7 @@
 
 namespace simplex
 {
-    class XmlWriter : object
+    class XmlWriter : public object
     {
         public:
         XmlWriter(StreamWriter& stream);
