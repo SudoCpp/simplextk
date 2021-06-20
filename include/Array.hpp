@@ -46,6 +46,7 @@ namespace simplex
 			Array();
 			Array(::std::initializer_list<ArrayMemberType> iList);
 			Array(int arraySize, char* characterArray[]);
+			Array(int arraySize, ArrayMemberType nativeArray[]);
 			Array(::std::vector<ArrayMemberType> vectorObject);
 
 			//Operators
@@ -58,10 +59,9 @@ namespace simplex
 			Array<ArrayMemberType>& add(::std::initializer_list<ArrayMemberType> iList);
 			Array<ArrayMemberType>& add(Array<ArrayMemberType> arrayValues);
 			Array<ArrayMemberType>& add(::std::vector<ArrayMemberType> arrayValues);
-			Array<ArrayMemberType>& addAt(ArrayMemberType value, int index);
 			
 			static Array<ArrayMemberType> FromVector(::std::vector<ArrayMemberType> vectorObject);
-			std::vector<ArrayMemberType> toVector();
+			std::vector<ArrayMemberType> toVector() const;
 			
 			ArrayMemberType& at(int index);
             ArrayMemberType at(int index) const;
@@ -75,8 +75,7 @@ namespace simplex
 			int containsCount(ArrayMemberType value) const;
 			int indexOf(ArrayMemberType value) const;
 			int lastIndexOf(ArrayMemberType value) const;
-			Array<ArrayMemberType>& pop();
-			ArrayMemberType popAndReturn();
+			ArrayMemberType pop(bool returnValue = false);
 			Array<ArrayMemberType>& push(ArrayMemberType value);
 			
 			Array<ArrayMemberType>& remove(ArrayMemberType value);
@@ -185,12 +184,6 @@ namespace simplex
         array_.insert(array_.end(), arrayValues.begin(), arrayValues.end());
         return *this;
     }
-    template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::addAt(ArrayMemberType value, int index)
-    {
-        add(value, index);
-        return *this;
-    }
     
     template <typename ArrayMemberType>
     Array<ArrayMemberType> Array<ArrayMemberType>::FromVector(::std::vector<ArrayMemberType> vectorObject)
@@ -199,7 +192,7 @@ namespace simplex
         return array;
     }
     template <typename ArrayMemberType>
-    ::std::vector<ArrayMemberType> Array<ArrayMemberType>::toVector()
+    ::std::vector<ArrayMemberType> Array<ArrayMemberType>::toVector() const
     {
         return array_;
     }
@@ -291,17 +284,16 @@ namespace simplex
         return array_.size() - indexFromEnd - 1;
     }
     template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::pop()
+    ArrayMemberType Array<ArrayMemberType>::pop(bool returnValue)
     {
-        array_.pop_back();
-        return *this;
-    }
-    template <typename ArrayMemberType>
-    ArrayMemberType Array<ArrayMemberType>::popAndReturn()
-    {
-        ArrayMemberType temp = array_.at(array_.size() - 1);
-        array_.pop_back();
-        return temp;
+        if(returnValue)
+        {
+            ArrayMemberType temp = array_.at(array_.size() - 1);
+            array_.pop_back();
+            return temp;
+        }
+        else
+            array_.pop_back();
     }
     template <typename ArrayMemberType>
     Array<ArrayMemberType>& Array<ArrayMemberType>::push(ArrayMemberType value)
