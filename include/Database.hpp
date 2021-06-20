@@ -63,7 +63,7 @@ namespace simplex
         virtual DatabaseStatement& bind(int number) = 0;
         virtual DatabaseStatement& bind(double number) = 0;
         virtual DatabaseStatement& bind(const char* blob, int blobSize) = 0;
-        //Relying on RVO haha
+        //Relying on RVO 
         virtual DataTable execute() = 0;
     };
 
@@ -86,13 +86,20 @@ namespace simplex
         Database(const DatabaseCredentials& connectionSettings) 
         : credentials{connectionSettings} 
         {}
-        virtual ~Database() = default;
+        virtual ~Database()
+        {
+            for(DatabaseStatement* statement : statements)
+                delete statement;
+        }
         
         virtual DataTable query(const string& sqlQuery) = 0;
-        virtual DatabaseStatement* prepare(const string& sqlQuery) = 0;
+        virtual DatabaseStatement& prepare(const string& sqlQuery) = 0;
         virtual Array<string> getTableNames() = 0;
         virtual Array<string> getColumnNames(const string& tableName) = 0;
         virtual string getColumnType(const string& tableName, const string& columnName) = 0;
+
+        protected:
+        Array<DatabaseStatement*> statements;
     };
 }
 
