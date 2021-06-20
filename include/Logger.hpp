@@ -41,6 +41,8 @@
 
 namespace simplex
 {
+    #define __LoggerLocationInformation__ string{" In file: '"} + __FILE__ + "' on line: '" + __LINE__ + "'"
+
     enum class LoggerLevel : char
     { 
         On = 6, 
