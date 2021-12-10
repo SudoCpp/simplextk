@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
         test.add("b");
         test.add("c");
         test.add("d");
-        if (test.popAndReturn() == "d")
+        if (test.pop(true) == "d")
             return EXIT_SUCCESS;
         else
             return EXIT_FAILURE;   
