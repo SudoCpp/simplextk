@@ -64,7 +64,7 @@ namespace simplex
 
         levelDeep--;
         if(elements.size() > 0)
-            stream.writeLine(string{'\t',levelDeep} + "</"+elements.popAndReturn()+">");
+            stream.writeLine(string{'\t',levelDeep} + "</"+elements.pop(true)+">");
         else
             throw IndexOutOfBoundsException{"No elements left to end.", __ExceptionParams__};
     }
