@@ -80,11 +80,11 @@ namespace simplex
             LoggerLevel displayLevel = LoggerLevel::On, bool takeOnOwnership = true);
         static void CreateLogger(StreamWriter* stream, LoggerLevel displayLevel = LoggerLevel::On,
         bool takeOnOwnership = true);
-        static void LogDebug(string message);
-        static void LogInfo(string message);
-        static void LogWarning(string message);
-        static void LogError(string message);
-        static void LogFatalError(string message);
+        static void LogDebug(const string& message);
+        static void LogInfo(const string& message);
+        static void LogWarning(const string& message);
+        static void LogError(const string& message);
+        static void LogFatalError(const string& message);
 
         private:
         static string GetDateTime();

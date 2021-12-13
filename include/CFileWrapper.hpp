@@ -54,33 +54,8 @@ namespace simplex
         mutable char buffer[1023]; //It's a buffer even if instance is const this can change `mutable`
 
     public:
-
-        CFileWrapper();
-        CFileWrapper(const string& filePath, const FileMode& mode, bool isBinary);
-        virtual ~CFileWrapper();
-        CFileWrapper(const CFileWrapper&) = default;
-
-        void openFile(const string& filePath, const FileMode& mode, bool isBinary);
-
-        template<typename returnType>
-        returnType read(size_t sizeOfRead) const
-        {
-            throw NotImplementedException{__ExceptionParams__};
-        }
         string readString(int lengthOfString) const;
-        string readLine() const;
 
-        template<typename type>
-        void write(type addressOfValue, size_t sizeOfWriteInBytes)
-        {
-            fwrite(addressOfValue, sizeof(char), sizeOfWriteInBytes, file);
-        }
-        
-        void writeString(const string& String);
-        void writeLine(const string& line);
-
-        void seek(int characters) const;
-        void rewind() const;
     };
 }
 

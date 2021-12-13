@@ -33,8 +33,8 @@
 #ifndef SIMPLEX_FILEWRITER_HPP
 #define SIMPLEX_FILEWRITER_HPP
 
-#include "CFileWrapper.hpp"
 #include "StreamWriter.hpp"
+#include <stdio.h>
 
 namespace simplex
 {
@@ -43,10 +43,12 @@ namespace simplex
     class FileWriter : public StreamWriter
     {
         private:
-            CFileWrapper file;
+            FILE* file;
+            string filePath;
 
         public:
             FileWriter(const string& filePath);
+            virtual ~FileWriter();
             void writeLine(const string& toWrite);
 			void write(const string& toWrite);
     };

@@ -74,7 +74,8 @@ namespace simplex
         string password;
         string databaseAddress;
         string databaseName;
-        DatabaseCredentials(string username, string password, string databaseAddress, string databaseName) 
+        DatabaseCredentials(const string& username, const string& password,
+         const string& databaseAddress, const string& databaseName) 
         : username{username}, password{password}, databaseAddress{databaseAddress}, databaseName{databaseName} 
         {}
     };

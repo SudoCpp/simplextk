@@ -18,30 +18,30 @@ project(simplex-toolkit VERSION 2.8.0)
     include_directories("..")
 
 #Add all the source files to build library
-set(SourceFiles
-    src/Common/CFileWrapper.cpp
-    src/Common/Console.cpp
-    src/Common/ConsoleReader.cpp
-    src/Common/ConsoleWriter.cpp
-    src/Common/DataTable.cpp
-    src/Common/DateTime.cpp
-    src/Common/Exception.cpp
-    src/Common/FileReader.cpp
-    src/Common/FileSystem.cpp
-    src/Common/FileWriter.cpp
-    src/Common/Logger.cpp
-    src/Common/Singleton.cpp
-    src/Common/string.cpp
-    src/Common/StringReader.cpp
-    src/Common/StringWriter.cpp
-    src/Common/SupportsSignals.cpp
-    src/Common/XmlWriter.cpp)
+    set(SourceFiles
+    src/Console.cpp
+    src/ConsoleReader.cpp
+    src/ConsoleWriter.cpp
+    src/DataTable.cpp
+    src/DateTime.cpp
+    src/Exception.cpp
+    src/FileReader.cpp
+    src/FileSystem.cpp
+    src/FileWriter.cpp
+    src/Logger.cpp
+    src/Singleton.cpp
+    src/string.cpp
+    src/StringReader.cpp
+    src/StringWriter.cpp
+    src/SupportsSignals.cpp
+    src/TreeNode.cpp
+    src/XmlReader.cpp
+    src/XmlTreeNode.cpp
+    src/XmlWriter.cpp)
 
+    #add_library(${PROJECT_NAME} SHARED ${SourceFiles})
     add_library(${PROJECT_NAME} SHARED ${SourceFiles})
     
-    #Set up links for all dependancies
-    set (${PROJECT_NAME}_LIBS "m")
-
     #Link the libraries
     target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LIBS})
 

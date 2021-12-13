@@ -62,8 +62,8 @@ namespace simplex
         // ValueType at(int index) const;
         // ValueType& at(int index);
 
-        bool containsKey(KeyType key) const;
-        Dictionary<KeyType, ValueType>& removeByKey(KeyType key);
+        bool containsKey(const KeyType& key) const;
+        Dictionary<KeyType, ValueType>& removeByKey(const KeyType& key);
         Dictionary<KeyType, ValueType>& clear();
 
         //Variables
@@ -196,12 +196,12 @@ namespace simplex
     //     }
     // }
     template <typename KeyType, typename ValueType>
-    bool Dictionary<KeyType, ValueType>::containsKey(KeyType key) const
+    bool Dictionary<KeyType, ValueType>::containsKey(const KeyType& key) const
     {
         return (dictionary_.count(key) > 0);
     }
     template <typename KeyType, typename ValueType>
-    Dictionary<KeyType, ValueType>& Dictionary<KeyType, ValueType>::removeByKey(KeyType key)
+    Dictionary<KeyType, ValueType>& Dictionary<KeyType, ValueType>::removeByKey(const KeyType& key)
     {
         dictionary_.erase(key);
         return *this;

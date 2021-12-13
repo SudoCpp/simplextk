@@ -30,27 +30,62 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "StringWriter.hpp"
+#include "FileReader.hpp"
 #include "Exception.hpp"
-#include "string.hpp"
 
-#define __class__ "simplex::StringWriter"
+#define __class__ "simplex::FileReader"
 
 namespace simplex
 {
-    void StringWriter::writeLine(const string& toWrite)
+    FileReader::FileReader(const string& fileName) : filePath{fileName}
     {
-        write(toWrite + "\n");
+        string fopenMode = "rb";
+
+        if(!(file = fopen(filePath.toCString(), fopenMode.toCString())))
+            throw Exception{"Unable to open file: "+filePath, __ExceptionParams__};
     }
 
-    void StringWriter::write(const string& toWrite)
+    FileReader::~FileReader()
     {
-        data += toWrite;
+        fclose(file);
     }
 
-    string StringWriter::toString()
+    bool FileReader::read(string& str, unsigned int numberOfCharacters) const
     {
-        return string{data};
+        char buffer[numberOfCharacters+1];
+        fread(buffer, sizeof(char), numberOfCharacters, file);
+        buffer[numberOfCharacters] = '\0';
+        str = string{buffer};
+        return true;
+    }
+
+    string FileReader::readLine() const
+    {
+        char buffer[1023];
+        if(fgets(buffer, 1023, file))
+            return string(buffer);
+        else
+            return "";
+    }
+
+    string FileReader::toString() const noexcept
+    {
+        string everything = "";
+        string nextLine = "";
+        rewind();
+        while((nextLine = readLine()) != "")
+            everything += nextLine;
+        return everything;
+    }
+
+    void FileReader::rewind(unsigned int numberOfCharacters) const
+    {
+        fseek(file, -numberOfCharacters, SEEK_CUR);
+    }
+
+    void FileReader::rewind() const
+    {
+        ::rewind(file);
     }
 }
 

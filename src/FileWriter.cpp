@@ -38,7 +38,18 @@
 
 namespace simplex
 {
-    FileWriter::FileWriter(const string& filePath) : file{filePath, FileMode::WriteMode, true} {}
+    FileWriter::FileWriter(const string& filePath) : filePath{filePath}
+    {
+        string fopenMode = "wb";
+
+        if(!(file = fopen(filePath.toCString(), fopenMode.toCString())))
+            throw Exception{"Unable to open file: "+filePath, __ExceptionParams__};
+    }
+
+    FileWriter::~FileWriter()
+    {
+        fclose(file);
+    }
 
     void FileWriter::writeLine(const string& toWrite)
     {
@@ -48,7 +59,8 @@ namespace simplex
     void FileWriter::write(const string& toWrite)
     {
         data+=toWrite;
-        file.write(toWrite.toCString(), toWrite.length());
+        const char* temp = toWrite.toCString();
+        fwrite(temp, sizeof(char), toWrite.length(), file);
     }
 }
 

@@ -36,80 +36,12 @@
 
 namespace simplex
 {
-    CFileWrapper::CFileWrapper() : fileIsOpen{false} {}
-
-    CFileWrapper::CFileWrapper(const string &filePath, const FileMode& mode, bool isBinary) : fileIsOpen{false}
-    {
-        openFile(filePath, mode, isBinary);
-    }
-
-    CFileWrapper::~CFileWrapper()
-    {
-        if(fileIsOpen)
-            fclose(file);
-    }
-
-    void CFileWrapper::openFile(const string &filePath, const FileMode& mode, bool isBinary)
-    {
-        this->filePath = filePath;
-
-        string fopenMode = "";
-        if(mode == FileMode::ReadMode)
-        {
-            fileIsReadMode = true;
-            fopenMode += "r";
-        }
-        else 
-        {
-            fileIsReadMode = false;
-            fopenMode += "w";
-        }
-
-        if(isBinary)
-            fopenMode += "b";
-        fileIsBinary = isBinary;
-
-        if(file = fopen(filePath.toCString(), fopenMode.toCString()))
-            fileIsOpen = true;
-        else
-            throw Exception{"Unable to open file: "+filePath, __ExceptionParams__};
-    }
-
     string CFileWrapper::readString(int lengthOfString) const
     {
         if(fgets(buffer, lengthOfString, file))
             return string(buffer);
         else
             return "";
-    }
-
-    string CFileWrapper::readLine() const
-    {
-        if(fgets(buffer, 1023, file))
-            return string(buffer);
-        else
-            return "";
-    }
-
-    void CFileWrapper::writeString(const string& String)
-    {
-        const char* temp = String.toCString();
-        fwrite(temp, sizeof(char), String.length(), file);
-    }
-
-    void CFileWrapper::writeLine(const string& line)
-    {
-        writeString(line+"\n");
-    }
-
-    void CFileWrapper::seek(int characters) const
-    {
-        fseek(file, characters, SEEK_CUR);
-    }
-
-    void CFileWrapper::rewind() const
-    {
-        ::rewind(file);
     }
 }
 

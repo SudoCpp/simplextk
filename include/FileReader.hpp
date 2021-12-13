@@ -34,18 +34,20 @@
 #define SIMPLEX_FILEREADER_HPP
 
 #include "StreamReader.hpp"
-#include "CFileWrapper.hpp"
+#include <stdio.h>
+#include "string.hpp"
 
 namespace simplex
 {
     class string;
 	class FileReader : public StreamReader
 	{
-        CFileWrapper file;
+        FILE* file;
+        string filePath;
 		
         public:
         FileReader(const string& fileName);
-        virtual ~FileReader() = default;
+        virtual ~FileReader();
         virtual bool read(string& str, unsigned int numberOfCharacters) const;
         char read(size_t sizeOfNumberInBytes) const;
         virtual string readLine() const;

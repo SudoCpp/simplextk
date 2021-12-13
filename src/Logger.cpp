@@ -101,7 +101,7 @@ namespace simplex
         ((DateTime::LocalAmPm() == 0) ? "AM" : "PM");
     }
 
-    void Logger::LogDebug(string message)
+    void Logger::LogDebug(const string& message)
     {
         if(instance == nullptr)
             throw NullException{"Please run Logger::CreateLogger before Logger::LogDebug", __ExceptionParams__};
@@ -110,7 +110,7 @@ namespace simplex
             instance->debugStream->writeLine("DEBUG - " + GetDateTime() + " - " + message);
     }
 
-    void Logger::LogInfo(string message)
+    void Logger::LogInfo(const string& message)
     {
         if(instance == nullptr)
             throw NullException{"Please run Logger::CreateLogger before Logger::LogInfo", __ExceptionParams__};
@@ -119,7 +119,7 @@ namespace simplex
             instance->infoStream->writeLine("INFO - " + GetDateTime() + " - " + message);
     }
 
-    void Logger::LogWarning(string message)
+    void Logger::LogWarning(const string& message)
     {
         if(instance == nullptr)
             throw NullException{"Please run Logger::CreateLogger before Logger::LogWarning", __ExceptionParams__};
@@ -128,7 +128,7 @@ namespace simplex
             instance->warningStream->writeLine("WARNING - " + GetDateTime() + " - " + message);
     }
 
-    void Logger::LogError(string message)
+    void Logger::LogError(const string& message)
     {
         if(instance == nullptr)
             throw NullException{"Please run Logger::CreateLogger before Logger::LogError", __ExceptionParams__};
@@ -137,7 +137,7 @@ namespace simplex
             instance->errorStream->writeLine("ERROR - " + GetDateTime() + " - " + message);
     }
 
-    void Logger::LogFatalError(string message)
+    void Logger::LogFatalError(const string& message)
     {
         if(instance == nullptr)
             throw NullException{"Please run Logger::CreateLogger before Logger::LogFatalError", __ExceptionParams__};
