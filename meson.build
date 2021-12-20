@@ -1,4 +1,4 @@
-project('simplex-toolkit','cpp')
+project('simplextk','cpp')
 
 simplextk_inc = include_directories('include')
 

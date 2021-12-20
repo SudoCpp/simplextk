@@ -30,51 +30,13 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SIMPLEX_SUPPORTSSIGNALS_HPP
-#define SIMPLEX_SUPPORTSSIGNALS_HPP
+#ifndef SIMPLEX_INTERNAL_HPP
+#define SIMPLEX_INTERNAL_HPP
 
-#include <vector>
+#ifndef SIMPLEXTK_HPP
+    #define _internal public
+#else
+    #define _internal private
+#endif
 
-#include "Internal.hpp"
-
-namespace simplex
-{
-    //template<typename ...Args> class Signal;
-    
-    class SupportsSignals
-    {
-        //template<typename ... Args>
-        //friend class Signal;
-
-        //Signals that call this slot object
-        std::vector<SupportsSignals*> linkedSignalObjects; //Class with Slots uses this
-        //Valid slot objects that signal can call
-        std::vector<SupportsSignals*> linkedSlotObjects; //Used by Signal
-
-        bool vecContains(const std::vector<SupportsSignals*>& vec, SupportsSignals* value);
-        void vecRemove(std::vector<SupportsSignals*>& vec, SupportsSignals* value);
-        
-        public:
-        SupportsSignals();
-        virtual ~SupportsSignals();
-
-        //Called by signal, so slot can tell it when slot is destructing
-        void addSignal(SupportsSignals* signalObj);
-        //Called by signal , so slot knows it doesn't need to alert signal
-        void removeSignal(SupportsSignals* signalObj);
-
-        //Called by slot, so that it isn't called anymore
-        void removeSlot(SupportsSignals* slotObj);
-
-        protected:
-        //Signal calls this so it knows what slots are valid
-        void addSlot(SupportsSignals* slotObj);
-
-        //Signal calls this to check if slot is still valid.
-        bool slotInstanceStillExists(SupportsSignals* slotObj);
-
-        operator SupportsSignals*();
-    };
-}
-
-#endif //SIMPLEX_SUPPORTSSIGNALS_HPP
+#endif //SIMPLEX_INTERNAL_HPP

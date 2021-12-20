@@ -43,6 +43,7 @@ namespace simplex
 	template <typename ArrayMemberType> class Array
 	{
 		public:
+            using Type = ArrayMemberType;
 			Array();
 			Array(::std::initializer_list<ArrayMemberType> iList);
 			Array(int arraySize, char* characterArray[]);

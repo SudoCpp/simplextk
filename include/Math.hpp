@@ -150,7 +150,7 @@ namespace simplex
 
         template <typename type> type Round(type number, double decimalPlaces)
         {
-            return (type)(Math::round(number * Math::power(10, decimalPlaces)) / Math::power(10, decimalPlaces));
+            return (type)(Math::Round(number * Math::Power(10, decimalPlaces)) / Math::Power(10, decimalPlaces));
         }
 
         template <typename type> type Sin(type number)

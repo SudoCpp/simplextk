@@ -1,4 +1,4 @@
-# simplex-toolkit
+# simplextk
 
 ## Why this project?
 I've always been a fan of C++ and really didn't like languages like C# or Java. They always seemed a little too slow for what I wanted and required all this framework to get them to work properly. Then I was forced into a situation to use C#. I realized that people liked it because of all the tooling that was put into the language.
