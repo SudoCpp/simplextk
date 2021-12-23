@@ -51,8 +51,12 @@ namespace simplex
 
     SingletonManager::~SingletonManager()
     {
-        for(Singleton* singleton : singletons)
+        int singletonsSize = singletons.size();
+        for(int loop = singletonsSize - 1; loop >= 0; loop--)
+        {
+            Singleton* singleton = singletons[loop];
             delete singleton;
+        }
     }
 
     void SingletonManager::RegisterInstance(Singleton* instance)
