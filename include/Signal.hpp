@@ -1,7 +1,7 @@
 /*
     BSD 3-Clause License
     
-    Copyright (c) 2021, SudoCpp
+    Copyright (c) 2022, SudoCpp
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,8 @@
 
 namespace simplex
 {
+    using namespace std::placeholders;
+
     template<typename ... Args>
     class Signal : public object
     {
@@ -76,12 +78,12 @@ namespace simplex
             if(slotParents[key] == nullptr)
             {
                 std::function<void(Args...)> bound = std::bind(slots[key], args...);
-                bound();
+                bound(args...);
             }
             else if(slotInstanceStillExists(slotParents[key]))
             {
                 std::function<void(Args...)> bound = std::bind(slots[key], args...);
-                bound();
+                bound(args...);
             }
             else
             { //This instance has died and slots need to be removed.
