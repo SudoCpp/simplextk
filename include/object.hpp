@@ -1,7 +1,7 @@
 /*
     BSD 3-Clause License
     
-    Copyright (c) 2021, SudoCpp
+    Copyright (c) 2022, SudoCpp
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@ namespace simplex
 {
 	class string;
     
-    class object : public SupportsSignals
+    class object : virtual public SupportsSignals
 	{
 		public:
             object() {}
