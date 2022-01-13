@@ -313,70 +313,147 @@ namespace simplex
         return std::hash<std::string>()(data);
     }
 
-        template<>
+    template<>
     float string::toNumber<float>() const
     {
-        return std::stof(data);
+        try
+        {
+            return std::stof(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     double string::toNumber<double>() const
     {
-        return std::stod(data);
+        try
+        {
+            return std::stod(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     long double string::toNumber<long double>() const
     {
-        return std::stold(data);
+        try
+        {
+            return std::stold(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     uint8_t string::toNumber<uint8_t>() const
     {
-        return (uint8_t)std::stoul(data);
+        try
+        {
+            return (uint8_t)std::stoul(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     uint16_t string::toNumber<uint16_t>() const
     {
-        return (uint16_t)std::stoul(data);
+        try
+        {
+            return (uint16_t)std::stoul(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     uint32_t string::toNumber<uint32_t>() const
     {
-        return (uint32_t)std::stoul(data);
+        try
+        {
+            return (uint32_t)std::stoul(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     uint64_t string::toNumber<uint64_t>() const
     {
-        return (uint64_t)std::stoull(data);
+        try
+        {
+            return (uint64_t)std::stoull(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     int8_t string::toNumber<int8_t>() const
     {
-        return (int8_t)std::stoi(data);
+        try
+        {
+            return (int8_t)std::stoi(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     int16_t string::toNumber<int16_t>() const
     {
-        return (int16_t)std::stoi(data);
+        try
+        {
+            return (int16_t)std::stoi(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     int32_t string::toNumber<int32_t>() const
     {
-        return (int32_t)std::stol(data);
+        try
+        {
+            return (int32_t)std::stol(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 
     template<>
     int64_t string::toNumber<int64_t>() const
     {
-        return (int64_t)std::stoll(data);
+        try
+        {
+            return (int64_t)std::stoll(data);
+        }
+        catch(std::exception ex)
+        {
+            throw Exception(ex.what(), __ExceptionParams__);
+        }
     }
 }
 
