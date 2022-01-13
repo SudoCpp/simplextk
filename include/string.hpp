@@ -94,6 +94,9 @@ namespace simplex
         string trimBeginning() const noexcept;
         string trimEnd() const noexcept;
 
+        template<typename NumberType>
+        NumberType toNumber() const;
+
         virtual size_t getHash() const noexcept;
     };
 }
