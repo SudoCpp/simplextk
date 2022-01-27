@@ -46,7 +46,7 @@ namespace simplex
         XmlWriter(StreamWriter& stream);
         ~XmlWriter();
         void close();
-        void createElement(const string& elementName);
+        void createElement(string elementName);
         void createEndElement();
         void addAttribute(const string& attributeName, const string& attributeValue);
         void addAttributes(const Dictionary<string, string>& attributes);
