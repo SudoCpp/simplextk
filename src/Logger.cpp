@@ -41,6 +41,7 @@ namespace simplex
     //Create spots in memory for static variables
     Logger* Logger::instance = nullptr;
     LoggerLevel Logger::DisplayLevel;
+    bool Logger::loggerRunning = false;
 
     //Implementation
     Logger::Logger(StreamWriter* stream, bool takeOnOwnership)
@@ -123,47 +124,62 @@ namespace simplex
 
     void Logger::LogDebug(const string& message)
     {
-        if(instance == nullptr)
-            throw NullException{"Please run Logger::CreateLogger before Logger::LogDebug", __ExceptionParams__};
+        if(loggerRunning)
+        {
+            if(instance == nullptr)
+                throw NullException{"Please run Logger::CreateLogger before Logger::LogDebug", __ExceptionParams__};
 
-        if(DisplayLevel >= LoggerLevel::Debug)
-            instance->debugStream->writeLine("DEBUG - " + GetDateTime() + " - " + message);
+            if(DisplayLevel >= LoggerLevel::Debug)
+                instance->debugStream->writeLine("DEBUG - " + GetDateTime() + " - " + message);
+        }
     }
 
     void Logger::LogInfo(const string& message)
     {
-        if(instance == nullptr)
-            throw NullException{"Please run Logger::CreateLogger before Logger::LogInfo", __ExceptionParams__};
+        if(loggerRunning)
+        {
+            if(instance == nullptr)
+                throw NullException{"Please run Logger::CreateLogger before Logger::LogInfo", __ExceptionParams__};
 
-        if(DisplayLevel >= LoggerLevel::Info)
-            instance->infoStream->writeLine("INFO - " + GetDateTime() + " - " + message);
+            if(DisplayLevel >= LoggerLevel::Info)
+                instance->infoStream->writeLine("INFO - " + GetDateTime() + " - " + message);
+        }
     }
 
     void Logger::LogWarning(const string& message)
     {
-        if(instance == nullptr)
-            throw NullException{"Please run Logger::CreateLogger before Logger::LogWarning", __ExceptionParams__};
+        if(loggerRunning)
+        {
+            if(instance == nullptr)
+                throw NullException{"Please run Logger::CreateLogger before Logger::LogWarning", __ExceptionParams__};
 
-        if(DisplayLevel >= LoggerLevel::Warning)
-            instance->warningStream->writeLine("WARNING - " + GetDateTime() + " - " + message);
+            if(DisplayLevel >= LoggerLevel::Warning)
+                instance->warningStream->writeLine("WARNING - " + GetDateTime() + " - " + message);
+        }
     }
 
     void Logger::LogError(const string& message)
     {
-        if(instance == nullptr)
-            throw NullException{"Please run Logger::CreateLogger before Logger::LogError", __ExceptionParams__};
+        if(loggerRunning)
+        {
+            if(instance == nullptr)
+                throw NullException{"Please run Logger::CreateLogger before Logger::LogError", __ExceptionParams__};
 
-        if(DisplayLevel >= LoggerLevel::Error)
-            instance->errorStream->writeLine("ERROR - " + GetDateTime() + " - " + message);
+            if(DisplayLevel >= LoggerLevel::Error)
+                instance->errorStream->writeLine("ERROR - " + GetDateTime() + " - " + message);
+        }
     }
 
     void Logger::LogFatalError(const string& message)
     {
-        if(instance == nullptr)
-            throw NullException{"Please run Logger::CreateLogger before Logger::LogFatalError", __ExceptionParams__};
+        if(loggerRunning)
+        {
+            if(instance == nullptr)
+                throw NullException{"Please run Logger::CreateLogger before Logger::LogFatalError", __ExceptionParams__};
 
-        if(DisplayLevel >= LoggerLevel::FatalError)
-            instance->fatalErrorStream->writeLine("FATAL ERROR - " + GetDateTime() + " - " + message);
+            if(DisplayLevel >= LoggerLevel::FatalError)
+                instance->fatalErrorStream->writeLine("FATAL ERROR - " + GetDateTime() + " - " + message);
+        }
     }
 
     void Logger::StartLogger()
