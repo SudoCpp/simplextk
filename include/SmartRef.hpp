@@ -61,6 +61,7 @@ namespace simplex
         template<typename type>
         type* add(SmartRef<type>& smartRef)
         {
+            static_assert(std::is_base_of<object, type>::value, "To use this operation, your pointer type must be derived from simplex::object.");
             type* temp = smartRef.stopManaging();
             refs.add(SmartRef<object>{temp});
             return temp;
