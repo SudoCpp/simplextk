@@ -44,16 +44,14 @@ namespace simplex
 
     //Implementation
     Logger::Logger(StreamWriter* stream, bool takeOnOwnership)
-    : Singleton(this),
-    debugStream{stream}, infoStream{stream}, warningStream{stream},
+    : debugStream{stream}, infoStream{stream}, warningStream{stream},
     errorStream{stream}, fatalErrorStream{stream}, uniquePointers{false},
     takeOnOwnership{takeOnOwnership}
     {}
 
     Logger::Logger(StreamWriter* debugStream, StreamWriter* infoStream, StreamWriter* warningStream, 
     StreamWriter* errorStream, StreamWriter* fatalErrorStream, bool takeOnOwnership)
-    : Singleton(this),
-    debugStream{debugStream}, infoStream{infoStream}, warningStream{warningStream},
+    : debugStream{debugStream}, infoStream{infoStream}, warningStream{warningStream},
     errorStream{errorStream}, fatalErrorStream{fatalErrorStream}, uniquePointers{true},
     takeOnOwnership{takeOnOwnership}
     {}
