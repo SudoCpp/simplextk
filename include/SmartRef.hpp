@@ -54,17 +54,16 @@ namespace simplex
         classType& startManaging(classType* pointer);
     };
 
-    class SmartRefManager : public object
+    class SmartRefArray: public object
     {
         Array<SmartRef<object>> refs;
         public:
         template<typename type>
-        type* add(SmartRef<type>& smartRef)
+        type& add(type* ptr)
         {
             static_assert(std::is_base_of<object, type>::value, "To use this operation, your pointer type must be derived from simplex::object.");
-            type* temp = smartRef.stopManaging();
-            refs.add(SmartRef<object>{temp});
-            return temp;
+            refs.add(SmartRef<object>{ptr});
+            return *ptr;
         }
     };
 }
