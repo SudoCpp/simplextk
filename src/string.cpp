@@ -34,6 +34,7 @@
 #include "Exception.hpp"
 #include <locale>
 #include "Array.hpp"
+#include <sstream>
 
 #define __class__ "simplex::string"
 
@@ -41,16 +42,21 @@ namespace simplex
 {
     string::string() : data{""} {}
 
-    string::string(const char* str) : data{str} {}
-
-    string::string(::std::string str) : data{str} {}
-
-    string::string(const char& character, unsigned int repetition)
+    string::string(const char* str) : data{std::string{str}} {}
+    string::string(const ::std::string& str): data{std::string{str}} {}
+    string::string(const ::std::string* str): data{std::string{*str}} {}
+    string::string(const char* character, unsigned int repetition) : data{""}
     {
-        data = "";
         for (int loop = 0; loop < repetition; loop++)
             data += character;
     }
+    string::string(const char& character, unsigned int repetition) : data{""}
+    {
+        for (int loop = 0; loop < repetition; loop++)
+            data += character;
+    }
+    string::string(const string& str) : data{std::string{str.data}} {}
+    string::string(const string* str) : data{std::string{str->data}} {}
 
     string operator+(const string& leftHandSide, const string& rightHandSide)
     {
@@ -79,49 +85,68 @@ namespace simplex
         return *this;
     }
 
-    string string::FromNumber(int number)
+    string string::FromNumber(int8_t number)
     {
         return string{std::to_string(number)};
     }
 
-    string string::FromNumber(char number)
+    string string::FromNumber(int16_t number)
     {
         return string{std::to_string(number)};
     }
 
-    string string::FromNumber(float number)
+    string string::FromNumber(int32_t number)
     {
         return string{std::to_string(number)};
     }
 
-    string string::FromNumber(long number)
+    string string::FromNumber(int64_t number)
     {
         return string{std::to_string(number)};
     }
 
-    string string::FromNumber(long long number)
+    string string::FromNumber(uint8_t number)
     {
         return string{std::to_string(number)};
     }
 
-    string string::FromNumber(unsigned long number)
+    string string::FromNumber(uint16_t number)
     {
         return string{std::to_string(number)};
     }
 
-    string string::FromNumber(unsigned long long number)
+    string string::FromNumber(uint32_t number)
+    {
+        return string{std::to_string(number)};
+    }
+
+    string string::FromNumber(uint64_t number)
     {
         return string{std::to_string(number)};
     }
     
-    string string::FromNumber(double number)
+    string string::FromNumber(float number, const int precision)
     {
-        return string{std::to_string(number)};
+        std::ostringstream temp;
+        temp.precision(precision);
+        temp << std::fixed << number;
+        return string{temp.str()};
     }
 
-    string string::FromNumber(long double number)
+    string string::FromNumber(double number, const int precision)
     {
-        return string{std::to_string(number)};
+        std::ostringstream temp;
+        temp.precision(precision);
+        temp << std::fixed << number;
+        return string{temp.str()};
+    }
+
+    string string::FromNumber(long double number, const int precision)
+    {
+        std::ostringstream temp;
+        temp.precision(precision);
+        temp << std::fixed << number;
+        return string{temp.str()};
     }
 
     string string::toLower() const noexcept
@@ -230,7 +255,7 @@ namespace simplex
         return count;
     }
 
-    string string::replace(const string& find, const string& replace)
+    string string::replace(const string& find, const string& replace) noexcept
     {
         //Try to use std::string logic so that if the c++ library improves, it will improve here also
         std::string duplicate{data};
