@@ -47,14 +47,18 @@ namespace simplex
     : debugStream{stream}, infoStream{stream}, warningStream{stream},
     errorStream{stream}, fatalErrorStream{stream}, uniquePointers{false},
     takeOnOwnership{takeOnOwnership}
-    {}
+    {
+        loggerRunning = true;
+    }
 
     Logger::Logger(StreamWriter* debugStream, StreamWriter* infoStream, StreamWriter* warningStream, 
     StreamWriter* errorStream, StreamWriter* fatalErrorStream, bool takeOnOwnership)
     : debugStream{debugStream}, infoStream{infoStream}, warningStream{warningStream},
     errorStream{errorStream}, fatalErrorStream{fatalErrorStream}, uniquePointers{true},
     takeOnOwnership{takeOnOwnership}
-    {}
+    {
+        loggerRunning = true;
+    }
 
     Logger::~Logger()
     {
@@ -160,6 +164,24 @@ namespace simplex
 
         if(DisplayLevel >= LoggerLevel::FatalError)
             instance->fatalErrorStream->writeLine("FATAL ERROR - " + GetDateTime() + " - " + message);
+    }
+
+    void Logger::StartLogger()
+    {
+        if(!loggerRunning)
+        {
+            if(instance == nullptr)
+                throw NullException{"Please run Logger::CreateLogger atleast once before trying to restart it.", __ExceptionParams__};
+            loggerRunning = true;
+        }
+    }
+    
+    void Logger::StopLogger()
+    {
+        if(loggerRunning)
+        {
+            loggerRunning = false;
+        }
     }
 }
 
