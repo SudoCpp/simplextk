@@ -48,29 +48,44 @@ namespace simplex
             return std::abs(number);
         }
 
-        template <typename type> type ArcCos(type number)
+        template <typename type> type ArcCos(type radians)
         {
-            return std::acos(number);
+            return std::acos(radians);
         }
 
-        template <typename type> type ArcCosH(type number)
+        template <typename type> type ArcCosD(type degrees)
         {
-            return std::acosh(number);
+            return std::acos(DegreesToRadians(degrees));
         }
 
-        template <typename type> type ArcSin(type number)
+        template <typename type> type ArcCosH(type radians)
         {
-            return std::asin(number);
+            return std::acosh(radians);
         }
 
-        template <typename type> type ArcSinH(type number)
+        template <typename type> type ArcSin(type radians)
         {
-            return std::asinh(number);
+            return std::asin(radians);
         }
 
-        template <typename type> type ArcTan(type number)
+        template <typename type> type ArcSinD(type degrees)
         {
-            return std::atan(number);
+            return std::asin(DegreesToRadians(degrees));
+        }
+
+        template <typename type> type ArcSinH(type radians)
+        {
+            return std::asinh(radians);
+        }
+
+        template <typename type> type ArcTan(type radians)
+        {
+            return std::atan(radians);
+        }
+
+        template <typename type> type ArcTanD(type degrees)
+        {
+            return std::atan(DegreesToRadians(degrees));
         }
 
         template <typename type, typename type2> type ArcTan2(type number1, type2 number2)
@@ -78,9 +93,9 @@ namespace simplex
             return std::atan2(number1, number2);
         }
 
-        template <typename type> type ArcTanH(type number)
+        template <typename type> type ArcTanH(type radians)
         {
-            return std::atanh(number);
+            return std::atanh(radians);
         }
 
         template <typename type> type Cube(type number)
@@ -103,9 +118,20 @@ namespace simplex
             return std::cos(number);
         }
 
+        // Perform Cosine and return value in degrees
+        template <typename type> type CosD(type number)
+        {
+            return RadiansToDegrees(std::cos(number));
+        }
+
         template <typename type> type CosH(type number)
         {
             return std::cosh(number);
+        }
+
+        template <typename type> type DegreesToRadians(type degrees)
+        {
+            return (long double)degrees / 180 * Pi;
         }
 
         template <typename type> type Floor(type number)
@@ -133,9 +159,16 @@ namespace simplex
             return std::min(number1, number2);
         }
 
+        const long double Pi = 3.14159265358979323846264338327950288419716939937510;
+
         template <typename type, typename type2> type Power(type base, type2 exponent)
         {
             return std::pow(base, exponent);
+        }
+
+        template <typename type> type RadiansToDegrees(type radians)
+        {
+            return (long double)radians * 180 / Pi;
         }
 
         template <typename type> type Remainder(type number1, type number2)
@@ -158,6 +191,12 @@ namespace simplex
             return std::sin(number);
         }
 
+        // Perform Sine and return value in degrees
+        template <typename type> type SinD(type number)
+        {
+            return RadiansToDegrees(std::sin(number));
+        }
+
         template <typename type> type SinH(type number)
         {
             return std::sinh(number);
@@ -176,6 +215,12 @@ namespace simplex
         template <typename type> type Tan(type number)
         {
             return std::tan(number);
+        }
+
+        // Perform Tangent and return value in degrees
+        template <typename type> type TanD(type number)
+        {
+            return RadiansToDegrees(std::tan(number));
         }
 
         template <typename type> type TanH(type number)
