@@ -75,11 +75,18 @@ namespace simplex
 
         virtual ~Logger();
 
+        // Specify each stream for each logging type. Creating with pointers means logger will take over ownership
         static void CreateLogger(StreamWriter* debugStream, StreamWriter* infoStream, 
             StreamWriter* warningStream, StreamWriter* errorStream, StreamWriter* fatalErrorStream, 
-            LoggerLevel displayLevel = LoggerLevel::On, bool takeOnOwnership = true);
-        static void CreateLogger(StreamWriter* stream, LoggerLevel displayLevel = LoggerLevel::On,
-        bool takeOnOwnership = true);
+            LoggerLevel displayLevel = LoggerLevel::On);
+        // Specify each stream for each logging type. Creating with references means you manage steam memory.
+        static void CreateLogger(StreamWriter& debugStream, StreamWriter& infoStream, 
+            StreamWriter& warningStream, StreamWriter& errorStream, StreamWriter& fatalErrorStream, 
+            LoggerLevel displayLevel = LoggerLevel::On);
+        // Specify one stream for all the logging to take place on. Creating with pointer means it will take over ownership.
+        static void CreateLogger(StreamWriter* stream, LoggerLevel displayLevel = LoggerLevel::On);
+        // Specify one stream for all the logging to take place on. Creating with reerences means you manage stream memory.
+        static void CreateLogger(StreamWriter& stream, LoggerLevel displayLevel = LoggerLevel::On);
         static void LogDebug(const string& message);
         static void LogInfo(const string& message);
         static void LogWarning(const string& message);

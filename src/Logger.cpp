@@ -73,19 +73,37 @@ namespace simplex
 
     void Logger::CreateLogger(StreamWriter* debugStream, StreamWriter* infoStream, 
     StreamWriter* warningStream, StreamWriter* errorStream, StreamWriter* fatalErrorStream, 
-    LoggerLevel displayLevel, bool takeOnOwnership)
+    LoggerLevel displayLevel)
     {
         if(instance != nullptr)
             delete instance;
-        instance = new Logger{debugStream, infoStream, warningStream, errorStream, fatalErrorStream, takeOnOwnership};
+        instance = new Logger{debugStream, infoStream, warningStream, errorStream, fatalErrorStream, true};
         DisplayLevel = displayLevel;
     }
 
-    void Logger::CreateLogger(StreamWriter* stream, LoggerLevel displayLevel, bool takeOnOwnership)
+    void Logger::CreateLogger(StreamWriter& debugStream, StreamWriter& infoStream, 
+    StreamWriter& warningStream, StreamWriter& errorStream, StreamWriter& fatalErrorStream, 
+    LoggerLevel displayLevel)
     {
         if(instance != nullptr)
             delete instance;
-        instance = new Logger{stream, takeOnOwnership};
+        instance = new Logger{&debugStream, &infoStream, &warningStream, &errorStream, &fatalErrorStream, false};
+        DisplayLevel = displayLevel;
+    }
+
+    void Logger::CreateLogger(StreamWriter* stream, LoggerLevel displayLevel)
+    {
+        if(instance != nullptr)
+            delete instance;
+        instance = new Logger{stream, true};
+        DisplayLevel = displayLevel;
+    }
+
+    void Logger::CreateLogger(StreamWriter& stream, LoggerLevel displayLevel)
+    {
+        if(instance != nullptr)
+            delete instance;
+        instance = new Logger{&stream, false};
         DisplayLevel = displayLevel;
     }
 
