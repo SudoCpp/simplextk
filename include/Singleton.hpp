@@ -38,7 +38,7 @@ namespace simplex
     class Singleton
 	{
 		public:
-            Singleton(Singleton* object);
+            Singleton();
             virtual ~Singleton(){} //virtual for inheritance
             operator Singleton*();
 	};
