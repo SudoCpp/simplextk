@@ -39,9 +39,9 @@ namespace simplex
 
     SingletonManager singletonMangager{}; //Create instance for management
     
-    Singleton::Singleton(Singleton* object)
+    Singleton::Singleton()
     {
-        SingletonManager::RegisterInstance(object);
+        SingletonManager::RegisterInstance(this);
     }
     
     Singleton::operator Singleton*()
