@@ -44,11 +44,11 @@ namespace simplex
     class DatabaseException : public Exception
 	{
 		public:
-            DatabaseException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
-            : Exception{text, fileName, lineNumber, className, methodName}
-            { 
-                exceptionType = "DatabaseException";
-            }
+        DatabaseException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+        : Exception{text, fileName, lineNumber, className, methodName}
+        { 
+            exceptionType = "DatabaseException";
+        }
 	};
 
     class DatabaseStatement : public object
