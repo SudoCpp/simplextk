@@ -41,14 +41,14 @@ namespace simplex
     class StringReader : public StreamReader
 	{
         string data;
-        mutable unsigned int position;
+        unsigned int position;
         
 		public:
-            StringReader(const string& data);
-			virtual bool read(unsigned int numberOfCharacters, string& readTo) const;
-            virtual string readLine() const;
-            virtual void rewind(unsigned int numberOfCharaters) const;
-            virtual void rewind() const;
+        StringReader(const string& data);
+        virtual bool read(unsigned int numberOfCharacters, string& readTo);
+        virtual string readLine();
+        virtual void rewind(unsigned int numberOfCharaters);
+        virtual void rewind();
 	};
 }
 

@@ -50,7 +50,7 @@ namespace simplex
         fclose(file);
     }
 
-    bool FileReader::read(string& str, unsigned int numberOfCharacters) const
+    bool FileReader::read(string& str, unsigned int numberOfCharacters)
     {
         char buffer[numberOfCharacters+1];
         fread(buffer, sizeof(char), numberOfCharacters, file);
@@ -59,7 +59,7 @@ namespace simplex
         return true;
     }
 
-    string FileReader::readLine() const
+    string FileReader::readLine()
     {
         char buffer[1023];
         if(fgets(buffer, 1023, file))
@@ -68,7 +68,7 @@ namespace simplex
             return "";
     }
 
-    string FileReader::toString() const noexcept
+    string FileReader::readAll() noexcept
     {
         string everything = "";
         string nextLine = "";
@@ -78,12 +78,12 @@ namespace simplex
         return everything;
     }
 
-    void FileReader::rewind(unsigned int numberOfCharacters) const
+    void FileReader::rewind(unsigned int numberOfCharacters)
     {
         fseek(file, -numberOfCharacters, SEEK_CUR);
     }
 
-    void FileReader::rewind() const
+    void FileReader::rewind()
     {
         ::rewind(file);
     }

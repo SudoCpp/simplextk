@@ -41,10 +41,10 @@ namespace simplex
 	class StreamReader : public object
 	{
 		public:
-			virtual bool read(string& str, unsigned int numberOfCharacters) const = 0;
-            virtual string readLine() const = 0;
-            virtual void rewind(unsigned int numberOfCharacters) const = 0;
-            virtual void rewind() const = 0;
+			virtual bool read(string& str, unsigned int numberOfCharacters) = 0;
+            virtual string readLine() = 0;
+            virtual void rewind(unsigned int numberOfCharacters) = 0;
+            virtual void rewind() = 0;
             virtual ~StreamReader() = default;
 	};
 }

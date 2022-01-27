@@ -40,7 +40,7 @@ namespace simplex
 {
     StringReader::StringReader(const string& data) : data{data}, position{0} {}
 
-    bool StringReader::read(unsigned int numberOfCharacters, string& readTo) const
+    bool StringReader::read(unsigned int numberOfCharacters, string& readTo)
     {
         if(data.length() >= position + numberOfCharacters)
         {
@@ -51,7 +51,7 @@ namespace simplex
         return false;
     }
 
-    string StringReader::readLine() const
+    string StringReader::readLine()
     {
         string newStr = "";
         string character = "";
@@ -69,13 +69,13 @@ namespace simplex
         return newStr;
     }
 
-    void StringReader::rewind(unsigned int numberOfCharacters) const
+    void StringReader::rewind(unsigned int numberOfCharacters)
     {
         if(position >= numberOfCharacters)
             position -= numberOfCharacters;
     }
 
-    void StringReader::rewind() const
+    void StringReader::rewind()
     {
         position = 0;
     }

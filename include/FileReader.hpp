@@ -48,12 +48,12 @@ namespace simplex
         public:
         FileReader(const string& fileName);
         virtual ~FileReader();
-        virtual bool read(string& str, unsigned int numberOfCharacters) const;
-        char read(size_t sizeOfNumberInBytes) const;
-        virtual string readLine() const;
-        virtual void rewind(unsigned int numberOfCharacters) const;
-        virtual void rewind() const;
-        virtual string toString() const noexcept;
+        virtual bool read(string& str, unsigned int numberOfCharacters);
+        char read(size_t sizeOfNumberInBytes);
+        virtual string readLine();
+        virtual void rewind(unsigned int numberOfCharacters);
+        virtual void rewind();
+        string readAll() noexcept;
 	};
 }
 
