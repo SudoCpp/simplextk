@@ -34,6 +34,7 @@
 #define SIMPLEX_OBJECT_HPP
 
 #include <cstddef>
+#include <cstdint>
 #include "SupportsSignals.hpp"
 
 namespace simplex
@@ -45,7 +46,14 @@ namespace simplex
 		public:
             object() {}
             virtual ~object() = default;
-            operator object*() { return (object*)this; }
+            operator object*()
+            { 
+                return (object*)this; 
+            }
+            operator const object*() const
+            { 
+                return (const object*)this; 
+            }
 	};
 }
 
