@@ -182,7 +182,7 @@ namespace simplex
         }
     }
 
-    void Logger::StartLogger()
+    void Logger::UnpauseLogger()
     {
         if(!loggerRunning)
         {
@@ -192,7 +192,7 @@ namespace simplex
         }
     }
     
-    void Logger::StopLogger()
+    void Logger::PauseLogger()
     {
         if(loggerRunning)
         {

@@ -63,7 +63,7 @@ namespace simplex
         StreamWriter* fatalErrorStream;
         bool uniquePointers;
         bool takeOnOwnership;
-        
+
         static bool loggerRunning;
         static Logger* instance;
 
@@ -93,8 +93,8 @@ namespace simplex
         static void LogWarning(const string& message);
         static void LogError(const string& message);
         static void LogFatalError(const string& message);
-        static void StartLogger();
-        static void StopLogger();
+        static void UnpauseLogger();
+        static void PauseLogger();
 
         private:
         static string GetDateTime();
