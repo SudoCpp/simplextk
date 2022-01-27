@@ -221,7 +221,7 @@ namespace simplex
         keys.reserveSpace(dictionary_.size());
 
         for (auto key : dictionary_)
-            keys.add(key.first);
+            keys.add((KeyType)key.first);
 
         return keys;
     }
