@@ -48,20 +48,28 @@ namespace simplex
 		//Constructors
         string();
         string(const char* str);
-        string(::std::string str);
+        string(const ::std::string& str);
+        string(const ::std::string* str);
+        string(const char* character, unsigned int repetition);
         string(const char& character, unsigned int repetition);
-        string(const string&) = default;
+        string(const string& str);
+        string(const string* str);
         virtual ~string() = default;
 
-        static string FromNumber(int number);
-        static string FromNumber(char number);
-        static string FromNumber(float number);
-        static string FromNumber(long number);
-        static string FromNumber(long long number);
-        static string FromNumber(unsigned long number);
-        static string FromNumber(unsigned long long number);
-        static string FromNumber(double number);
-        static string FromNumber(long double number);
+        static string FromNumber(int8_t number);
+        static string FromNumber(int16_t number);
+        static string FromNumber(int32_t number);
+        static string FromNumber(int64_t number);
+        static string FromNumber(uint8_t number);
+        static string FromNumber(uint16_t number);
+        static string FromNumber(uint32_t number);
+        static string FromNumber(uint64_t number);
+        static string FromNumber(float number, const int precision);
+        static string FromNumber(double number, const int precision);
+        static string FromNumber(long double number, const int precision);
+
+        template<typename NumberType>
+        NumberType toNumber() const;
 
         //Modified Strings
         string toLower() const noexcept;
@@ -86,16 +94,13 @@ namespace simplex
         int lastIndexOf(const char character) const noexcept;
         bool contains(const string& subString) const noexcept;
         int containsCount(const string& subString) const noexcept;
-        string replace(const string& find, const string& replace);
+        string replace(const string& find, const string& replace) noexcept;
         Array<string> split(const char characterToSplit) const noexcept;
         string subString(unsigned int start) const;
         string subString(unsigned int start, unsigned int lengthOfSub) const;
         string trim() const noexcept;
         string trimBeginning() const noexcept;
         string trimEnd() const noexcept;
-
-        template<typename NumberType>
-        NumberType toNumber() const;
 
         virtual size_t getHash() const noexcept;
     };
