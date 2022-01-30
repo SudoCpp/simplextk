@@ -45,7 +45,7 @@ namespace simplex
         return ReadLine();
     }
 
-    string Console::Read(unsigned int numberOfCharacters)
+    string Console::Read(uint32_t numberOfCharacters)
     {
         ::std::string temp;
         ::std::cin >> std::setw(numberOfCharacters) >> temp;
