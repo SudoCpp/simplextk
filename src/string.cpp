@@ -45,14 +45,14 @@ namespace simplex
     string::string(const char* str) : data{std::string{str}} {}
     string::string(const ::std::string& str): data{std::string{str}} {}
     string::string(const ::std::string* str): data{std::string{*str}} {}
-    string::string(const char* character, unsigned int repetition) : data{""}
+    string::string(const char* character, uint32_t repetition) : data{""}
     {
-        for (int loop = 0; loop < repetition; loop++)
+        for (int32_t loop = 0; loop < repetition; loop++)
             data += character;
     }
-    string::string(const char& character, unsigned int repetition) : data{""}
+    string::string(const char& character, uint32_t repetition) : data{""}
     {
-        for (int loop = 0; loop < repetition; loop++)
+        for (int32_t loop = 0; loop < repetition; loop++)
             data += character;
     }
     string::string(const string& str) : data{std::string{str.data}} {}
@@ -125,7 +125,7 @@ namespace simplex
         return string{std::to_string(number)};
     }
     
-    string string::FromNumber(float number, const int precision)
+    string string::FromNumber(float number, const int32_t precision)
     {
         std::ostringstream temp;
         temp.precision(precision);
@@ -133,7 +133,7 @@ namespace simplex
         return string{temp.str()};
     }
 
-    string string::FromNumber(double number, const int precision)
+    string string::FromNumber(double number, const int32_t precision)
     {
         std::ostringstream temp;
         temp.precision(precision);
@@ -141,7 +141,7 @@ namespace simplex
         return string{temp.str()};
     }
 
-    string string::FromNumber(long double number, const int precision)
+    string string::FromNumber(long double number, const int32_t precision)
     {
         std::ostringstream temp;
         temp.precision(precision);
@@ -175,12 +175,12 @@ namespace simplex
         return data.c_str();
     }
 
-    int string::length() const noexcept
+    int32_t string::length() const noexcept
     {
         return data.length();
     }
 
-    int string::indexOf(const string& subString) const noexcept
+    int32_t string::indexOf(const string& subString) const noexcept
     {
         size_t location = data.find(subString.data);
         if (location != std::string::npos)
@@ -189,7 +189,7 @@ namespace simplex
             return -1;
     }
 
-    int string::indexOf(const string& subString, int offset) const noexcept
+    int32_t string::indexOf(const string& subString, int32_t offset) const noexcept
     {
         size_t location = data.find(subString.data, offset);
         if (location != std::string::npos)
@@ -198,9 +198,9 @@ namespace simplex
             return -1;
     }
 
-    int string::lastIndexOf(const string& subString) const noexcept
+    int32_t string::lastIndexOf(const string& subString) const noexcept
     {
-        int location = (int)data.find_last_of(subString.data);
+        int32_t location = (int)data.find_last_of(subString.data);
         location -= subString.length() - 1;
         if (location != std::string::npos)
             return location;
@@ -208,7 +208,7 @@ namespace simplex
             return -1;
     }
 
-    int string::indexOf(const char character) const noexcept
+    int32_t string::indexOf(const char character) const noexcept
     {
         size_t location = data.find(character);
         if (location != std::string::npos)
@@ -217,7 +217,7 @@ namespace simplex
             return -1;
     }
 
-    int string::indexOf(const char character, int offset) const noexcept
+    int32_t string::indexOf(const char character, int32_t offset) const noexcept
     {
         size_t location = data.find(character, offset);
         if (location != std::string::npos)
@@ -226,11 +226,11 @@ namespace simplex
             return -1;
     }
 
-    int string::lastIndexOf(const char character) const noexcept
+    int32_t string::lastIndexOf(const char character) const noexcept
     {
         size_t location = data.find_last_of(character);
         if (location != std::string::npos)
-            return (int)location;
+            return (int32_t)location;
         else
             return -1;
     }
@@ -243,10 +243,10 @@ namespace simplex
             return false;
     }
 
-    int string::containsCount(const string& subString) const noexcept
+    int32_t string::containsCount(const string& subString) const noexcept
     {
-        int count = 0;
-        int nPos = data.find(subString.toStdString(), 0);
+        int32_t count = 0;
+        int32_t nPos = data.find(subString.toStdString(), 0);
         while (nPos != -1)
         {
             count++;
@@ -274,14 +274,14 @@ namespace simplex
     Array<string> string::split(const char characterToSplit) const noexcept
     {
         Array<string> temp{};
-        int previousLocation = 0;
-        int location = 0;
+        int32_t previousLocation = 0;
+        int32_t location = 0;
         do
         {
             previousLocation = location;
             location = indexOf(characterToSplit, location);
             if(location != -1)
-                temp.add(subString((unsigned int)previousLocation, (unsigned int)location));
+                temp.add(subString((uint32_t)previousLocation, (uint32_t)location));
             else
                 temp.add(subString(previousLocation));
         } while (location != -1);
@@ -289,17 +289,17 @@ namespace simplex
         return temp;
     }
 
-    string string::subString(unsigned int start) const
+    string string::subString(uint32_t start) const
     {
         if (start < 0)
             start = length() + start;
 
-        if (start <= (unsigned int)length())
+        if (start <= (uint32_t)length())
             return string{data.substr(start)};
         return string{};
     }
 
-    string string::subString(unsigned int start, unsigned int lengthOfSub) const
+    string string::subString(uint32_t start, uint32_t lengthOfSub) const
     {
         if (start < 0)
             start = length() + start;

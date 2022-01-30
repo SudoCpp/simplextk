@@ -44,7 +44,7 @@ namespace simplex
     class DatabaseException : public Exception
 	{
 		public:
-        DatabaseException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+        DatabaseException(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName)
         : Exception{text, fileName, lineNumber, className, methodName}
         { 
             exceptionType = "DatabaseException";
@@ -60,9 +60,9 @@ namespace simplex
         {}
         virtual ~DatabaseStatement() = default;
         virtual DatabaseStatement& bind(const string& text) = 0;
-        virtual DatabaseStatement& bind(int number) = 0;
+        virtual DatabaseStatement& bind(int32_t number) = 0;
         virtual DatabaseStatement& bind(double number) = 0;
-        virtual DatabaseStatement& bind(const char* blob, int blobSize) = 0;
+        virtual DatabaseStatement& bind(const char* blob, int32_t blobSize) = 0;
         //Relying on RVO 
         virtual DataTable execute() = 0;
     };

@@ -32,6 +32,7 @@ if(NOT TARGET ${PROJECT_NAME}_${TestName})
     add_test(${PROJECT_NAME}_${TestName}_12, ${TestExecutable} "12")
     add_test(${PROJECT_NAME}_${TestName}_13, ${TestExecutable} "13")
     add_test(${PROJECT_NAME}_${TestName}_14, ${TestExecutable} "14")
+    add_test(${PROJECT_NAME}_${TestName}_15, ${TestExecutable} "15")
 endif()
 
 set(TestName "ArrayTest")

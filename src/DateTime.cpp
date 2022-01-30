@@ -34,53 +34,53 @@
 
 namespace simplex
 {
-	int DateTime::LocalSecond()
+	int32_t DateTime::LocalSecond()
 	{
 		return DateTime::getLocal().tm_sec;
 	}
 
-	int DateTime::LocalMinute()
+	int32_t DateTime::LocalMinute()
 	{
 		return DateTime::getLocal().tm_min;
 	}
 
-	int DateTime::Local24Hour()
+	int32_t DateTime::Local24Hour()
 	{
 		return DateTime::getLocal().tm_hour;
 	}
 
-	int DateTime::Local12Hour()
+	int32_t DateTime::Local12Hour()
 	{
-		int hour = DateTime::getLocal().tm_hour % 12;
+		int32_t hour = DateTime::getLocal().tm_hour % 12;
 		return (hour == 0) ? 12 : hour;
 	}
 
-	int DateTime::LocalAmPm()
+	int32_t DateTime::LocalAmPm()
 	{
 		return DateTime::getLocal().tm_hour / 12;
 	}
 
-	int DateTime::LocalDay()
+	int32_t DateTime::LocalDay()
 	{
 		return DateTime::getLocal().tm_mday;
 	}
 
-	int DateTime::LocalMonth()
+	int32_t DateTime::LocalMonth()
 	{
 		return DateTime::getLocal().tm_mon + 1;
 	}
 
-	int DateTime::LocalYYYY()
+	int32_t DateTime::LocalYYYY()
 	{
 		return DateTime::getLocal().tm_year + 1900;
 	}
 
-	int DateTime::LocalYY()
+	int32_t DateTime::LocalYY()
 	{
 		return (DateTime::getLocal().tm_year + 1900) % 100;
 	}
 
-	int DateTime::CurrentCentury()
+	int32_t DateTime::CurrentCentury()
 	{
 		return (DateTime::getLocal().tm_year + 1900) / 100 + 1;
 	}
@@ -90,48 +90,48 @@ namespace simplex
 		return (bool)DateTime::getLocal().tm_isdst;
 	}
 
-	int DateTime::UtcSecond()
+	int32_t DateTime::UtcSecond()
 	{
 		return DateTime::getUtc().tm_sec;
 	}
 
-	int DateTime::UtcMinute()
+	int32_t DateTime::UtcMinute()
 	{
 		return DateTime::getUtc().tm_min;
 	}
 
-	int DateTime::Utc24Hour()
+	int32_t DateTime::Utc24Hour()
 	{
 		return DateTime::getUtc().tm_hour;
 	}
 
-	int DateTime::Utc12Hour()
+	int32_t DateTime::Utc12Hour()
 	{
-		int hour = DateTime::getUtc().tm_hour % 12;
+		int32_t hour = DateTime::getUtc().tm_hour % 12;
 		return (hour == 0) ? 12 : hour;
 	}
 
-	int DateTime::UtcAmPm()
+	int32_t DateTime::UtcAmPm()
 	{
 		return DateTime::getUtc().tm_hour / 12;
 	}
 
-	int DateTime::UtcDay()
+	int32_t DateTime::UtcDay()
 	{
 		return DateTime::getUtc().tm_mday;
 	}
 
-	int DateTime::UtcMonth()
+	int32_t DateTime::UtcMonth()
 	{
 		return DateTime::getUtc().tm_mon + 1;
 	}
 
-	int DateTime::UtcYYYY()
+	int32_t DateTime::UtcYYYY()
 	{
 		return DateTime::getUtc().tm_year + 1900;
 	}
 
-	int DateTime::UtcYY()
+	int32_t DateTime::UtcYY()
 	{
 		return (DateTime::getUtc().tm_year + 1900) % 100;
 	}

@@ -59,8 +59,8 @@ namespace simplex
         Dictionary<KeyType, ValueType>&  add(::std::initializer_list<::std::pair<KeyType, ValueType>> bracedPairs);
         ValueType& at(const KeyType& key);
         ValueType at(const KeyType& key) const;
-        // ValueType at(int index) const;
-        // ValueType& at(int index);
+        // ValueType at(int32_t index) const;
+        // ValueType& at(int32_t index);
 
         bool containsKey(const KeyType& key) const;
         Dictionary<KeyType, ValueType>& removeByKey(const KeyType& key);
@@ -72,7 +72,7 @@ namespace simplex
 
         //Standard c++ aliases
         Dictionary<KeyType, ValueType>& insert(KeyType key, ValueType value);
-        int size() const;
+        int32_t size() const;
 
         auto begin() const
         {
@@ -95,7 +95,7 @@ namespace simplex
     class KeyNotFoundException : public Exception
 	{
 		public:
-            KeyNotFoundException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+            KeyNotFoundException(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName)
             : Exception{text, fileName, lineNumber, className, methodName}
             { 
                 exceptionType = "KeyNotFoundException";
@@ -170,7 +170,7 @@ namespace simplex
         }
     }
     // template <typename KeyType, typename ValueType>
-    // ValueType Dictionary<KeyType, ValueType>::at(int index) const
+    // ValueType Dictionary<KeyType, ValueType>::at(int32_t index) const
     // {
     //     try
     //     {
@@ -183,7 +183,7 @@ namespace simplex
     //     }
     // }
     // template <typename KeyType, typename ValueType>
-    // ValueType& Dictionary<KeyType, ValueType>::at(int index)
+    // ValueType& Dictionary<KeyType, ValueType>::at(int32_t index)
     // {
     //     try
     //     {
@@ -245,7 +245,7 @@ namespace simplex
         return *this;
     }
     template <typename KeyType, typename ValueType>
-    int Dictionary<KeyType, ValueType>::size() const
+    int32_t Dictionary<KeyType, ValueType>::size() const
     {
         return dictionary_.size();
     }

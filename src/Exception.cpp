@@ -34,7 +34,7 @@
 
 namespace simplex
 {
-    Exception::Exception(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+    Exception::Exception(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName)
         : exceptionType{"Exception"}, message{text}, fileName{fileName}, lineNumber{lineNumber}, className{className}, methodName{methodName}, text{text}
     {}
     const char* Exception::what() const throw ()
@@ -51,19 +51,19 @@ namespace simplex
         return string{exceptionType};
     }
 
-    IndexOutOfBoundsException::IndexOutOfBoundsException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+    IndexOutOfBoundsException::IndexOutOfBoundsException(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName)
         : Exception{text, fileName, lineNumber, className, methodName}
     { 
 		exceptionType = "IndexOutOfBoundsException";
 	}
 
-    NotImplementedException::NotImplementedException(const char* fileName, const int lineNumber, const char* className, const char* methodName)
+    NotImplementedException::NotImplementedException(const char* fileName, const int32_t lineNumber, const char* className, const char* methodName)
         : Exception{"Method Not Implemented", fileName, lineNumber, className, methodName}
     { 
 		exceptionType = "NotImplementedException";
 	}
 	
-    NullException::NullException(const string text, const char* fileName, const int lineNumber, const char* className, const char* methodName)
+    NullException::NullException(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName)
         : Exception{text, fileName, lineNumber, className, methodName}
     {
 		exceptionType = "NullException";

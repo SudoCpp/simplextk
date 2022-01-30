@@ -44,16 +44,16 @@ namespace simplex
         public:
         Tuple(Args ...args) : data{ std::make_tuple(args...) } {}
         
-        template<int index>
+        template<int32_t index>
             using Type = typename std::tuple_element_t<index, std::tuple<Args...>>;
 
-        template<int index>
+        template<int32_t index>
         auto at() 
         { 
             return std::get<index>(data);
         }
         
-        template<int index>
+        template<int32_t index>
         void at(std::tuple_element_t<index, std::tuple<Args...>> value) 
         { 
             std::get<index>(data) = value;

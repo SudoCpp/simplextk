@@ -36,7 +36,7 @@
 
 namespace simplex
 {
-    string CFileWrapper::readString(int lengthOfString) const
+    string CFileWrapper::readString(int32_t lengthOfString) const
     {
         if(fgets(buffer, lengthOfString, file))
             return string(buffer);

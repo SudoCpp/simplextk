@@ -46,19 +46,19 @@ namespace simplex
             using Type = ArrayMemberType;
 			Array();
 			Array(::std::initializer_list<ArrayMemberType> iList);
-			Array(int arraySize, char* characterArray[]);
-			Array(int arraySize, ArrayMemberType nativeArray[]);
+			Array(int32_t arraySize, char* characterArray[]);
+			Array(int32_t arraySize, ArrayMemberType nativeArray[]);
 			Array(::std::vector<ArrayMemberType> vectorObject);
 
 			//Operators
-            ArrayMemberType operator[](int index) const;
-            ArrayMemberType& operator[](int index);
+            ArrayMemberType operator[](int32_t index) const;
+            ArrayMemberType& operator[](int32_t index);
 
 			//Methods
 			Array<ArrayMemberType>& add(ArrayMemberType& value) noexcept;
 			Array<ArrayMemberType>& add(ArrayMemberType&& value) noexcept;
 			Array<ArrayMemberType>& add(ArrayMemberType* value) noexcept;
-			Array<ArrayMemberType>& add(ArrayMemberType value, int index);
+			Array<ArrayMemberType>& add(ArrayMemberType value, int32_t index);
 			Array<ArrayMemberType>& add(::std::initializer_list<ArrayMemberType> iList) noexcept;
 			Array<ArrayMemberType>& add(Array<ArrayMemberType> arrayValues) noexcept;
 			Array<ArrayMemberType>& add(::std::vector<ArrayMemberType> arrayValues) noexcept;
@@ -66,24 +66,24 @@ namespace simplex
 			static Array<ArrayMemberType> FromVector(::std::vector<ArrayMemberType> vectorObject) noexcept;
 			std::vector<ArrayMemberType> toVector() const noexcept;
 			
-			ArrayMemberType& at(int index);
-            ArrayMemberType at(int index) const;
+			ArrayMemberType& at(int32_t index);
+            ArrayMemberType at(int32_t index) const;
 
 			Array<ArrayMemberType>& clear() noexcept;
 			
-			Array<ArrayMemberType> getPartialArray(int start) const;
-			Array<ArrayMemberType> getPartialArray(int start, int count) const;
+			Array<ArrayMemberType> getPartialArray(int32_t start) const;
+			Array<ArrayMemberType> getPartialArray(int32_t start, int32_t count) const;
 			
 			bool contains(const ArrayMemberType& value) const;
-			int containsCount(const ArrayMemberType& value) const;
-			int indexOf(const ArrayMemberType& value) const;
-			int lastIndexOf(const ArrayMemberType& value) const;
+			int32_t containsCount(const ArrayMemberType& value) const;
+			int32_t indexOf(const ArrayMemberType& value) const;
+			int32_t lastIndexOf(const ArrayMemberType& value) const;
 			ArrayMemberType pop();
 			Array<ArrayMemberType>& push(ArrayMemberType& value);
 			
 			Array<ArrayMemberType>& remove(const ArrayMemberType& value);
 			Array<ArrayMemberType>& removeAll() noexcept;
-			Array<ArrayMemberType>& removeAt(int index);
+			Array<ArrayMemberType>& removeAt(int32_t index);
 			
 			Array<ArrayMemberType>& reserveSpace(size_t spaceToReserve);
 			
@@ -128,9 +128,9 @@ namespace simplex
             add(item);
     }
     template <typename ArrayMemberType>
-    Array<ArrayMemberType>::Array(int arraySize, char* characterArray[])
+    Array<ArrayMemberType>::Array(int32_t arraySize, char* characterArray[])
     {
-        for (int i = 0; i < arraySize; i++)
+        for (int32_t i = 0; i < arraySize; i++)
             array_.emplace_back(::std::string(characterArray[i]));
     }
     template <typename ArrayMemberType>
@@ -139,12 +139,12 @@ namespace simplex
 
     //Operators
     template <typename ArrayMemberType>
-    ArrayMemberType Array<ArrayMemberType>::operator[](int index) const
+    ArrayMemberType Array<ArrayMemberType>::operator[](int32_t index) const
     {
         return at(index);
     }
     template <typename ArrayMemberType>
-    ArrayMemberType& Array<ArrayMemberType>::operator[](int index)
+    ArrayMemberType& Array<ArrayMemberType>::operator[](int32_t index)
     {
         return at(index);
     }
@@ -169,7 +169,7 @@ namespace simplex
         return *this;
     }
     template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::add(ArrayMemberType value, int index)
+    Array<ArrayMemberType>& Array<ArrayMemberType>::add(ArrayMemberType value, int32_t index)
     {
         if (index < size() + 1)
         {
@@ -213,7 +213,7 @@ namespace simplex
     }
 
     template <typename ArrayMemberType>
-    ArrayMemberType& Array<ArrayMemberType>::at(int index)
+    ArrayMemberType& Array<ArrayMemberType>::at(int32_t index)
     {
         try
         {
@@ -225,7 +225,7 @@ namespace simplex
         }
     }
     template <typename ArrayMemberType>
-    ArrayMemberType Array<ArrayMemberType>::at(int index) const
+    ArrayMemberType Array<ArrayMemberType>::at(int32_t index) const
     {
         try
         {
@@ -246,9 +246,9 @@ namespace simplex
     }
 
     template <typename ArrayMemberType>
-    Array<ArrayMemberType> Array<ArrayMemberType>::getPartialArray(int start) const
+    Array<ArrayMemberType> Array<ArrayMemberType>::getPartialArray(int32_t start) const
     {
-        int arraySize = array_.size();
+        int32_t arraySize = array_.size();
         if (start < 0)
             start = arraySize + start;
 
@@ -258,9 +258,9 @@ namespace simplex
         return Array<ArrayMemberType>(::std::vector<ArrayMemberType>(array_.begin() + start, array_.end()));
     }
     template <typename ArrayMemberType>
-    Array<ArrayMemberType> Array<ArrayMemberType>::getPartialArray(int start, int count) const
+    Array<ArrayMemberType> Array<ArrayMemberType>::getPartialArray(int32_t start, int32_t count) const
     {
-        int arraySize = array_.size();
+        int32_t arraySize = array_.size();
         if (start < 0)
             start = arraySize + start;
         if (count < 0)
@@ -283,19 +283,19 @@ namespace simplex
         return (::std::find(array_.begin(), array_.end(), value) != array_.end()) ? true : false;
     }
     template <typename ArrayMemberType>
-    int Array<ArrayMemberType>::containsCount(const ArrayMemberType& value) const
+    int32_t Array<ArrayMemberType>::containsCount(const ArrayMemberType& value) const
     {
         return ::std::count(array_.begin(), array_.end(), value);
     }
     template <typename ArrayMemberType>
-    int Array<ArrayMemberType>::indexOf(const ArrayMemberType& value) const
+    int32_t Array<ArrayMemberType>::indexOf(const ArrayMemberType& value) const
     {
         return ::std::distance(array_.begin(), ::std::find(array_.begin(), array_.end(), value));
     }
     template <typename ArrayMemberType>
-    int Array<ArrayMemberType>::lastIndexOf(const ArrayMemberType& value) const
+    int32_t Array<ArrayMemberType>::lastIndexOf(const ArrayMemberType& value) const
     {
-        int indexFromEnd = std::distance(array_.rbegin(), ::std::find(array_.rbegin(), array_.rend(), value));
+        int32_t indexFromEnd = std::distance(array_.rbegin(), ::std::find(array_.rbegin(), array_.rend(), value));
         return array_.size() - indexFromEnd - 1;
     }
     template <typename ArrayMemberType>
@@ -315,8 +315,8 @@ namespace simplex
     template <typename ArrayMemberType>
     Array<ArrayMemberType>& Array<ArrayMemberType>::remove(const ArrayMemberType& value)
     {
-        int arraySize = size();
-        for (int loop = 0; loop < arraySize; loop++)
+        int32_t arraySize = size();
+        for (int32_t loop = 0; loop < arraySize; loop++)
             if (array_[loop] == value)
             {
                 removeAt(loop);
@@ -332,7 +332,7 @@ namespace simplex
         return *this;
     }
     template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::removeAt(int index)
+    Array<ArrayMemberType>& Array<ArrayMemberType>::removeAt(int32_t index)
     {
         array_.erase(array_.begin() + index);
         return *this;

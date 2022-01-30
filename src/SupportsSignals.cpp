@@ -56,8 +56,8 @@ namespace simplex
 
     void SupportsSignals::vecRemove(std::vector<SupportsSignals*>& vec, SupportsSignals* value)
     {
-        int size = vec.size();
-        for (int loop = 0; loop < size; loop++)
+        int32_t size = vec.size();
+        for (int32_t loop = 0; loop < size; loop++)
             if (vec[loop] == value)
             {
                 vec.erase(vec.begin() + loop);

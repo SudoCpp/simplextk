@@ -33,22 +33,24 @@
 #ifndef SIMPLEX_TYPEARRAY_HPP
 #define SIMPLEX_TYPEARRAY_HPP
 
+#include <cstdint>
+
 //This saves on the typing :D
 #define getType(typeArray, index) decltype(simplex::typeArrayGet<(index)>(typeArray))::type
 
 namespace simplex
 {
     //This is the base template so that we can specialize below
-    template<int index, typename... Types>
+    template<int32_t index, typename... Types>
     class TypeElement;
 
     //As the Types are unpacked eventually there will be no types left, this prevent compile error
-    template<int index>
+    template<int32_t index>
     class TypeElement<index>
     {};
 
     //This starts to unpack the types.
-    template<int index, typename FirstType, typename... Types>
+    template<int32_t index, typename FirstType, typename... Types>
     class TypeElement<index, FirstType, Types...> :
     public TypeElement<index+1, Types...> //This will unpack and uniquely name with a number
     {
@@ -56,7 +58,7 @@ namespace simplex
         using type = FirstType; // Simliar to #define but allows a type we can access
     };
 
-    template<int index, typename FirstType, typename... Types>
+    template<int32_t index, typename FirstType, typename... Types>
     auto typeArrayGet(TypeElement<index, FirstType, Types...> typeArray)
     {
         //Create an instance of this class so we can decltype it

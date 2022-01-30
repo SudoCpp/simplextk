@@ -34,34 +34,35 @@
 #define SIMPLEX_DATETIME_HPP
 
 #include <ctime>
+#include <cstdint>
 
 namespace simplex
 {
 	class DateTime
 	{
 		public:
-			static int LocalSecond();
-			static int LocalMinute();
-			static int Local24Hour();
-			static int Local12Hour();
-			static int LocalAmPm();
-			static int LocalDay();
-			static int LocalMonth();
-			static int LocalYY();
-			static int LocalYYYY();
+			static int32_t LocalSecond();
+			static int32_t LocalMinute();
+			static int32_t Local24Hour();
+			static int32_t Local12Hour();
+			static int32_t LocalAmPm();
+			static int32_t LocalDay();
+			static int32_t LocalMonth();
+			static int32_t LocalYY();
+			static int32_t LocalYYYY();
 			static bool IsDST();
 
-			static int UtcSecond();
-			static int UtcMinute();
-			static int Utc24Hour();
-			static int Utc12Hour();
-			static int UtcAmPm();
-			static int UtcDay();
-			static int UtcMonth();
-			static int UtcYY();
-			static int UtcYYYY();
+			static int32_t UtcSecond();
+			static int32_t UtcMinute();
+			static int32_t Utc24Hour();
+			static int32_t Utc12Hour();
+			static int32_t UtcAmPm();
+			static int32_t UtcDay();
+			static int32_t UtcMonth();
+			static int32_t UtcYY();
+			static int32_t UtcYYYY();
 
-			static int CurrentCentury();
+			static int32_t CurrentCentury();
 
 		private:
 			DateTime() {}

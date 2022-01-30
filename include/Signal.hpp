@@ -48,19 +48,19 @@ namespace simplex
     template<typename ... Args>
     class Signal : public object
     {
-        mutable Dictionary<unsigned int, std::function<void(Args...)>> slots;
-        mutable Dictionary<unsigned int, SupportsSignals*> slotParents;
-        mutable unsigned int currentKey;
+        mutable Dictionary<uint32_t, std::function<void(Args...)>> slots;
+        mutable Dictionary<uint32_t, SupportsSignals*> slotParents;
+        mutable uint32_t currentKey;
         public:
         Signal();
 
         virtual ~Signal() = default;
         
         Signal<Args...>& emit(Args... args);
-        unsigned int connect(std::function<void(Args...)> slot);
-        Signal<Args...>& disconnect(unsigned int handle);
+        uint32_t connect(std::function<void(Args...)> slot);
+        Signal<Args...>& disconnect(uint32_t handle);
         template<typename SlotClassType>
-        unsigned int connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
+        uint32_t connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
     };
 
     template<typename ... Args>
@@ -70,8 +70,8 @@ namespace simplex
     template<typename ... Args>
     Signal<Args...>& Signal<Args...>::emit(Args... args)
     {
-        Array<unsigned int> slotParentKeys = slotParents.keys();
-        for(unsigned int key : slotParentKeys)
+        Array<uint32_t> slotParentKeys = slotParents.keys();
+        for(uint32_t key : slotParentKeys)
             if(slotParents[key] == nullptr)
             {
                 std::function<void(Args...)> bound = std::bind(slots[key], args...);
@@ -91,7 +91,7 @@ namespace simplex
     }
 
     template<typename ... Args>
-    unsigned int Signal<Args...>::connect(std::function<void(Args...)> slot)
+    uint32_t Signal<Args...>::connect(std::function<void(Args...)> slot)
     {
         slotParents.add(currentKey, nullptr);
         slots.add(currentKey, slot);
@@ -101,7 +101,7 @@ namespace simplex
 
     template<typename ... Args>
     template<typename SlotClassType>
-    unsigned int Signal<Args...>::connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance)
+    uint32_t Signal<Args...>::connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance)
     {
         static_assert(std::is_base_of<SupportsSignals, SlotClassType>::value, "Slot class must be derived from SupportsSignals");
         SupportsSignals* castedInstance = (SupportsSignals*)slotInstance;
@@ -117,7 +117,7 @@ namespace simplex
     }
 
     template<typename ... Args>
-    Signal<Args...>& Signal<Args...>::disconnect(unsigned int handle)
+    Signal<Args...>& Signal<Args...>::disconnect(uint32_t handle)
     {
         slots.removeByKey(handle);
         slotParents.removeByKey(handle);

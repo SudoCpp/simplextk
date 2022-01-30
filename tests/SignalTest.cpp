@@ -33,7 +33,7 @@
 #include "Signal.hpp"
 #include "string.hpp"
 
-static int effected = 0;
+static int32_t effected = 0;
 
 // class NoSupportSignals
 // {

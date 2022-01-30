@@ -51,8 +51,8 @@ namespace simplex
 
     SingletonManager::~SingletonManager()
     {
-        int singletonsSize = singletons.size();
-        for(int loop = singletonsSize - 1; loop >= 0; loop--)
+        int32_t singletonsSize = singletons.size();
+        for(int32_t loop = singletonsSize - 1; loop >= 0; loop--)
         {
             Singleton* singleton = singletons[loop];
             delete singleton;

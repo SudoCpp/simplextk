@@ -50,8 +50,8 @@ namespace simplex
         string(const char* str);
         string(const ::std::string& str);
         string(const ::std::string* str);
-        string(const char* character, unsigned int repetition);
-        string(const char& character, unsigned int repetition);
+        string(const char* character, uint32_t repetition);
+        string(const char& character, uint32_t repetition);
         string(const string& str);
         string(const string* str);
         virtual ~string() = default;
@@ -64,9 +64,9 @@ namespace simplex
         static string FromNumber(uint16_t number);
         static string FromNumber(uint32_t number);
         static string FromNumber(uint64_t number);
-        static string FromNumber(float number, const int precision);
-        static string FromNumber(double number, const int precision);
-        static string FromNumber(long double number, const int precision);
+        static string FromNumber(float number, const int32_t precision);
+        static string FromNumber(double number, const int32_t precision);
+        static string FromNumber(long double number, const int32_t precision);
 
         template<typename NumberType>
         NumberType toNumber() const;
@@ -85,19 +85,19 @@ namespace simplex
         //Outputs
         ::std::string toStdString() const noexcept;
         const char* toCString() const noexcept;
-        int length() const noexcept;
-        int indexOf(const string& subString) const noexcept;
-        int indexOf(const string& subString, int offset) const noexcept;
-        int lastIndexOf(const string& subString) const noexcept;
-        int indexOf(const char character) const noexcept;
-        int indexOf(const char character, int offset) const noexcept;
-        int lastIndexOf(const char character) const noexcept;
+        int32_t length() const noexcept;
+        int32_t indexOf(const string& subString) const noexcept;
+        int32_t indexOf(const string& subString, int32_t offset) const noexcept;
+        int32_t lastIndexOf(const string& subString) const noexcept;
+        int32_t indexOf(const char character) const noexcept;
+        int32_t indexOf(const char character, int32_t offset) const noexcept;
+        int32_t lastIndexOf(const char character) const noexcept;
         bool contains(const string& subString) const noexcept;
-        int containsCount(const string& subString) const noexcept;
+        int32_t containsCount(const string& subString) const noexcept;
         string replace(const string& find, const string& replace) noexcept;
         Array<string> split(const char characterToSplit) const noexcept;
-        string subString(unsigned int start) const;
-        string subString(unsigned int start, unsigned int lengthOfSub) const;
+        string subString(uint32_t start) const;
+        string subString(uint32_t start, uint32_t lengthOfSub) const;
         string trim() const noexcept;
         string trimBeginning() const noexcept;
         string trimEnd() const noexcept;

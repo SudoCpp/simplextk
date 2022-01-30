@@ -47,8 +47,8 @@ namespace simplex
     {
         if(columnNames.size() == columnValues.size())
         {
-            int numberColumns = columnNames.size();
-            for(int loop = 0; loop < numberColumns; loop++)
+            int32_t numberColumns = columnNames.size();
+            for(int32_t loop = 0; loop < numberColumns; loop++)
                 columns.add(columnNames[loop], columnValues[loop]);
         }
         else
@@ -83,7 +83,7 @@ namespace simplex
         return columns[name];
     }
 
-    string& DataRow::getCell(int index)
+    string& DataRow::getCell(int32_t index)
     {
         if(columnNames.size() > index)
             return columns.at(columnNames[index]);
@@ -96,7 +96,7 @@ namespace simplex
         return columns[name];
     }
 
-    string DataRow::getCell(int index) const
+    string DataRow::getCell(int32_t index) const
     {
         if(columnNames.size() > index)
             return columns.at(columnNames[index]);
@@ -104,12 +104,12 @@ namespace simplex
             throw IndexOutOfBoundsException("Unable to get cell, index out of bounds.", __ExceptionParams__);
     }
 
-    string DataRow::operator[](int index) const
+    string DataRow::operator[](int32_t index) const
     {
         return getCell(index);
     }
 
-    string& DataRow::operator[](int index)
+    string& DataRow::operator[](int32_t index)
     {
         return getCell(index);
     }
@@ -154,19 +154,19 @@ namespace simplex
             row->addColumn(columnName);
         return *this;
     }
-    DataRow& DataTable::getRow(int index)
+    DataRow& DataTable::getRow(int32_t index)
     {
         return *rows[index];
     }
-    DataRow DataTable::getRow(int index) const
+    DataRow DataTable::getRow(int32_t index) const
     {
         return *rows[index];
     }
-    DataRow DataTable::operator[](int index) const
+    DataRow DataTable::operator[](int32_t index) const
     {
         return getRow(index);
     }
-    DataRow& DataTable::operator[](int index)
+    DataRow& DataTable::operator[](int32_t index)
     {
         return getRow(index);
     }

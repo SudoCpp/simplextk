@@ -54,7 +54,7 @@ namespace simplex
         mutable char buffer[1023]; //It's a buffer even if instance is const this can change `mutable`
 
     public:
-        string readString(int lengthOfString) const;
+        string readString(int32_t lengthOfString) const;
 
     };
 }

@@ -54,11 +54,11 @@ namespace simplex
         DataRow& addColumn(string name);
         DataRow& addColumn(string name, string value);
         string& getCell(string name);
-        string& getCell(int index);
+        string& getCell(int32_t index);
         string getCell(string name) const;
-        string getCell(int index) const;
-        string operator[](int index) const;
-        string& operator[](int index);
+        string getCell(int32_t index) const;
+        string operator[](int32_t index) const;
+        string& operator[](int32_t index);
         string operator[](string columnName) const;
         string& operator[](string columnName);
     };
@@ -76,10 +76,10 @@ namespace simplex
         DataTable& addRow(const DataRow& row);
         DataTable& addRow(const Array<string>& values);
         DataTable& addColumn(string columnName);
-        DataRow& getRow(int index);
-        DataRow getRow(int index) const;
-        DataRow operator[](int index) const;
-        DataRow& operator[](int index);
+        DataRow& getRow(int32_t index);
+        DataRow getRow(int32_t index) const;
+        DataRow operator[](int32_t index) const;
+        DataRow& operator[](int32_t index);
     };
 }
 
