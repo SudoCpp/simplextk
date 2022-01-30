@@ -33,13 +33,15 @@
 #ifndef SIMPLEX_CONSOLE_HPP
 #define SIMPLEX_CONSOLE_HPP
 
+#include <cstdint>
+
 namespace simplex
 {
     class string;
     namespace Console
 	{
         string Prompt(const string& toWrite);
-        string Read(unsigned int numberOfCharacters);
+        string Read(uint32_t numberOfCharacters);
         string ReadLine();
         void WriteLine(const string& toWrite);
         void Write(const string& toWrite);
