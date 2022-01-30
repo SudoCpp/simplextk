@@ -43,6 +43,8 @@ namespace simplex
 {
     namespace Math
     {
+        const long double Pi = 3.14159265358979323846264338327950288419716939937510;
+        
         template <typename type> type Abs(type number)
         {
             return std::abs(number);
@@ -157,9 +159,7 @@ namespace simplex
         template <typename type> type Min(type number1, type number2)
         {
             return std::min(number1, number2);
-        }
-
-        const long double Pi = 3.14159265358979323846264338327950288419716939937510;
+        }        
 
         template <typename type, typename type2> type Power(type base, type2 exponent)
         {
