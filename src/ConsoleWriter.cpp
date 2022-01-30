@@ -50,6 +50,11 @@ namespace simplex
     {
         write(toWrite + "\n");
     }
+
+    void ConsoleWriter::writeType(void* value, size_t typeSize)
+    {
+        NotImplementedException(__ExceptionParams__);
+    }
 }
 
 #undef __class__

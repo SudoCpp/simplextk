@@ -52,6 +52,11 @@ namespace simplex
     {
         return string{data};
     }
+
+    void StringWriter::writeType(void* value, size_t typeSize)
+    {
+        NotImplementedException(__ExceptionParams__);
+    }
 }
 
 #undef __class__

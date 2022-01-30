@@ -41,16 +41,28 @@
 
 namespace simplex
 {
-    bool ConsoleReader::read(unsigned int numberOfCharacters, string& readTo) const
+    bool ConsoleReader::readString(string& str, uint32_t numberOfCharacters)
     {
         buffer << std::cin.rdbuf();
         ::std::string temp;
         buffer >> std::setw(numberOfCharacters) >> temp;
-        readTo = string(temp);
+        str = string(temp);
         return true;
     }
+
+    bool ConsoleReader::readType(void* value, size_t typeSize)
+    {
+        string line = readLine();
+        if(typeSize != line.length())
+            return false;
+        else
+        {
+            memcpy(value, line.toCString(), typeSize);
+            return true;
+        }
+    }
     
-    string ConsoleReader::readLine() const
+    string ConsoleReader::readLine()
     {
         buffer << std::cin.rdbuf();
         ::std::string temp;
@@ -58,14 +70,14 @@ namespace simplex
         return string(temp);
     }
     
-    void ConsoleReader::rewind(unsigned int numberOfCharacters) const
+    void ConsoleReader::rewind(uint32_t numberOfCharacters)
     {
-        int currentPosition = buffer.tellg();
-        int newPosition = (currentPosition - numberOfCharacters < 0)? 0 : currentPosition - numberOfCharacters;
+        int32_t currentPosition = buffer.tellg();
+        int32_t newPosition = (currentPosition - numberOfCharacters < 0)? 0 : currentPosition - numberOfCharacters;
         buffer.seekg(newPosition);
     }
 
-    void ConsoleReader::rewind() const
+    void ConsoleReader::rewind()
     {
         buffer.seekg(0);
     }

@@ -44,10 +44,11 @@ namespace simplex
         mutable std::stringstream buffer;
 		
         public:
-        virtual bool read(unsigned int numberOfCharacters, string& readTo) const;
-        virtual string readLine() const;
-        virtual void rewind(unsigned int numberOfCharacters) const;
-        virtual void rewind() const;
+        virtual bool readString(string& str, uint32_t numberOfCharacters);
+        virtual bool readType(void* value, size_t typeSize);
+        virtual string readLine();
+        virtual void rewind(uint32_t numberOfCharacters);
+        virtual void rewind();
 	};
 }
 

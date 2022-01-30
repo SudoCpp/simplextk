@@ -50,12 +50,20 @@ namespace simplex
         fclose(file);
     }
 
-    bool FileReader::read(string& str, unsigned int numberOfCharacters)
+    bool FileReader::readString(string& str, uint32_t numberOfCharacters)
     {
         char buffer[numberOfCharacters+1];
         fread(buffer, sizeof(char), numberOfCharacters, file);
         buffer[numberOfCharacters] = '\0';
         str = string{buffer};
+        return true;
+    }
+
+    bool FileReader::readType(void* value, size_t typeSize)
+    {
+        fread(value, typeSize, 1, file);
+        if(value == nullptr)
+            return false;
         return true;
     }
 
@@ -78,7 +86,7 @@ namespace simplex
         return everything;
     }
 
-    void FileReader::rewind(unsigned int numberOfCharacters)
+    void FileReader::rewind(uint32_t numberOfCharacters)
     {
         fseek(file, -numberOfCharacters, SEEK_CUR);
     }

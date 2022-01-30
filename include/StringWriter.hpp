@@ -41,9 +41,10 @@ namespace simplex
     class StringWriter : public StreamWriter
     {
         public:
-            void writeLine(const string& toWrite);
-			void write(const string& toWrite);
-            string toString();
+        void writeLine(const string& toWrite);
+        void write(const string& toWrite);
+        string toString();
+        virtual void writeType(void* value, size_t typeSize);
     };
 }
 

@@ -40,26 +40,38 @@ namespace simplex
 {
     StringReader::StringReader(const string& data) : data{data}, position{0} {}
 
-    bool StringReader::read(unsigned int numberOfCharacters, string& readTo)
+    bool StringReader::readString(string& str, uint32_t numberOfCharacters)
     {
         if(data.length() >= position + numberOfCharacters)
         {
-            readTo = data.subString(position, position + numberOfCharacters);
+            str = data.subString(position, position + numberOfCharacters);
             position += numberOfCharacters;
             return true;
         }
         return false;
     }
 
+    bool StringReader::readType(void* value, size_t typeSize)
+    {
+        if(data.length() >= typeSize)
+        {
+            memcpy(value, data.toCString(), typeSize);
+            position += typeSize;
+            return true;
+        }
+        else
+            return false;
+    }
+
     string StringReader::readLine()
     {
         string newStr = "";
         string character = "";
-        while(read(1, character) && character != "\n")
+        while(readString(character, 1) && character != "\n")
             newStr += character;
         if(character == "\n")
         {
-            read(1, character);
+            readString(character, 1);
             if(character == "\r")
                 newStr += character;
             else
@@ -69,7 +81,7 @@ namespace simplex
         return newStr;
     }
 
-    void StringReader::rewind(unsigned int numberOfCharacters)
+    void StringReader::rewind(uint32_t numberOfCharacters)
     {
         if(position >= numberOfCharacters)
             position -= numberOfCharacters;

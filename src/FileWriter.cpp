@@ -62,6 +62,11 @@ namespace simplex
         const char* temp = toWrite.toCString();
         fwrite(temp, sizeof(char), toWrite.length(), file);
     }
+
+    void FileWriter::writeType(void* value, size_t typeSize)
+    {
+        NotImplementedException(__ExceptionParams__);
+    }
 }
 
 #undef __class__
