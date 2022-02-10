@@ -69,12 +69,12 @@ namespace simplex
         Write(toWrite + "\n");
     }
 
-    void Console::WriteErrorLine(const string& toWrite)
+    void Console::WriteError(const string& toWrite)
     {
         std::cerr << toWrite.toStdString();
     }
-    
-    void Console::WriteError(const string& toWrite)
+
+    void Console::WriteErrorLine(const string &toWrite)
     {
         WriteError(toWrite + "\n");
     }
