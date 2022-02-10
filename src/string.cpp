@@ -33,6 +33,7 @@
 #include "string.hpp"
 #include "Exception.hpp"
 #include <locale>
+#include <ctype.h>
 #include "Array.hpp"
 #include <sstream>
 
@@ -71,6 +72,26 @@ namespace simplex
     bool operator!=(const string& leftHandSide, const string& rightHandSide)
     {
         return leftHandSide.toStdString() != rightHandSide.toStdString();
+    }
+
+    bool operator<(const string& leftHandSide, const string& rightHandSide)
+    {
+        return leftHandSide.toStdString() < rightHandSide.toStdString();
+    }
+
+    bool operator<=(const string& leftHandSide, const string& rightHandSide)
+    {
+        return leftHandSide.toStdString() <= rightHandSide.toStdString();
+    }
+
+    bool operator>(const string& leftHandSide, const string& rightHandSide)
+    {
+        return leftHandSide.toStdString() > rightHandSide.toStdString();
+    }
+
+    bool operator>=(const string& leftHandSide, const string& rightHandSide)
+    {
+        return leftHandSide.toStdString() >= rightHandSide.toStdString();
     }
 
     string& string::operator+=(const string& rightHandSide)
@@ -153,7 +174,7 @@ namespace simplex
     {
         ::std::string temp = data;
         for (auto& ch : temp)
-            ch = ::std::tolower(ch);
+            ch = ::std::tolower(ch, std::locale());
         return string{temp};
     }
 
@@ -161,7 +182,7 @@ namespace simplex
     {
         ::std::string temp = data;
         for (auto& ch : temp)
-            ch = ::std::toupper(ch);
+            ch = ::std::toupper(ch, std::locale());
         return string{temp};
     }
 

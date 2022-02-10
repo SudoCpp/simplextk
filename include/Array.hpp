@@ -93,8 +93,11 @@ namespace simplex
 			{
 				inline bool operator() (ArrayMemberType type1, ArrayMemberType type2)
 				{
-					return ((::std::string)type1 < (::std::string)type2);
-				}
+                    if (::std::is_same<string, ArrayMemberType>::value || ::std::is_same<::std::string, ArrayMemberType>::value || ::std::is_integral<ArrayMemberType>::value || ::std::is_same<float, ArrayMemberType>::value || ::std::is_same<double, ArrayMemberType>::value || ::std::is_same<long double, ArrayMemberType>::value)
+                        return type1 < type2;
+                    else
+                        return true;
+                }
 			};
 			Array<ArrayMemberType>& sort();
 			

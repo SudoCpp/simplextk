@@ -79,6 +79,10 @@ namespace simplex
         friend string operator+(const string& leftHandSide, const string& rightHandSide);
         friend bool operator==(const string& leftHandSide, const string& rightHandSide);
         friend bool operator!=(const string& leftHandSide, const string& rightHandSide);
+        friend bool operator<(const string& leftHandSide, const string& rightHandSide);
+        friend bool operator<=(const string& leftHandSide, const string& rightHandSide);
+        friend bool operator>(const string& leftHandSide, const string& rightHandSide);
+        friend bool operator>=(const string& leftHandSide, const string& rightHandSide);
         string& operator+=(const string& rightHandSide);
         string& operator=(const string& rightHandSide);
 
