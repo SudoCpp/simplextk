@@ -100,7 +100,9 @@ namespace simplex
                 }
 			};
 			Array<ArrayMemberType>& sort();
-			
+
+            ArrayMemberType &last() const;
+
             auto begin() const noexcept
 			{
 				return array_.begin();
@@ -373,6 +375,16 @@ namespace simplex
     size_t Array<ArrayMemberType>::size() const
     {
         return array_.size();
+    }
+
+    template <typename ArrayMemberType>
+    ArrayMemberType& Array<ArrayMemberType>::last() const
+    {
+        int arraySize = size();
+        if (arraySize != 0)
+            return array_[arraySize - 1];
+        else
+            throw IndexOutOfBoundsException("Array contains zero elements.", __ExceptionParams__);
     }
 }
 
