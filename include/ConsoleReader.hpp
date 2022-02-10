@@ -46,7 +46,7 @@ namespace simplex
         public:
         virtual bool readString(string& str, uint32_t numberOfCharacters);
         virtual bool readType(void* value, size_t typeSize);
-        virtual string readLine();
+        virtual bool readLine(string &str);
         virtual void rewind(uint32_t numberOfCharacters);
         virtual void rewind();
 	};
