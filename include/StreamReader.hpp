@@ -45,7 +45,7 @@ namespace simplex
         virtual bool readString(string& str, uint32_t numberOfCharacters) = 0;
         // Not a template so that abstraction is emforced
         virtual bool readType(void* value, size_t typeSize) = 0;
-        virtual string readLine() = 0;
+        virtual bool readLine(string& str) = 0;
         virtual void rewind(uint32_t numberOfCharacters) = 0;
         virtual void rewind() = 0;
         virtual ~StreamReader() = default;

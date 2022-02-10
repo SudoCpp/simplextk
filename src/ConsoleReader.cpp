@@ -52,8 +52,10 @@ namespace simplex
 
     bool ConsoleReader::readType(void* value, size_t typeSize)
     {
-        string line = readLine();
-        if(typeSize != line.length())
+        string line{};
+        if(!readLine(line))
+            return false;
+        if (typeSize != line.length())
             return false;
         else
         {
@@ -61,15 +63,17 @@ namespace simplex
             return true;
         }
     }
-    
-    string ConsoleReader::readLine()
+
+    bool ConsoleReader::readLine(string &str)
     {
         buffer << std::cin.rdbuf();
         ::std::string temp;
-        ::std::getline (buffer, temp);
-        return string(temp);
+        if(!::std::getline (buffer, temp))
+            return false;
+        str = string(temp);
+        return true;
     }
-    
+
     void ConsoleReader::rewind(uint32_t numberOfCharacters)
     {
         int32_t currentPosition = buffer.tellg();

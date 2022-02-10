@@ -63,7 +63,7 @@ namespace simplex
             return false;
     }
 
-    string StringReader::readLine()
+    bool StringReader::readLine(string& str)
     {
         string newStr = "";
         string character = "";
@@ -78,7 +78,8 @@ namespace simplex
                 rewind(1);
         }
 
-        return newStr;
+        str = newStr;
+        return true;
     }
 
     void StringReader::rewind(uint32_t numberOfCharacters)

@@ -34,6 +34,7 @@
 #define SIMPLEX_SUPPORTSSIGNALS_HPP
 
 #include <vector>
+#include <cstdint>
 
 #include "Internal.hpp"
 

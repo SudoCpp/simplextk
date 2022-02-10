@@ -34,7 +34,6 @@
 #define SIMPLEX_OBJECT_HPP
 
 #include <cstddef>
-#include <cstdint>
 #include "SupportsSignals.hpp"
 
 namespace simplex

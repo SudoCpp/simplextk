@@ -27,7 +27,7 @@ set(SourceFiles
     src/SupportsSignals.cpp
     # src/TreeNode.cpp
     # src/XmlReader.cpp
-    src/XmlTreeNode.cpp
+    # src/XmlTreeNode.cpp
     src/XmlWriter.cpp)
 
 if(NOT TARGET ${PROJECT_NAME})

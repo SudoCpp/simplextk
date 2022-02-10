@@ -52,7 +52,7 @@ namespace simplex
 
     bool FileReader::readString(string& str, uint32_t numberOfCharacters)
     {
-        char buffer[numberOfCharacters+1];
+        char* buffer = new char[numberOfCharacters+1];
         fread(buffer, sizeof(char), numberOfCharacters, file);
         buffer[numberOfCharacters] = '\0';
         str = string{buffer};
@@ -67,13 +67,16 @@ namespace simplex
         return true;
     }
 
-    string FileReader::readLine()
+    bool FileReader::readLine(string& str)
     {
         char buffer[1023];
         if(fgets(buffer, 1023, file))
-            return string(buffer);
+        {
+            str = string(buffer).replace("\r", "").replace("\n", "");
+            return true;
+        }
         else
-            return "";
+            return false;
     }
 
     string FileReader::readAll() noexcept
@@ -81,7 +84,7 @@ namespace simplex
         string everything = "";
         string nextLine = "";
         rewind();
-        while((nextLine = readLine()) != "")
+        while (readLine(nextLine))
             everything += nextLine;
         return everything;
     }
