@@ -1,6 +1,6 @@
 /*
     BSD 3-Clause License
-    
+
     Copyright (c) 2022, SudoCpp
     All rights reserved.
 
@@ -40,24 +40,48 @@
 
 namespace simplex::FileSystem
 {
-    bool exists(const string& path)
+    #if defined(__WIN32__) || defined(__WIN32) || defined(WIN32)
+        string PathSeparator = "\\";
+    #else
+        string PathSeparator = "/";
+    #endif
+
+    bool Exists(const string &path)
     {
         struct stat info;
 
-        if(stat(path.toCString(), &info) != 0 )
+        if (stat(path.toCString(), &info) != 0)
             return false;
-        else if(info.st_mode & S_IFDIR)
+        else if (info.st_mode & S_IFDIR)
             return true;
         else
             return false;
     }
 
-    string getExtension(const string& fullPath)
+    string GetExtension(const string &fullPath)
     {
         int32_t position = fullPath.lastIndexOf(".");
-        if(position == -1)
-            throw Exception{"Invalid Path: "+fullPath, __ExceptionParams__};
+        if (position == -1)
+            throw Exception{"Invalid Path: " + fullPath, __ExceptionParams__};
         return fullPath.subString(position);
+    }
+
+    string GetFileName(string fullPath)
+    {
+        fullPath = fullPath.replace("\\", "/");
+        int32_t position = fullPath.lastIndexOf("/");
+        if (position == -1)
+            throw Exception{"Invalid Path: " + fullPath, __ExceptionParams__};
+        return fullPath.subString(position + 1);
+    }
+
+    string GetFileNameWithoutExtension(string fullPath)
+    {
+        fullPath = GetFileName(fullPath);
+        if (fullPath.indexOf(".") != -1)
+            return fullPath.subString(0, fullPath.indexOf("."));
+        else
+            return fullPath;
     }
 }
 
