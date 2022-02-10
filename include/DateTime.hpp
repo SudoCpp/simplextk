@@ -66,8 +66,8 @@ namespace simplex
 
 		private:
 			DateTime() {}
-			static struct tm getLocal();
-			static struct tm getUtc();
+			static struct tm* getLocal();
+			static struct tm* getUtc();
 	};
 }
 #endif //SIMPLEX_DATETIME_HPP
