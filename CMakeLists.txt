@@ -21,13 +21,13 @@ set(SourceFiles
     src/StringReader.cpp
     src/StringWriter.cpp
     src/SupportsSignals.cpp
-    src/TreeNode.cpp
-    src/XmlReader.cpp
-    src/XmlTreeNode.cpp
+   # src/TreeNode.cpp
+   # src/XmlReader.cpp
+   # src/XmlTreeNode.cpp
     src/XmlWriter.cpp)
 
 if(NOT TARGET ${PROJECT_NAME})
-    add_library(${PROJECT_NAME} SHARED ${SourceFiles})
+    add_library(${PROJECT_NAME} STATIC ${SourceFiles})
 endif()
 
 include(CTest)
