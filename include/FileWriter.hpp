@@ -43,14 +43,15 @@ namespace simplex
     class FileWriter : public StreamWriter
     {
         private:
-            FILE* file;
-            string filePath;
+        FILE* file;
+        string filePath;
 
         public:
-            FileWriter(const string& filePath);
-            virtual ~FileWriter();
-            void writeLine(const string& toWrite);
-			void write(const string& toWrite);
+        FileWriter(const string& filePath);
+        virtual ~FileWriter();
+        virtual void writeLine(const string& toWrite);
+        virtual void write(const string& toWrite);
+        virtual void writeType(void* value, size_t typeSize);
     };
 }
 
