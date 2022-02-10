@@ -39,8 +39,11 @@ namespace simplex
 {
     namespace FileSystem
     {
-        bool exists(const string& path);
-        string getExtension(const string& fullPath);
+        extern string PathSeparator;
+        bool Exists(const string &path);
+        string GetExtension(const string& fullPath);
+        string GetFileName(string fullPath);
+        string GetFileNameWithoutExtension(string fullPath);
     }
 }
 
