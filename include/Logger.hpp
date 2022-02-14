@@ -73,6 +73,7 @@ namespace simplex
 
         public:
         static LoggerLevel DisplayLevel;
+        static LoggerLevel KillSwitch;
 
         virtual ~Logger();
 

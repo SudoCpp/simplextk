@@ -41,6 +41,7 @@ namespace simplex
     //Create spots in memory for static variables
     Logger* Logger::instance = nullptr;
     LoggerLevel Logger::DisplayLevel;
+    LoggerLevel Logger::KillSwitch = LoggerLevel::Off;
     bool Logger::loggerRunning = false;
 
     //Implementation
@@ -131,6 +132,9 @@ namespace simplex
 
             if(DisplayLevel >= LoggerLevel::Debug)
                 instance->debugStream->writeLine("DEBUG - " + GetDateTime() + " - " + message);
+
+            if(KillSwitch >= LoggerLevel::Debug)
+                throw Exception("Logger kill switch triggered.", __ExceptionParams__);
         }
     }
 
@@ -143,6 +147,9 @@ namespace simplex
 
             if(DisplayLevel >= LoggerLevel::Info)
                 instance->infoStream->writeLine("INFO - " + GetDateTime() + " - " + message);
+
+            if (KillSwitch >= LoggerLevel::Info)
+                throw Exception("Logger kill switch triggered.", __ExceptionParams__);
         }
     }
 
@@ -155,6 +162,9 @@ namespace simplex
 
             if(DisplayLevel >= LoggerLevel::Warning)
                 instance->warningStream->writeLine("WARNING - " + GetDateTime() + " - " + message);
+
+            if (KillSwitch >= LoggerLevel::Warning)
+                throw Exception("Logger kill switch triggered.", __ExceptionParams__);
         }
     }
 
@@ -167,6 +177,9 @@ namespace simplex
 
             if(DisplayLevel >= LoggerLevel::Error)
                 instance->errorStream->writeLine("ERROR - " + GetDateTime() + " - " + message);
+
+            if (KillSwitch >= LoggerLevel::Error)
+                throw Exception("Logger kill switch triggered.", __ExceptionParams__);
         }
     }
 
@@ -179,6 +192,9 @@ namespace simplex
 
             if(DisplayLevel >= LoggerLevel::FatalError)
                 instance->fatalErrorStream->writeLine("FATAL ERROR - " + GetDateTime() + " - " + message);
+
+            if (KillSwitch >= LoggerLevel::FatalError)
+                throw Exception("Logger kill switch triggered.", __ExceptionParams__);
         }
     }
 
