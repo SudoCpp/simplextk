@@ -40,8 +40,9 @@
 
 namespace simplex
 {
-	template <typename ArrayMemberType> class Array
+    template <typename ArrayMemberType> class Array
 	{
+        static_assert(!std::is_reference<ArrayMemberType>::value, "Array types can not hold references.");
 		public:
             using Type = ArrayMemberType;
 			Array();
@@ -101,7 +102,8 @@ namespace simplex
 			};
 			Array<ArrayMemberType>& sort();
 
-            ArrayMemberType &last() const;
+            ArrayMemberType last() const;
+            ArrayMemberType &last();
 
             auto begin() const noexcept
 			{
@@ -378,7 +380,17 @@ namespace simplex
     }
 
     template <typename ArrayMemberType>
-    ArrayMemberType& Array<ArrayMemberType>::last() const
+    ArrayMemberType Array<ArrayMemberType>::last() const
+    {
+        int arraySize = size();
+        if (arraySize != 0)
+            return array_[arraySize - 1];
+        else
+            throw IndexOutOfBoundsException("Array contains zero elements.", __ExceptionParams__);
+    }
+
+    template <typename ArrayMemberType>
+    ArrayMemberType& Array<ArrayMemberType>::last()
     {
         int arraySize = size();
         if (arraySize != 0)
