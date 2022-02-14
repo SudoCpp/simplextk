@@ -297,14 +297,18 @@ namespace simplex
         Array<string> temp{};
         int32_t previousLocation = 0;
         int32_t location = 0;
+        int32_t strLength = length();
         do
         {
             previousLocation = location;
             location = indexOf(characterToSplit, location);
             if(location != -1)
-                temp.add(subString((uint32_t)previousLocation, (uint32_t)location));
+                temp.add(subString((uint32_t)previousLocation, (uint32_t)location-previousLocation));
             else
                 temp.add(subString(previousLocation));
+            
+            if(strLength > location && location != -1)
+                location++;
         } while (location != -1);
 
         return temp;
