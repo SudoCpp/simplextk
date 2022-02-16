@@ -12,7 +12,7 @@ set(SourceFiles
     src/ConsoleWriter.cpp
     src/DataTable.cpp
     src/DateTime.cpp
-    src/DynamicLibrary.cpp
+    # src/DynamicLibrary.cpp
     src/Exception.cpp
     src/FileReader.cpp
     src/FileSystem.cpp
@@ -26,7 +26,7 @@ set(SourceFiles
     src/StringWriter.cpp
     src/SupportsSignals.cpp
     # src/TreeNode.cpp
-    # src/XmlReader.cpp
+    src/XmlReader.cpp
     # src/XmlTreeNode.cpp
     src/XmlWriter.cpp)
 
