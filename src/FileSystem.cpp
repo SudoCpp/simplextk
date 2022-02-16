@@ -35,6 +35,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <cstdio>
 
 #define __class__ "simplex::FileSystem"
 
@@ -46,6 +47,19 @@ namespace simplex::FileSystem
         string PathSeparator = "/";
     #endif
 
+    class FileMemoryManager
+    {
+        public:
+            FILE* filePtr;
+            FileMemoryManager(FILE* filePtr) 
+            : filePtr{filePtr} 
+            {}
+            ~FileMemoryManager()
+            { 
+                fclose(filePtr);
+            }
+    };
+
     bool Exists(const string &path)
     {
         struct stat info;
@@ -56,6 +70,31 @@ namespace simplex::FileSystem
             return true;
         else
             return false;
+    }
+
+    void CopyFile(const string& filePath, const string& newFilePath)
+    {
+        char buffer[4096];
+        size_t size;
+
+        FILE* source = fopen(filePath.toCString(), "rb");
+        if(source == nullptr)
+            throw Exception("Unable to open " + filePath, __ExceptionParams__);
+        FileMemoryManager sourceManager{source};
+        
+        FILE* dest = fopen(newFilePath.toCString(), "wb");
+        if(dest == nullptr)
+            throw Exception("Unable to write to " + newFilePath, __ExceptionParams__);
+        FileMemoryManager destinationManager{dest};
+       
+        while (size = fread(buffer, 1, 4096, source))
+            fwrite(buffer, 1, size, dest);
+    }
+
+    void DeleteFile(const string& filePath)
+    {
+        if(std::remove(filePath.toCString()) != 0)
+            throw Exception("Unable to delete "+filePath, __ExceptionParams__);
     }
 
     string GetExtension(const string &fullPath)
@@ -82,6 +121,18 @@ namespace simplex::FileSystem
             return fullPath.subString(0, fullPath.indexOf("."));
         else
             return fullPath;
+    }
+
+    void MoveFile(const string& oldFilePath, const string& newFilePath)
+    {
+        if(std::rename(oldFilePath.toCString(), newFilePath.toCString()) != 0)
+            throw Exception("Unable to move file " + oldFilePath, __ExceptionParams__);
+    }
+
+    void RenameFile(const string& oldFilePath, const string& newFilePath)
+    {
+        if(std::rename(oldFilePath.toCString(), newFilePath.toCString()) != 0)
+            throw Exception("Unable to rename file " + oldFilePath, __ExceptionParams__);
     }
 }
 

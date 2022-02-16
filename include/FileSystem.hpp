@@ -40,10 +40,14 @@ namespace simplex
     namespace FileSystem
     {
         extern string PathSeparator;
+        void CopyFile(const string& filePath, const string& newFilePath);
+        void DeleteFile(const string& filePath);
         bool Exists(const string &path);
         string GetExtension(const string& fullPath);
         string GetFileName(string fullPath);
         string GetFileNameWithoutExtension(string fullPath);
+        void MoveFile(const string& oldFilePath, const string& newFilePath);
+        void RenameFile(const string& oldFilePath, const string& newFilePath);
     }
 }
 
