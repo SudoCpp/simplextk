@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(Example VERSION 1.0.0)
+
+include(CTest)
+enable_testing()
+
+#Determine if 32 or 64 bit
+set(OSBitness 32)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(OSBitness 64)
+endif()
+
+#Save outputs into bin folder, for easier testing and locating all files
+set(FullOutputDir "${CMAKE_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}${OSBitness}/${CMAKE_BUILD_TYPE}")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${FullOutputDir}/static libs")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${FullOutputDir})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${FullOutputDir})
+
+# Order is important here. Needs to include from least dependant to most
+set(SubProjects
+    simplextk
+    )
+
+foreach(Project IN LISTS SubProjects)
+    if(NOT TARGET ${Project})
+        add_subdirectory("subprojects/${Project}")
+    endif()
+endforeach()
+
+# subprojects folder used for future Meson support.
+include_directories("subprojects")
+add_executable(${PROJECT_NAME} main.cpp)
+# Link in all subproject libraries
+foreach(Project IN LISTS SubProjects)
+    target_link_libraries(${PROJECT_NAME} ${Project})
+endforeach()
