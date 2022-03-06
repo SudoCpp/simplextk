@@ -56,11 +56,14 @@ namespace simplex
 
         virtual ~Signal() = default;
         
-        Signal<Args...>& emit(Args... args);
+        void emit(Args... args);
         uint32_t connect(std::function<void(Args...)> slot);
         Signal<Args...>& disconnect(uint32_t handle);
         template<typename SlotClassType>
+        //If this signal is emitted then call this method from this instance.
         uint32_t connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
+        //If this signal is emitted then emit it again with the following signal
+        uint32_t connect(Signal<Args...>* signal);
     };
 
     template<typename ... Args>
@@ -68,7 +71,7 @@ namespace simplex
     {}
 
     template<typename ... Args>
-    Signal<Args...>& Signal<Args...>::emit(Args... args)
+    void Signal<Args...>::emit(Args... args)
     {
         Array<uint32_t> slotParentKeys = slotParents.keys();
         for(uint32_t key : slotParentKeys)
@@ -87,7 +90,6 @@ namespace simplex
                 slots.removeByKey(key);
                 slotParents.removeByKey(key);
             }
-        return *this;
     }
 
     template<typename ... Args>
@@ -114,6 +116,12 @@ namespace simplex
         });
         currentKey++;
         return (currentKey-1);
+    }
+
+    template<typename ... Args>
+    uint32_t Signal<Args...>::connect(Signal<Args...>* signal)
+    {
+        return connect(&Signal<Args...>::emit, signal);
     }
 
     template<typename ... Args>
