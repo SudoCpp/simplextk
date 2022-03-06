@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(simplextk VERSION 2.8.0)
-#Add Parent Directory so that other libraries can be easily found
+
 include_directories("include")
-include_directories("..")
 
 #Add all the source files to build library
 set(SourceFiles
