@@ -40,6 +40,12 @@
 
 namespace simplex
 {
+    enum class XmlEncoding
+    {
+        utf8,
+        utf16
+    };
+
     class XmlWriter : public object
     {
         public:
@@ -51,9 +57,10 @@ namespace simplex
         void addAttribute(const string& attributeName, const string& attributeValue);
         void addAttributes(const Dictionary<string, string>& attributes);
         void addValue(const string& value);
-        
-        private:
-        StreamWriter& stream;
+        void writeXMLDeclaration(const string &versionNumber, XmlEncoding encoding);
+
+    private:
+        StreamWriter &stream;
         uint32_t levelDeep;
         bool creatingElement;
         string buffer;

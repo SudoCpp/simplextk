@@ -1,6 +1,6 @@
 /*
     BSD 3-Clause License
-    
+
     Copyright (c) 2022, SudoCpp
     All rights reserved.
 
@@ -37,19 +37,19 @@
 
 namespace simplex
 {
-    XmlWriter::XmlWriter(StreamWriter& stream) : stream(stream), levelDeep{0}, creatingElement{false} {}
+    XmlWriter::XmlWriter(StreamWriter &stream) : stream(stream), levelDeep{0}, creatingElement{false} {}
 
     XmlWriter::~XmlWriter() { close(); }
 
     void XmlWriter::close()
     {
-        while(elements.size() > 0)
+        while (elements.size() > 0)
             createEndElement();
     }
 
     void XmlWriter::createElement(string elementName)
     {
-        if(creatingElement)
+        if (creatingElement)
             writeBuffer();
         creatingElement = true;
         buffer = string{'\t', levelDeep} + "<" + elementName;
@@ -59,33 +59,33 @@ namespace simplex
 
     void XmlWriter::createEndElement()
     {
-        if(creatingElement)
+        if (creatingElement)
             writeBuffer();
 
         levelDeep--;
-        if(elements.size() > 0)
-            stream.writeLine(string{'\t',levelDeep} + "</"+elements.pop()+">");
+        if (elements.size() > 0)
+            stream.writeLine(string{'\t', levelDeep} + "</" + elements.pop() + ">");
         else
             throw IndexOutOfBoundsException{"No elements left to end.", __ExceptionParams__};
     }
 
-    void XmlWriter::addAttribute(const string& attributeName, const string& attributeValue)
+    void XmlWriter::addAttribute(const string &attributeName, const string &attributeValue)
     {
-        if(!creatingElement)
-            throw Exception{"An Element is not being created. Can not add attribute: "+attributeName, __ExceptionParams__};
+        if (!creatingElement)
+            throw Exception{"An Element is not being created. Can not add attribute: " + attributeName, __ExceptionParams__};
         else
             buffer += " " + attributeName + "=\"" + attributeValue + "\"";
     }
 
-    void XmlWriter::addAttributes(const Dictionary<string, string>& attributes)
+    void XmlWriter::addAttributes(const Dictionary<string, string> &attributes)
     {
-        for(std::pair<string,string> attribute : attributes)
+        for (std::pair<string, string> attribute : attributes)
             addAttribute(attribute.first, attribute.second);
     }
 
-    void XmlWriter::addValue(const string& value)
+    void XmlWriter::addValue(const string &value)
     {
-        if(creatingElement)
+        if (creatingElement)
             writeBuffer();
         stream.writeLine(string{'\t', levelDeep} + value);
     }
@@ -96,6 +96,11 @@ namespace simplex
         stream.writeLine(buffer);
         creatingElement = false;
         buffer = "";
+    }
+
+    void XmlWriter::writeXMLDeclaration(const string &versionNumber, XmlEncoding encoding)
+    {
+        stream.writeLine("<?xml version=\"" + versionNumber + "\" encoding=\"" + (encoding == XmlEncoding::utf8 ? "utf-8" : "utf-16") + "\" ?>");
     }
 }
 
