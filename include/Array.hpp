@@ -39,22 +39,61 @@
 #include <string>
 #include "Exception.hpp"
 
+#define __class__ "simplex::Array"
+
 namespace simplex
 {
     template <typename ArrayMemberType> class Array
 	{
         static_assert(!std::is_reference<ArrayMemberType>::value, "Array types can not hold references.");
         bool deletePointersOnDestruction;
+        bool isACopy;
 
     public:
         template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
-        Array() : deletePointersOnDestruction{false} {}
+        Array() : deletePointersOnDestruction{false}, isACopy{false} {}
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
-        Array(bool deletePointersOnDestruction) : deletePointersOnDestruction{deletePointersOnDestruction} {}
+        Array(bool deletePointersOnDestruction) : deletePointersOnDestruction{deletePointersOnDestruction},
+        isACopy{false} {}
         Array(::std::initializer_list<ArrayMemberType> iList);
         Array(int32_t arraySize, char *characterArray[]);
         Array(int32_t arraySize, ArrayMemberType nativeArray[]);
         Array(::std::vector<ArrayMemberType> vectorObject);
+
+        Array(const Array& original)
+        {
+            // If a copy is made for example for a function, don't delete pointers when copy is destroyed
+            deletePointersOnDestruction = false;
+            // Use to generate Exceptions when deleting on copies.
+            isACopy = true;
+            array_ = original.array_;
+        }
+        Array &operator=(const Array &original)
+        {
+            // If a copy is made for example for a function, don't delete pointers when copy is destroyed
+            deletePointersOnDestruction = false;
+            // Use to generate Exceptions when deleting on copies.
+            isACopy = true;
+            array_ = original.array_;
+            return *this;
+        }
+        Array(Array&& original) noexcept
+        {
+            // If a copy is made for example for a function, don't delete pointers when copy is destroyed
+            deletePointersOnDestruction = false;
+            // Use to generate Exceptions when deleting on copies.
+            isACopy = false;
+            array_ = original.array_;
+        }
+        Array &operator=(Array&& original) noexcept
+        {
+            // If a copy is made for example for a function, don't delete pointers when copy is destroyed
+            deletePointersOnDestruction = false;
+            // Use to generate Exceptions when deleting on copies.
+            isACopy = false;
+            std::swap(array_, original.array_);
+            return *this;
+        }
 
         ~Array()
         {
@@ -152,7 +191,9 @@ namespace simplex
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
         Array<ArrayMemberType> &removeAll(bool deletePointers) noexcept
         {
-            if (deletePointers)
+            if (deletePointers && isACopy)
+                throw Exception("You are attempting to delete all the pointers from this Array, but this Array is a copy. When the original is cleaned up, it will probably attempt to double delete and create a memory error.", __ExceptionParams__);
+            else if (deletePointers)
                 internalPointerDelete();
             array_.clear();
             return *this;
@@ -167,7 +208,9 @@ namespace simplex
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
         Array<ArrayMemberType> &removeAt(int32_t index, bool deletePointer)
         {
-            if (deletePointer)
+            if (deletePointer && isACopy)
+                throw Exception("You are attempting to delete a pointer from this Array, but this Array is a copy. When the original is cleaned up, it will probably attempt to double delete and create a memory error.", __ExceptionParams__);
+            else if (deletePointer)
                 delete at(index);
             array_.erase(array_.begin() + index);
             return *this;
@@ -219,8 +262,6 @@ namespace simplex
     };
 }
 
-#define __class__ "simplex::Array"
-
 namespace simplex
 {
     template <typename ArrayMemberType>
@@ -261,7 +302,7 @@ namespace simplex
     template <typename ArrayMemberType>
     Array<ArrayMemberType>& Array<ArrayMemberType>::add(ArrayMemberType&& value) noexcept
     {
-        array_.emplace_back(value);
+        array_.emplace_back(std::move(value));
         return *this;
     }
     template <typename ArrayMemberType>
