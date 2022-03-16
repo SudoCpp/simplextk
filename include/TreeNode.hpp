@@ -67,7 +67,6 @@ namespace simplex
             virtual TreeNode &addChildNode(const string &name);
             // Ownership can not be taken for objects created on the stack
             virtual TreeNode &addChildNode(TreeNode *node, bool takeOnOwnership);
-            virtual TreeNode &addChildNode(TreeNode node);
 
             int32_t getLevel() const;
 
