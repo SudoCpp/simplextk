@@ -33,6 +33,7 @@
 #include "FileWriter.hpp"
 #include "Exception.hpp"
 #include "string.hpp"
+#include "stdio.h"
 
 #define __class__ "simplex::FileWriter"
 

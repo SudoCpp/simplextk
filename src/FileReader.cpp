@@ -32,6 +32,7 @@
 
 #include "FileReader.hpp"
 #include "Exception.hpp"
+#include "stdio.h"
 
 #define __class__ "simplex::FileReader"
 

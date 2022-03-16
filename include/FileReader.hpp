@@ -34,7 +34,7 @@
 #define SIMPLEX_FILEREADER_HPP
 
 #include "StreamReader.hpp"
-#include <stdio.h>
+#include <iosfwd>
 #include "string.hpp"
 
 namespace simplex

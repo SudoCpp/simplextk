@@ -34,7 +34,7 @@
 #define SIMPLEX_FILEWRITER_HPP
 
 #include "StreamWriter.hpp"
-#include <stdio.h>
+#include <iosfwd>
 
 namespace simplex
 {
