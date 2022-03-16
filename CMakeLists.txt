@@ -61,7 +61,7 @@ add_library(${PROJECT_NAME} SHARED ${SourceFiles})
             foreach(Project IN LISTS SubProjects)
                 # This is like an include guard on a header file, they can only be added once
                 if(NOT TARGET ${Project})
-                    add_subdirectory("../${Project}")
+                    add_subdirectory("../${Project}" ${Project})
                 endif()
                 include_directories("../${Project}")
                 target_link_libraries(${PROJECT_NAME} ${Project})
