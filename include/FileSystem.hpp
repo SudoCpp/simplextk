@@ -46,6 +46,7 @@ namespace simplex
         string GetExtension(const string& fullPath);
         string GetFileName(string fullPath);
         string GetFileNameWithoutExtension(string fullPath);
+        string GetFilePath(string fullPath);
         void MoveFile(const string& oldFilePath, const string& newFilePath);
         void RenameFile(const string& oldFilePath, const string& newFilePath);
     }

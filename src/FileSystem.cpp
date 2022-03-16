@@ -123,6 +123,15 @@ namespace simplex::FileSystem
             return fullPath;
     }
 
+    string GetFilePath(string fullPath)
+    {
+        fullPath = fullPath.replace("\\", "/");
+        int32_t position = fullPath.lastIndexOf("/");
+        if (position == -1)
+            throw Exception{"Invalid Path: " + fullPath, __ExceptionParams__};
+        return fullPath.subString(0, position + 1);
+    }
+
     void MoveFile(const string& oldFilePath, const string& newFilePath)
     {
         if(std::rename(oldFilePath.toCString(), newFilePath.toCString()) != 0)
