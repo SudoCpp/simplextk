@@ -114,7 +114,34 @@ namespace simplex
         ArrayMemberType pop();
         Array<ArrayMemberType>& push(ArrayMemberType& value);
         
-        Array<ArrayMemberType>& remove(const ArrayMemberType& value);
+        template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &remove(const ArrayMemberType &value) noexcept
+        {
+            int32_t arraySize = size();
+            for (int32_t loop = 0; loop < arraySize; loop++)
+                if (array_[loop] == value)
+                {
+                    removeAt(loop);
+                    break;
+                }
+
+            return *this;
+        }
+
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &remove(const ArrayMemberType &value, bool deletePointers) noexcept
+        {
+            int32_t arraySize = size();
+            for (int32_t loop = 0; loop < arraySize; loop++)
+                if (array_[loop] == value)
+                {
+                    removeAt(loop, deletePointers);
+                    break;
+                }
+
+            return *this;
+        }
+
         template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
         Array<ArrayMemberType> &removeAll() noexcept
         {
@@ -377,20 +404,6 @@ namespace simplex
     Array<ArrayMemberType>& Array<ArrayMemberType>::push(ArrayMemberType& value)
     {
         add(value);
-        return *this;
-    }
-    
-    template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::remove(const ArrayMemberType& value)
-    {
-        int32_t arraySize = size();
-        for (int32_t loop = 0; loop < arraySize; loop++)
-            if (array_[loop] == value)
-            {
-                removeAt(loop);
-                break;
-            }
-
         return *this;
     }
     

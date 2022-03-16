@@ -156,7 +156,7 @@ namespace simplex
         TreeNode* TreeNode::removeChild(TreeNode* childPtr)
         {
             if(children.contains(childPtr))
-                children.remove(childPtr);
+                children.remove(childPtr, false);
             return childPtr;
         }
 }
