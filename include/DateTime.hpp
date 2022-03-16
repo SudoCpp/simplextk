@@ -33,9 +33,9 @@
 #ifndef SIMPLEX_DATETIME_HPP
 #define SIMPLEX_DATETIME_HPP
 
-#include <ctime>
 #include <cstdint>
 
+struct tm;
 namespace simplex
 {
 	class DateTime
