@@ -44,43 +44,43 @@ namespace simplex
         Array<TreeNode*> ownership;
 
         public:
-        Array<TreeNode*> children;
+            string name;
+            Array<TreeNode *> children;
 
-        TreeNode(string name);
-        virtual ~TreeNode();
-        virtual TreeNode& getChild(int32_t index) const;
-        int32_t numberOfChildren() const;
-        //Go one level up
-        virtual TreeNode& getParent() const;
-        //Go to the root of the whole tree.
-        virtual TreeNode& getRoot() const;
+            TreeNode(string name);
+            virtual ~TreeNode();
+            virtual TreeNode &getChild(int32_t index) const;
+            int32_t numberOfChildren() const;
+            // Go one level up
+            virtual TreeNode &getParent() const;
+            // Go to the root of the whole tree.
+            virtual TreeNode &getRoot() const;
 
-        virtual TreeNode& nextSibling() const;
-        virtual TreeNode& previousSibling() const;
+            virtual TreeNode &nextSibling() const;
+            virtual TreeNode &previousSibling() const;
 
-        bool parentExists() const;
+            bool parentExists() const;
 
-        int32_t numberNextSiblings() const;
-        int32_t numberPreviousSiblings() const;
+            int32_t numberNextSiblings() const;
+            int32_t numberPreviousSiblings() const;
 
-        virtual TreeNode& addChildNode(const string& name);
-        //Ownership can not be taken for objects created on the stack
-        virtual TreeNode& addChildNode(TreeNode* node, bool takeOnOwnership);
+            virtual TreeNode &addChildNode(const string &name);
+            // Ownership can not be taken for objects created on the stack
+            virtual TreeNode &addChildNode(TreeNode *node, bool takeOnOwnership);
+            virtual TreeNode &addChildNode(TreeNode node);
 
-        int32_t getLevel() const;
+            int32_t getLevel() const;
 
-        //Clones this TreeNode and all children
-        virtual TreeNode* clone();
-        //Delete this TreeNode and all children, returns parent
-        void deleteNode();
-        //Delete child node
-        virtual TreeNode& deleteChild(TreeNode* childPtr);
-        //Remove this TreeNode from Parent (must have a parent)
-        virtual TreeNode* removeNode();
-        //Remove a child from parent and return it's address
-        virtual TreeNode* removeChild(TreeNode* childPtr);
-
-        string name;
+            // Clones this TreeNode and all children
+            virtual TreeNode *clone();
+            // Delete this TreeNode and all children, returns parent
+            void deleteNode();
+            // Delete child node
+            virtual TreeNode &deleteChild(TreeNode *childPtr);
+            // Remove this TreeNode from Parent (must have a parent)
+            virtual TreeNode *removeNode();
+            // Remove a child from parent and return it's address
+            virtual TreeNode *removeChild(TreeNode *childPtr);
     };
 }
 

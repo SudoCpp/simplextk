@@ -37,12 +37,10 @@
 
 namespace simplex
 {
-        TreeNode::TreeNode(string name) : parent{nullptr}, name{name} {}
+        TreeNode::TreeNode(string name) : parent{nullptr}, ownership{true}, name{name}, children{false} {}
         TreeNode::~TreeNode()
-        {
-            for(TreeNode* child : ownership)
-                delete child;
-        }
+        {}
+        
         TreeNode& TreeNode::getChild(int32_t index) const
         {
             if(children.size() > index)

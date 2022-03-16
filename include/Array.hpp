@@ -34,100 +34,168 @@
 #define SIMPLEX_ARRAY_HPP
 
 #include <algorithm>
-#include "Exception.hpp"
+#include <type_traits>
 #include <vector>
 #include <string>
+#include "Exception.hpp"
 
 namespace simplex
 {
     template <typename ArrayMemberType> class Array
 	{
         static_assert(!std::is_reference<ArrayMemberType>::value, "Array types can not hold references.");
-		public:
-            using Type = ArrayMemberType;
-			Array();
-			Array(::std::initializer_list<ArrayMemberType> iList);
-			Array(int32_t arraySize, char* characterArray[]);
-			Array(int32_t arraySize, ArrayMemberType nativeArray[]);
-			Array(::std::vector<ArrayMemberType> vectorObject);
+        bool deletePointersOnDestruction;
 
-			//Operators
-            ArrayMemberType operator[](int32_t index) const;
-            ArrayMemberType& operator[](int32_t index);
+    public:
+        template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
+        Array() : deletePointersOnDestruction{false} {}
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        Array(bool deletePointersOnDestruction) : deletePointersOnDestruction{deletePointersOnDestruction} {}
+        Array(::std::initializer_list<ArrayMemberType> iList);
+        Array(int32_t arraySize, char *characterArray[]);
+        Array(int32_t arraySize, ArrayMemberType nativeArray[]);
+        Array(::std::vector<ArrayMemberType> vectorObject);
 
-			//Methods
-			Array<ArrayMemberType>& add(ArrayMemberType& value) noexcept;
-			Array<ArrayMemberType>& add(ArrayMemberType&& value) noexcept;
-			Array<ArrayMemberType>& add(ArrayMemberType* value) noexcept;
-			Array<ArrayMemberType>& add(ArrayMemberType value, int32_t index);
-			Array<ArrayMemberType>& add(::std::initializer_list<ArrayMemberType> iList) noexcept;
-			Array<ArrayMemberType>& add(Array<ArrayMemberType> arrayValues) noexcept;
-			Array<ArrayMemberType>& add(::std::vector<ArrayMemberType> arrayValues) noexcept;
-			
-			static Array<ArrayMemberType> FromVector(::std::vector<ArrayMemberType> vectorObject) noexcept;
-			std::vector<ArrayMemberType> toVector() const noexcept;
-			
-			ArrayMemberType& at(int32_t index);
-            ArrayMemberType at(int32_t index) const;
+        ~Array()
+        {
+            if(deletePointersOnDestruction)
+                internalPointerDelete();
+        }
 
-			Array<ArrayMemberType>& clear() noexcept;
-			
-			Array<ArrayMemberType> getPartialArray(int32_t start) const;
-			Array<ArrayMemberType> getPartialArray(int32_t start, int32_t count) const;
-			
-			bool contains(const ArrayMemberType& value) const;
-			int32_t containsCount(const ArrayMemberType& value) const;
-			int32_t indexOf(const ArrayMemberType& value) const;
-			int32_t lastIndexOf(const ArrayMemberType& value) const;
-			ArrayMemberType pop();
-			Array<ArrayMemberType>& push(ArrayMemberType& value);
-			
-			Array<ArrayMemberType>& remove(const ArrayMemberType& value);
-			Array<ArrayMemberType>& removeAll() noexcept;
-			Array<ArrayMemberType>& removeAt(int32_t index);
-			
-			Array<ArrayMemberType>& reserveSpace(size_t spaceToReserve);
-			
-			Array<ArrayMemberType>& reverse();
-			Array<ArrayMemberType>& reverseSort();
-			struct sorter
-			{
-				inline bool operator() (ArrayMemberType type1, ArrayMemberType type2)
-				{
-                    if (::std::is_same<string, ArrayMemberType>::value || ::std::is_same<::std::string, ArrayMemberType>::value || ::std::is_integral<ArrayMemberType>::value || ::std::is_same<float, ArrayMemberType>::value || ::std::is_same<double, ArrayMemberType>::value || ::std::is_same<long double, ArrayMemberType>::value)
-                        return type1 < type2;
-                    else
-                        return true;
-                }
-			};
-			Array<ArrayMemberType>& sort();
+        // Operators
+        ArrayMemberType operator[](int32_t index) const;
+        ArrayMemberType &operator[](int32_t index);
 
-            ArrayMemberType last() const;
-            ArrayMemberType &last();
+        // Methods
+        Array<ArrayMemberType> &add(ArrayMemberType &value) noexcept;
+        Array<ArrayMemberType> &add(ArrayMemberType &&value) noexcept;
+        Array<ArrayMemberType> &add(ArrayMemberType *value) noexcept;
+        Array<ArrayMemberType> &add(ArrayMemberType value, int32_t index);
+        Array<ArrayMemberType> &add(::std::initializer_list<ArrayMemberType> iList) noexcept;
+        Array<ArrayMemberType> &add(Array<ArrayMemberType> arrayValues) noexcept;
+        Array<ArrayMemberType> &add(::std::vector<ArrayMemberType> arrayValues) noexcept;
 
-            auto begin() const noexcept
-			{
-				return array_.begin();
-			}
-            auto end() const noexcept
-			{
-				return array_.end();
-			}
-			
-			size_t size() const;
+        static Array<ArrayMemberType> FromVector(::std::vector<ArrayMemberType> vectorObject) noexcept;
+        std::vector<ArrayMemberType> toVector() const noexcept;
 
-		protected:
-			::std::vector<ArrayMemberType> array_;
-	};
+        ArrayMemberType &at(int32_t index);
+        ArrayMemberType at(int32_t index) const;
+
+        template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &clear() noexcept
+        {
+            array_.clear();
+            return *this;
+        }
+
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &clear(bool deletePointers) noexcept
+        {
+            if(deletePointers)
+                internalPointerDelete();
+            array_.clear();
+            return *this;
+        }
+
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        Array<T> &deletePointers() noexcept
+        {
+            internalPointerDelete();
+            return clear();
+        }
+
+        Array<ArrayMemberType> getPartialArray(int32_t start) const;
+        Array<ArrayMemberType> getPartialArray(int32_t start, int32_t count) const;
+        
+        bool contains(const ArrayMemberType& value) const;
+        int32_t containsCount(const ArrayMemberType& value) const;
+        int32_t indexOf(const ArrayMemberType& value) const;
+        int32_t lastIndexOf(const ArrayMemberType& value) const;
+        ArrayMemberType pop();
+        Array<ArrayMemberType>& push(ArrayMemberType& value);
+        
+        Array<ArrayMemberType>& remove(const ArrayMemberType& value);
+        template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &removeAll() noexcept
+        {
+            array_.clear();
+            return *this;
+        }
+
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &removeAll(bool deletePointers) noexcept
+        {
+            if (deletePointers)
+                internalPointerDelete();
+            array_.clear();
+            return *this;
+        }
+
+        template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &removeAt(int32_t index)
+        {
+            array_.erase(array_.begin() + index);
+            return *this;
+        }
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        Array<ArrayMemberType> &removeAt(int32_t index, bool deletePointer)
+        {
+            if (deletePointer)
+                delete at(index);
+            array_.erase(array_.begin() + index);
+            return *this;
+        }
+        
+        Array<ArrayMemberType>& reserveSpace(size_t spaceToReserve);
+        
+        Array<ArrayMemberType>& reverse();
+        Array<ArrayMemberType>& reverseSort();
+        struct sorter
+        {
+            inline bool operator() (ArrayMemberType type1, ArrayMemberType type2)
+            {
+                if (::std::is_same<string, ArrayMemberType>::value || ::std::is_same<::std::string, ArrayMemberType>::value || ::std::is_integral<ArrayMemberType>::value || ::std::is_same<float, ArrayMemberType>::value || ::std::is_same<double, ArrayMemberType>::value || ::std::is_same<long double, ArrayMemberType>::value)
+                    return type1 < type2;
+                else
+                    return true;
+            }
+        };
+        Array<ArrayMemberType>& sort();
+
+        ArrayMemberType last() const;
+        ArrayMemberType &last();
+
+        auto begin() const noexcept
+        {
+            return array_.begin();
+        }
+        auto end() const noexcept
+        {
+            return array_.end();
+        }
+        
+        size_t size() const;
+
+    protected:
+        ::std::vector<ArrayMemberType> array_;
+
+    private:
+        template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
+        void internalPointerDelete() noexcept
+        {
+            for (ArrayMemberType item : array_)
+                delete item;
+        }
+        template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
+        void internalPointerDelete() noexcept
+        { }
+    };
 }
 
 #define __class__ "simplex::Array"
 
 namespace simplex
 {
-    template <typename ArrayMemberType>
-    Array<ArrayMemberType>::Array() {}
-
     template <typename ArrayMemberType>
     Array<ArrayMemberType>::Array(::std::initializer_list<ArrayMemberType> iList)
     {
@@ -246,13 +314,6 @@ namespace simplex
     }
 
     template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::clear() noexcept
-    {
-        array_.clear();
-        return *this;
-    }
-
-    template <typename ArrayMemberType>
     Array<ArrayMemberType> Array<ArrayMemberType>::getPartialArray(int32_t start) const
     {
         int32_t arraySize = array_.size();
@@ -330,18 +391,6 @@ namespace simplex
                 break;
             }
 
-        return *this;
-    }
-    template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::removeAll() noexcept
-    {
-        array_.clear();
-        return *this;
-    }
-    template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::removeAt(int32_t index)
-    {
-        array_.erase(array_.begin() + index);
         return *this;
     }
     

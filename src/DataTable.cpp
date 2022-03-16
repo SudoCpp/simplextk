@@ -125,13 +125,11 @@ namespace simplex
     }
     #undef __class__
     #define __class__ "simplex::DataTable"
-    DataTable::DataTable(){}
-    DataTable::DataTable(Array<string> columnNames) : columnNames{columnNames} {}
+    DataTable::DataTable() : rows{true} {}
+    DataTable::DataTable(Array<string> columnNames) : rows{true}, columnNames{columnNames} {}
     DataTable::~DataTable()
-    {
-        for(DataRow* row : rows)
-            delete row;
-    }
+    { }
+
     DataTable& DataTable::addRow(DataRow* row)
     {
         rows.add(row);

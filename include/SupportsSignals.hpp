@@ -40,12 +40,12 @@
 
 namespace simplex
 {
-    //template<typename ...Args> class Signal;
+    template<typename ...Args> class Signal;
     
     class SupportsSignals
     {
-        //template<typename ... Args>
-        //friend class Signal;
+        template<typename ... Args>
+        friend class Signal;
 
         //Signals that call this slot object
         std::vector<SupportsSignals*> linkedSignalObjects; //Class with Slots uses this
@@ -54,26 +54,26 @@ namespace simplex
 
         bool vecContains(const std::vector<SupportsSignals*>& vec, SupportsSignals* value);
         void vecRemove(std::vector<SupportsSignals*>& vec, SupportsSignals* value);
-        
-        public:
+
+        // Called by signal, so slot can tell it when slot is destructing
+        void addSignal(SupportsSignals *signalObj);
+        // Called by signal , so slot knows it doesn't need to alert signal
+        void removeSignal(SupportsSignals *signalObj);
+
+        // Called by slot, so that it isn't called anymore
+        void removeSlot(SupportsSignals *slotObj);
+
+        // Signal calls this so it knows what slots are valid
+        void addSlot(SupportsSignals *slotObj);
+
+        // Signal calls this to check if slot is still valid.
+        bool slotInstanceStillExists(SupportsSignals *slotObj);
+
+    public:
         SupportsSignals();
         virtual ~SupportsSignals();
 
-        //Called by signal, so slot can tell it when slot is destructing
-        void addSignal(SupportsSignals* signalObj);
-        //Called by signal , so slot knows it doesn't need to alert signal
-        void removeSignal(SupportsSignals* signalObj);
-
-        //Called by slot, so that it isn't called anymore
-        void removeSlot(SupportsSignals* slotObj);
-
         protected:
-        //Signal calls this so it knows what slots are valid
-        void addSlot(SupportsSignals* slotObj);
-
-        //Signal calls this to check if slot is still valid.
-        bool slotInstanceStillExists(SupportsSignals* slotObj);
-
         operator SupportsSignals*();
     };
 }

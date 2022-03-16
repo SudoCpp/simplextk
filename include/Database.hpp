@@ -85,13 +85,9 @@ namespace simplex
         DatabaseCredentials credentials;
         public:
         Database(const DatabaseCredentials& connectionSettings) 
-        : credentials{connectionSettings} 
+        : credentials{connectionSettings}, statements{true}
         {}
-        virtual ~Database()
-        {
-            for(DatabaseStatement* statement : statements)
-                delete statement;
-        }
+        virtual ~Database() {}
         
         virtual DataTable query(const string& sqlQuery) = 0;
         virtual DatabaseStatement& prepare(const string& sqlQuery) = 0;

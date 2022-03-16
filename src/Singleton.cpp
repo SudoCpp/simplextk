@@ -35,7 +35,7 @@
 
 namespace simplex
 {
-    Array<Singleton*> SingletonManager::singletons{}; //initialize static member
+    Array<Singleton*> SingletonManager::singletons{false}; //initialize static member
 
     SingletonManager singletonMangager{}; //Create instance for management
     
