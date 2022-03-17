@@ -76,8 +76,8 @@ namespace simplex
 
     void ConsoleReader::rewind(uint32_t numberOfCharacters)
     {
-        int32_t currentPosition = buffer.tellg();
-        int32_t newPosition = (currentPosition - numberOfCharacters < 0)? 0 : currentPosition - numberOfCharacters;
+        uint32_t currentPosition = (uint32_t)buffer.tellg();
+        uint32_t newPosition = (currentPosition - numberOfCharacters < 0)? 0 : currentPosition - numberOfCharacters;
         buffer.seekg(newPosition);
     }
 

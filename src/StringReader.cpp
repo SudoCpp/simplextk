@@ -42,7 +42,7 @@ namespace simplex
 
     bool StringReader::readString(string& str, uint32_t numberOfCharacters)
     {
-        if(data.length() >= position + numberOfCharacters)
+        if(data.length() >= (int32_t)position + numberOfCharacters)
         {
             str = data.subString(position, position + numberOfCharacters);
             position += numberOfCharacters;
