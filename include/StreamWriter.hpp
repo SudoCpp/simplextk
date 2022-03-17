@@ -36,6 +36,7 @@
 #include "object.hpp"
 #include "string.hpp"
 #include <string.h>
+#include "Array.hpp"
 
 namespace simplex
 {
@@ -49,6 +50,11 @@ namespace simplex
 			virtual void write(const string& toWrite) = 0;
 			// Not a template to force method to children.
             virtual void writeType(void* value, size_t typeSize) = 0;
+            virtual void writeAllLines(const Array<string>& lines)
+            {
+                for(string line : lines)
+                    writeLine(line);
+            }
             virtual ~StreamWriter() = default;
 	};
 }
