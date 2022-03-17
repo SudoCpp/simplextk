@@ -50,8 +50,8 @@ namespace simplex
         string(const char* str);
         string(const ::std::string& str);
         string(const ::std::string* str);
-        string(const char* character, uint32_t repetition);
-        string(const char& character, uint32_t repetition);
+        string(const char* character, uint16_t repetition);
+        string(const char& character, uint16_t repetition);
         string(const string& str);
         string(const string* str);
         virtual ~string() = default;
@@ -107,6 +107,8 @@ namespace simplex
         string trimEnd() const noexcept;
 
         virtual size_t getHash() const noexcept;
+
+        static string Join(Array<string> array, const string& joiningDivider);
     };
 }
 

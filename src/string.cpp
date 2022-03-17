@@ -46,14 +46,14 @@ namespace simplex
     string::string(const char* str) : data{std::string{str}} {}
     string::string(const ::std::string& str): data{std::string{str}} {}
     string::string(const ::std::string* str): data{std::string{*str}} {}
-    string::string(const char* character, uint32_t repetition) : data{""}
+    string::string(const char* character, uint16_t repetition) : data{""}
     {
-        for (int32_t loop = 0; loop < repetition; loop++)
+        for (uint16_t loop = 0; loop < repetition; loop++)
             data += character;
     }
-    string::string(const char& character, uint32_t repetition) : data{""}
+    string::string(const char& character, uint16_t repetition) : data{""}
     {
-        for (int32_t loop = 0; loop < repetition; loop++)
+        for (uint16_t loop = 0; loop < repetition; loop++)
             data += character;
     }
     string::string(const string& str) : data{std::string{str.data}} {}
@@ -198,7 +198,7 @@ namespace simplex
 
     int32_t string::length() const noexcept
     {
-        return data.length();
+        return (int32_t)data.length();
     }
 
     int32_t string::indexOf(const string& subString) const noexcept
@@ -267,11 +267,11 @@ namespace simplex
     int32_t string::containsCount(const string& subString) const noexcept
     {
         int32_t count = 0;
-        int32_t nPos = data.find(subString.toStdString(), 0);
+        int32_t nPos = (int32_t)data.find(subString.toStdString(), 0);
         while (nPos != -1)
         {
             count++;
-            nPos = data.find(subString.toStdString(), nPos + 1);
+            nPos = (int32_t)data.find(subString.toStdString(), nPos + 1);
         }
         return count;
     }
@@ -504,6 +504,19 @@ namespace simplex
         {
             throw Exception(ex.what(), __ExceptionParams__);
         }
+    }
+
+    string string::Join(Array<string> array, const string& joiningDivider)
+    {
+        string buffer = "";
+        int32_t arraySize = array.size();
+        for (int loop = 0; loop < arraySize; loop++)
+        {
+            if (loop != 0)
+                buffer += joiningDivider;
+            buffer += array[loop];
+        }
+        return buffer;
     }
 }
 
