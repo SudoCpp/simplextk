@@ -244,7 +244,7 @@ namespace simplex
             return array_.end();
         }
         
-        size_t size() const;
+        int32_t size() const;
 
     protected:
         ::std::vector<ArrayMemberType> array_;
@@ -426,7 +426,7 @@ namespace simplex
     template <typename ArrayMemberType>
     int32_t Array<ArrayMemberType>::indexOf(const ArrayMemberType& value) const
     {
-        return ::std::distance(array_.begin(), ::std::find(array_.begin(), array_.end(), value));
+        return (int32_t)::std::distance(array_.begin(), ::std::find(array_.begin(), array_.end(), value));
     }
     template <typename ArrayMemberType>
     int32_t Array<ArrayMemberType>::lastIndexOf(const ArrayMemberType& value) const
@@ -477,9 +477,9 @@ namespace simplex
     }
     
     template <typename ArrayMemberType>
-    size_t Array<ArrayMemberType>::size() const
+    int32_t Array<ArrayMemberType>::size() const
     {
-        return array_.size();
+        return (int32_t)array_.size();
     }
 
     template <typename ArrayMemberType>
