@@ -61,7 +61,7 @@ namespace simplex
 
     private:
         StreamWriter &stream;
-        uint32_t levelDeep;
+        uint16_t levelDeep;
         bool creatingElement;
         string buffer;
         Array<string> elements;

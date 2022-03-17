@@ -59,11 +59,16 @@ namespace simplex
 
     void XmlWriter::createEndElement()
     {
-        if (creatingElement)
-            writeBuffer();
-
         levelDeep--;
-        if (elements.size() > 0)
+        if (creatingElement)
+        {
+            buffer += " />";
+            stream.writeLine(buffer);
+            creatingElement = false;
+            buffer = "";
+            elements.pop();
+        }
+        else if (elements.size() > 0)
             stream.writeLine(string{'\t', levelDeep} + "</" + elements.pop() + ">");
         else
             throw IndexOutOfBoundsException{"No elements left to end.", __ExceptionParams__};
