@@ -42,7 +42,6 @@ namespace simplex
     class ConsoleWriter : public StreamWriter
     {
         public:
-        virtual void writeLine(const string& toWrite);
         virtual void write(const string& toWrite);
         virtual void writeType(void* value, size_t typeSize);
     };

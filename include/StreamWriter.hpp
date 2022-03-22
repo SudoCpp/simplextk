@@ -46,7 +46,10 @@ namespace simplex
             string data;
         
 		public:
-			virtual void writeLine(const string& toWrite) = 0;
+			virtual void writeLine(const string& toWrite)
+            {
+                write(toWrite + "\n");
+            }
 			virtual void write(const string& toWrite) = 0;
 			// Not a template to force method to children.
             virtual void writeType(void* value, size_t typeSize) = 0;

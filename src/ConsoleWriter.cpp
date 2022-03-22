@@ -46,11 +46,6 @@ namespace simplex
         data += toWrite;
     }
 
-    void ConsoleWriter::writeLine(const string& toWrite)
-    {
-        write(toWrite + "\n");
-    }
-
     void ConsoleWriter::writeType(void* value, size_t typeSize)
     {
         NotImplementedException(__ExceptionParams__);

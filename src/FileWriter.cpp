@@ -52,11 +52,6 @@ namespace simplex
         fclose(file);
     }
 
-    void FileWriter::writeLine(const string& toWrite)
-    {
-        write(toWrite+"\n");
-    }
-
     void FileWriter::write(const string& toWrite)
     {
         data+=toWrite;

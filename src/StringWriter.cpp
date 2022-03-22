@@ -38,11 +38,6 @@
 
 namespace simplex
 {
-    void StringWriter::writeLine(const string& toWrite)
-    {
-        write(toWrite + "\n");
-    }
-
     void StringWriter::write(const string& toWrite)
     {
         data += toWrite;
