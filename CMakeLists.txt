@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.1.0)
 project(simplextk VERSION 2.8.0)
 
 #Debian Packages required
 # none
+set (CMAKE_CXX_STANDARD 17)
 
-set(ProjectType SHARED) #option are SHARED and STATIC
+set(ProjectType SHARED) #options are SHARED and STATIC
 
 set(Packages
 
@@ -47,6 +48,10 @@ set(SourceFiles
             # Unix systems required the dl library for dynamically loading libraries
             if (UNIX)
                 target_link_libraries(${PROJECT_NAME} "-ldl")
+            endif()
+
+            if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+                target_link_libraries(${PROJECT_NAME} "-lstdc++fs")
             endif()
 
             # Include files for this project

@@ -34,6 +34,7 @@
 #define SIMPLEX_FILESYSTEM_HPP
 
 #include "string.hpp"
+#include "Array.hpp"
 
 namespace simplex
 {
@@ -41,12 +42,17 @@ namespace simplex
     {
         extern string PathSeparator;
         void CopyFile(const string& filePath, const string& newFilePath);
+        void CreateDirectory(const string& fullPath);
+        void DeleteDirectory(const string& filePath);
         void DeleteFile(const string& filePath);
         bool Exists(const string &path);
+        Array<string> GetDirectories(const string& fullPath);
         string GetExtension(const string& fullPath);
         string GetFileName(string fullPath);
         string GetFileNameWithoutExtension(string fullPath);
         string GetFilePath(string fullPath);
+        Array<string> GetFiles(const string& fullPath);
+        bool IsDirectory(string fullPath);
         void MoveFile(const string& oldFilePath, const string& newFilePath);
         void RenameFile(const string& oldFilePath, const string& newFilePath);
     }
