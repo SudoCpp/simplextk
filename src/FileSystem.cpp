@@ -127,6 +127,16 @@ namespace simplex::FileSystem
         return fullPath.subString(0, position + 1);
     }
 
+    string GetFilePathUpOneLevel(string fullPath)
+    {
+        fullPath = GetFilePath(fullPath);
+        fullPath = fullPath.subString(0, fullPath.length() - 1);
+        int32_t position = fullPath.lastIndexOf("/");
+        if (position == -1)
+            throw Exception{"Invalid Path: " + fullPath, __ExceptionParams__};
+        return fullPath.subString(0, position + 1);
+    }
+
     Array<string> GetFiles(const string& fullPath)
     {
         Array<string> files{};

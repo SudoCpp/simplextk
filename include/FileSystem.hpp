@@ -51,6 +51,7 @@ namespace simplex
         string GetFileName(string fullPath);
         string GetFileNameWithoutExtension(string fullPath);
         string GetFilePath(string fullPath);
+        string GetFilePathUpOneLevel(string fullPath);
         Array<string> GetFiles(const string& fullPath);
         bool IsDirectory(string fullPath);
         void MoveFile(const string& oldFilePath, const string& newFilePath);
