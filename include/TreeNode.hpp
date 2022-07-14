@@ -64,7 +64,12 @@ namespace simplex
             int32_t numberNextSiblings() const;
             int32_t numberPreviousSiblings() const;
 
-            virtual TreeNode &addChildNode(const string &name);
+            template <typename DerivedTreeNodeType, typename... Args>
+            DerivedTreeNodeType &addChildNode(Args &&...args)
+            {
+                DerivedTreeNodeType *node = new DerivedTreeNodeType(std::forward<Args>(args)...);
+                return (DerivedTreeNodeType&)addChildNode(node, true);
+            }
             // Ownership can not be taken for objects created on the stack
             virtual TreeNode &addChildNode(TreeNode *node, bool takeOnOwnership);
 

@@ -96,11 +96,6 @@ namespace simplex
             return parent->children.indexOf((TreeNode*)this);
         }
 
-        TreeNode& TreeNode::addChildNode(const string& name)
-        {
-            TreeNode* node = new TreeNode(name);
-            return addChildNode(node, true);
-        }
         TreeNode& TreeNode::addChildNode(TreeNode* node, bool takeOnOwnership)
         {
             if(node != nullptr)
