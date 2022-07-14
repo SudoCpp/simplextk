@@ -58,6 +58,7 @@ namespace simplex
         void addAttributes(const Dictionary<string, string>& attributes);
         void addValue(const string& value);
         void writeXMLDeclaration(const string &versionNumber, XmlEncoding encoding);
+        void addXMLString(const string &xml);
 
     private:
         StreamWriter &stream;

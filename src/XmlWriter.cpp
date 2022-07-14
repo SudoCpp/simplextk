@@ -32,6 +32,8 @@
 
 #include "XmlWriter.hpp"
 #include "Exception.hpp"
+#include "XmlReader.hpp"
+#include "StringReader.hpp"
 
 #define __class__ "simplex::XmlWriter"
 
@@ -106,6 +108,23 @@ namespace simplex
     void XmlWriter::writeXMLDeclaration(const string &versionNumber, XmlEncoding encoding)
     {
         stream.writeLine("<?xml version=\"" + versionNumber + "\" encoding=\"" + (encoding == XmlEncoding::utf8 ? "utf-8" : "utf-16") + "\" ?>");
+    }
+
+    void XmlWriter::addXMLString(const string &xml)
+    {
+        StringReader readerString{xml};
+        XmlReader reader{readerString};
+        while(reader.read())
+        {
+            if(reader.isStartElement)
+            {
+                createElement(reader.name);
+                if(reader.attributes.size() > 0)
+                    addAttributes(reader.attributes);
+            }
+            else
+                createEndElement();
+        }
     }
 }
 
