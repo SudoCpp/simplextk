@@ -64,6 +64,8 @@ namespace simplex
         bool attributeNameComplete;
         bool attributeValueComplete;
         bool beginQuote;
+        string nextName;
+        bool nextIsEnd;
     };
 }
 

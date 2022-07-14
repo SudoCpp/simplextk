@@ -1,6 +1,6 @@
 /*
     BSD 3-Clause License
-    
+
     Copyright (c) 2022, SudoCpp
     All rights reserved.
 
@@ -37,7 +37,7 @@
 
 namespace simplex
 {
-    XmlReader::XmlReader(StreamReader& stream) : stream{stream} { }
+    XmlReader::XmlReader(StreamReader &stream) : stream{stream}, nextIsEnd{false} {}
 
     bool XmlReader::read()
     {
@@ -51,55 +51,75 @@ namespace simplex
         attributeNameComplete = false;
         attributeValueComplete = false;
         beginQuote = false;
-        for(int32_t loop = 0; stream.readString(character, 1); loop++)
+        isStartElement = false;
+        attributeName = "";
+        attributeValue = "";
+        if (nextIsEnd)
         {
-            if(character == "<")
+            name = nextName;
+            nextIsEnd = false;
+            return true;
+        }
+
+        for (int32_t loop = 0; stream.readString(character, 1); loop++)
+        {
+            if (character == "<")
             {
                 isValue = false;
                 nameComplete = false;
                 readingElement = true;
                 isStartElement = true;
+                value = "";
             }
             else
             {
-                if(loop == 1 && character == "/")
-                    isStartElement = false;
-
-                if(readingElement)
+                if (character == "/" && !nameComplete)
                 {
-                    if(character == ">")
+                    isStartElement = false;
+                    continue;
+                }
+                else if (character == "/" && !beginQuote && nameComplete)
+                {
+                    nextIsEnd = true;
+                    nextName = name;
+                    continue;
+                }
+
+                if (readingElement)
+                {
+                    if (character == ">")
                     {
-                        if(attributeName != "")
+                        if (attributeName != "")
                             addAttribute(attributeName, attributeValue);
-                        break;
+                        return true;
                     }
-                    else if(!nameComplete)
+                    else if (!nameComplete)
                     {
-                        if(character == " ")
+                        if (character == " ")
                             nameComplete = true;
                         else
                             name += character;
                     }
-                    else if(!attributeNameComplete)
+                    else if (!attributeNameComplete)
                     {
-                        if(character != "=")
+                        if (character != "=")
                             attributeName += character;
                         else
                             attributeNameComplete = true;
                     }
                     else
                     {
-                        if(character == "\"")
+                        if (character == "\"")
                         {
                             beginQuote = beginQuote ? false : true;
-                            if(!beginQuote)
+                            if (!beginQuote)
                             {
                                 attributeNameComplete = true;
                                 attributeValueComplete = true;
                                 addAttribute(attributeName, attributeValue);
                             }
                         }
-                        else if(character != " " && !beginQuote)
+                        else if (character == " " && !beginQuote)
                         {
                             attributeNameComplete = false;
                             attributeValueComplete = false;
@@ -110,7 +130,7 @@ namespace simplex
                             attributeValue += character;
                     }
                 }
-                else if(character == "<")
+                else if (character == "<")
                 {
                     stream.rewind(1);
                     break;
@@ -119,12 +139,17 @@ namespace simplex
                     value += character;
             }
         }
-        return true;
+        
+        value = value.trim();
+        if(value != "")
+            return true;
+        else
+            return false;
     }
 
     void XmlReader::addAttribute(string name, string value)
     {
-        if(!attributes.containsKey(name))
+        if (!attributes.containsKey(name))
             attributes.add(name, value);
     }
 }
