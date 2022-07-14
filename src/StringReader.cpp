@@ -44,7 +44,7 @@ namespace simplex
     {
         if(data.length() >= (int32_t)position + numberOfCharacters)
         {
-            str = data.subString(position, position + numberOfCharacters);
+            str = data.subString(position, numberOfCharacters);
             position += numberOfCharacters;
             return true;
         }
