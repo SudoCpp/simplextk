@@ -47,6 +47,9 @@ namespace simplex
         public:
         SmartRef();
         SmartRef(classType* pointer);
+        template <typename... Args>
+        SmartRef(Args &&...args) : pointer(new classType(std::forward<Args>(args)...)), managed(true) {}
+
         virtual ~SmartRef();
 
         classType& getRef();
