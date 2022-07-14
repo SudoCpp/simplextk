@@ -44,6 +44,7 @@ namespace simplex
     string::string() : data{""} {}
 
     string::string(const char* str) : data{std::string{str}} {}
+    string::string(const wchar_t* str) : data{autoNarrow(str)} {}
     string::string(const ::std::string& str): data{std::string{str}} {}
     string::string(const ::std::string* str): data{std::string{*str}} {}
     string::string(const char* character, uint16_t repetition) : data{""}
@@ -517,6 +518,33 @@ namespace simplex
             buffer += array[loop];
         }
         return buffer;
+    }
+
+    ::std::string test()
+    {
+        return ::std::string{""};
+    }
+
+    ::std::string string::autoNarrow(const wchar_t *original)
+    {
+        size_t index;
+        wchar_t currentCharacter;
+        ::std::string tempString = "";
+
+        while ((currentCharacter = original[index]) != '\0')
+        {
+            if(currentCharacter < 128)
+                tempString += char(currentCharacter);
+            else
+            {
+                tempString += '?';
+                if(currentCharacter >= 0xD800 && currentCharacter <= 0xDBFF)
+                    //This is the first of a surrogate pair skip the next character
+                    index++;
+            }
+        }
+
+        return tempString;
     }
 }
 

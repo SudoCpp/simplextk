@@ -48,6 +48,7 @@ namespace simplex
 		//Constructors
         string();
         string(const char* str);
+        string(const wchar_t* str);
         string(const ::std::string& str);
         string(const ::std::string* str);
         string(const char* character, uint16_t repetition);
@@ -109,6 +110,9 @@ namespace simplex
         virtual size_t getHash() const noexcept;
 
         static string Join(Array<string> array, const string& joiningDivider);
+
+        private:
+        static ::std::string autoNarrow(const wchar_t *original);
     };
 }
 
