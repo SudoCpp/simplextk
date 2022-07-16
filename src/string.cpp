@@ -107,6 +107,11 @@ namespace simplex
         return *this;
     }
 
+    string string::FromSingleCharacter(char character)
+    {
+        return string{std::string{character}};
+    }
+
     string string::FromNumber(int8_t number)
     {
         return string{std::to_string(number)};

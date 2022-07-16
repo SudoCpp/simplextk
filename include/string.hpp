@@ -57,6 +57,8 @@ namespace simplex
         string(const string* str);
         virtual ~string() = default;
 
+        static string FromSingleCharacter(char character);
+
         static string FromNumber(int8_t number);
         static string FromNumber(int16_t number);
         static string FromNumber(int32_t number);
