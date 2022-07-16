@@ -86,7 +86,7 @@ namespace simplex
         string nextLine = "";
         rewind();
         while (readLine(nextLine))
-            everything += nextLine;
+            everything += (nextLine + string::FromSingleCharacter('\n'));
         return everything;
     }
 
