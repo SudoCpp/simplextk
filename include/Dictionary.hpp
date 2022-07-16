@@ -44,8 +44,9 @@ namespace simplex
     {
         protected:
         ::std::unordered_map<KeyType, ValueType> dictionary_;
+        Array<KeyType> keyNames;
 
-        public:
+    public:
         //Constructors
         Dictionary();
         Dictionary(::std::initializer_list<::std::pair<KeyType const, ValueType>> bracedPairs);
@@ -130,6 +131,7 @@ namespace simplex
     Dictionary<KeyType, ValueType>& Dictionary<KeyType, ValueType>::add(KeyType key, ValueType value)
     {
         dictionary_.insert(std::make_pair(key, value));
+        keyNames.add(key);
         return *this;
     }
     template <typename KeyType, typename ValueType>
@@ -204,12 +206,14 @@ namespace simplex
     Dictionary<KeyType, ValueType>& Dictionary<KeyType, ValueType>::removeByKey(const KeyType& key)
     {
         dictionary_.erase(key);
+        keyNames.remove(key);
         return *this;
     }
     template <typename KeyType, typename ValueType>
     Dictionary<KeyType, ValueType>& Dictionary<KeyType, ValueType>::clear()
     {
         dictionary_.clear();
+        keyNames.clear();
         return *this;
     }
 
@@ -217,13 +221,7 @@ namespace simplex
     template <typename KeyType, typename ValueType>
     Array<KeyType> Dictionary<KeyType, ValueType>::keys() const
     {
-        Array<KeyType> keys;
-        keys.reserveSpace(dictionary_.size());
-
-        for (auto key : dictionary_)
-            keys.add((KeyType)key.first);
-
-        return keys;
+        return keyNames;
     }
     template <typename KeyType, typename ValueType>
     Array<ValueType> Dictionary<KeyType, ValueType>::values() const
@@ -241,7 +239,7 @@ namespace simplex
     template <typename KeyType, typename ValueType>
     Dictionary<KeyType, ValueType>& Dictionary<KeyType, ValueType>::insert(KeyType key, ValueType value)
     {
-        Add(key, value);
+        add(key, value);
         return *this;
     }
     template <typename KeyType, typename ValueType>
