@@ -111,7 +111,14 @@ namespace simplex
         Array<ArrayMemberType> &add(ArrayMemberType *value) noexcept;
         Array<ArrayMemberType> &add(ArrayMemberType value, int32_t index);
         Array<ArrayMemberType> &add(::std::initializer_list<ArrayMemberType> iList) noexcept;
-        Array<ArrayMemberType> &add(Array<ArrayMemberType> arrayValues) noexcept;
+        //Just having a signature with Array<ArrayMemberType> would try to automatically 
+        //create an empty array of the correct type when the wrong type was being added.
+        template <typename T = ArrayMemberType>
+        Array<T> &add(Array<T> arrayValues) noexcept
+        {
+            array_.insert(array_.end(), arrayValues.begin(), arrayValues.end());
+            return *this;
+        }
         Array<ArrayMemberType> &add(::std::vector<ArrayMemberType> arrayValues) noexcept;
 
         static Array<ArrayMemberType> FromVector(::std::vector<ArrayMemberType> vectorObject) noexcept;
@@ -328,12 +335,6 @@ namespace simplex
     {
         for (ArrayMemberType item : iList)
             add(item);
-        return *this;
-    }
-    template <typename ArrayMemberType>
-    Array<ArrayMemberType>& Array<ArrayMemberType>::add(Array<ArrayMemberType> arrayValues) noexcept
-    {
-        array_.insert(array_.end(), arrayValues.begin(), arrayValues.end());
         return *this;
     }
     template <typename ArrayMemberType>
