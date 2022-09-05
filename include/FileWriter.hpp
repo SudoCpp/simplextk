@@ -36,6 +36,8 @@
 #include "StreamWriter.hpp"
 #include <iosfwd>
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class string;
@@ -47,11 +49,13 @@ namespace simplex
         string filePath;
 
         public:
-            FileWriter(const string& filePath);
+            FileWriter(in const string& filePath);
             virtual ~FileWriter();
-            virtual void write(const string &toWrite);
-            virtual void writeType(void *value, size_t typeSize);
+            virtual void write(in const string &toWrite);
+            virtual void writeType(in void *value, size_t typeSize);
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_FILEWRITER_HPP

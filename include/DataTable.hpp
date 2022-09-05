@@ -38,6 +38,8 @@
 #include "Dictionary.hpp"
 #include "Array.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class DataRow : public object
@@ -45,22 +47,22 @@ namespace simplex
         Dictionary<string, string> columns;
         Array<string> columnNames;
         public:
-        DataRow(Dictionary<string, string> columnsAndData);
-        DataRow(Array<string> columnNames);
-        DataRow(Array<string> columnNames, Array<string> columnValues);
+        DataRow(in Dictionary<string, string> columnsAndData);
+        DataRow(in Array<string> columnNames);
+        DataRow(in Array<string> columnNames, in Array<string> columnValues);
         DataRow();
 
         Array<string> getColumnNames();
-        DataRow& addColumn(string name);
-        DataRow& addColumn(string name, string value);
-        string& getCell(string name);
-        string& getCell(int32_t index);
-        string getCell(string name) const;
-        string getCell(int32_t index) const;
-        string operator[](int32_t index) const;
-        string& operator[](int32_t index);
-        string operator[](string columnName) const;
-        string& operator[](string columnName);
+        DataRow& addColumn(in string name);
+        DataRow& addColumn(in string name, in string value);
+        string& getCell(in string name);
+        string& getCell(in int32_t index);
+        string getCell(in string name) const;
+        string getCell(in int32_t index) const;
+        string operator[](in int32_t index) const;
+        string& operator[](in int32_t index);
+        string operator[](in string columnName) const;
+        string& operator[](in string columnName);
     };
 
     class DataTable : public object
@@ -69,18 +71,20 @@ namespace simplex
         Array<string> columnNames;
         public:
         DataTable();
-        DataTable(Array<string> columnNames);
+        DataTable(in Array<string> columnNames);
         virtual ~DataTable();
         //Ownership is taken and auto deleted when DataTable is destructed
-        DataTable& addRow(DataRow* row);
-        DataTable& addRow(const DataRow& row);
-        DataTable& addRow(const Array<string>& values);
-        DataTable& addColumn(string columnName);
-        DataRow& getRow(int32_t index);
-        DataRow getRow(int32_t index) const;
-        DataRow operator[](int32_t index) const;
-        DataRow& operator[](int32_t index);
+        DataTable& addRow(in ownership DataRow* row);
+        DataTable& addRow(in const DataRow& row);
+        DataTable& addRow(in const Array<string>& values);
+        DataTable& addColumn(in string columnName);
+        DataRow& getRow(in int32_t index);
+        DataRow getRow(in int32_t index) const;
+        DataRow operator[](in int32_t index) const;
+        DataRow& operator[](in int32_t index);
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_DATATABLE_HPP

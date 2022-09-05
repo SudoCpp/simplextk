@@ -36,8 +36,6 @@
 #include <vector>
 #include <cstdint>
 
-#include "Internal.hpp"
-
 namespace simplex
 {
     template<typename ...Args> class Signal;

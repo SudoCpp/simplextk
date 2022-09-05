@@ -36,6 +36,8 @@
 #include "StreamReader.hpp"
 #include <sstream>
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class string;
@@ -44,12 +46,14 @@ namespace simplex
         mutable std::stringstream buffer;
 		
         public:
-        virtual bool readString(string& str, uint32_t numberOfCharacters);
-        virtual bool readType(void* value, size_t typeSize);
-        virtual bool readLine(string &str);
-        virtual void rewind(uint32_t numberOfCharacters);
+        virtual bool readString(out string& str, in uint32_t numberOfCharacters);
+        virtual bool readType(out ownership void* value, in size_t typeSize);
+        virtual bool readLine(out string &str);
+        virtual void rewind(in uint32_t numberOfCharacters);
         virtual void rewind();
 	};
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_CONSOLEREADER_HPP

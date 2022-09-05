@@ -36,20 +36,24 @@
 #include "object.hpp"
 #include <string.h>
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class string;
 	class StreamReader : public object
 	{
 		public:
-        virtual bool readString(string& str, uint32_t numberOfCharacters) = 0;
+        virtual bool readString(out string& str, in uint32_t numberOfCharacters) = 0;
         // Not a template so that abstraction is emforced
-        virtual bool readType(void* value, size_t typeSize) = 0;
-        virtual bool readLine(string& str) = 0;
-        virtual void rewind(uint32_t numberOfCharacters) = 0;
+        virtual bool readType(out void* value, in size_t typeSize) = 0;
+        virtual bool readLine(out string& str) = 0;
+        virtual void rewind(in uint32_t numberOfCharacters) = 0;
         virtual void rewind() = 0;
         virtual ~StreamReader() = default;
 	};
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_STREAMREADER_HPP

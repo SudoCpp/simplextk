@@ -30,13 +30,13 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SIMPLEX_INTERNAL_HPP
-#define SIMPLEX_INTERNAL_HPP
-
-#ifndef SIMPLEXTK_HPP
-    #define _internal public
-#else
-    #define _internal private
-#endif
-
-#endif //SIMPLEX_INTERNAL_HPP
+#ifdef __FORMATTINGDECORATIONS_HPP__
+#undef in
+#undef inout
+#undef out
+#undef nullable
+#undef ownership
+#undef slots
+#undef internal
+#undef __FORMATTINGDECORATIONS_HPP__
+#endif //__FORMATTINGDECORATIONS_HPP__

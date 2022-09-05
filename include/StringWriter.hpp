@@ -36,15 +36,19 @@
 #include "StreamWriter.hpp"
 #include "string.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class StringWriter : public StreamWriter
     {
         public:
-        void write(const string& toWrite);
+        void write(in const string& toWrite);
         string toString();
-        virtual void writeType(void* value, size_t typeSize);
+        virtual void writeType(in void* value, in size_t typeSize);
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_STRINGWRITER_HPP

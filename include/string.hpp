@@ -36,6 +36,8 @@
 #include <string>
 #include "object.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
 	template<typename ArrayMemberType> class Array;
@@ -47,29 +49,29 @@ namespace simplex
 	public:
 		//Constructors
         string();
-        string(const char* str);
-        string(const wchar_t* str);
-        string(const ::std::string& str);
-        string(const ::std::string* str);
-        string(const char* character, uint16_t repetition);
-        string(const char& character, uint16_t repetition);
-        string(const string& str);
-        string(const string* str);
+        string(in const char* str);
+        string(in const wchar_t* str);
+        string(in const ::std::string& str);
+        string(in const ::std::string* str);
+        string(in const char* character, in uint16_t repetition);
+        string(in const char& character, in uint16_t repetition);
+        string(in const string& str);
+        string(in const string* str);
         virtual ~string() = default;
 
-        static string FromSingleCharacter(char character);
+        static string FromSingleCharacter(in char character);
 
-        static string FromNumber(int8_t number);
-        static string FromNumber(int16_t number);
-        static string FromNumber(int32_t number);
-        static string FromNumber(int64_t number);
-        static string FromNumber(uint8_t number);
-        static string FromNumber(uint16_t number);
-        static string FromNumber(uint32_t number);
-        static string FromNumber(uint64_t number);
-        static string FromNumber(float number, const int32_t precision);
-        static string FromNumber(double number, const int32_t precision);
-        static string FromNumber(long double number, const int32_t precision);
+        static string FromNumber(in int8_t number);
+        static string FromNumber(in int16_t number);
+        static string FromNumber(in int32_t number);
+        static string FromNumber(in int64_t number);
+        static string FromNumber(in uint8_t number);
+        static string FromNumber(in uint16_t number);
+        static string FromNumber(in uint32_t number);
+        static string FromNumber(in uint64_t number);
+        static string FromNumber(in float number, in const int32_t precision);
+        static string FromNumber(in double number, in const int32_t precision);
+        static string FromNumber(in long double number, in const int32_t precision);
 
         template<typename NumberType>
         NumberType toNumber() const;
@@ -93,28 +95,28 @@ namespace simplex
         ::std::string toStdString() const noexcept;
         const char* toCString() const noexcept;
         int32_t length() const noexcept;
-        int32_t indexOf(const string& subString) const noexcept;
-        int32_t indexOf(const string& subString, int32_t offset) const noexcept;
-        int32_t lastIndexOf(const string& subString) const noexcept;
-        int32_t indexOf(const char character) const noexcept;
-        int32_t indexOf(const char character, int32_t offset) const noexcept;
-        int32_t lastIndexOf(const char character) const noexcept;
-        bool contains(const string& subString) const noexcept;
-        int32_t containsCount(const string& subString) const noexcept;
-        string replace(const string& find, const string& replace) noexcept;
-        Array<string> split(const char characterToSplit) const noexcept;
-        string subString(uint32_t start) const;
-        string subString(uint32_t start, uint32_t lengthOfSub) const;
+        int32_t indexOf(in const string& subString) const noexcept;
+        int32_t indexOf(in const string& subString, in int32_t offset) const noexcept;
+        int32_t lastIndexOf(in const string& subString) const noexcept;
+        int32_t indexOf(in const char character) const noexcept;
+        int32_t indexOf(in const char character, in int32_t offset) const noexcept;
+        int32_t lastIndexOf(in const char character) const noexcept;
+        bool contains(in const string& subString) const noexcept;
+        int32_t containsCount(in const string& subString) const noexcept;
+        string replace(in const string& find, in const string& replace) noexcept;
+        Array<string> split(in const char characterToSplit) const noexcept;
+        string subString(in uint32_t start) const;
+        string subString(in uint32_t start, in uint32_t lengthOfSub) const;
         string trim() const noexcept;
         string trimBeginning() const noexcept;
         string trimEnd() const noexcept;
 
         virtual size_t getHash() const noexcept;
 
-        static string Join(Array<string> array, const string& joiningDivider);
+        static string Join(in Array<string> array, in const string& joiningDivider);
 
         private:
-        static ::std::string autoNarrow(const wchar_t *original);
+        static ::std::string autoNarrow(in const wchar_t *original);
     };
 }
 
@@ -125,5 +127,7 @@ template<> struct std::hash<simplex::string>
         return str.getHash();
     }
 };
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_STRING_HPP

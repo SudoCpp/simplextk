@@ -36,20 +36,22 @@
 #include "string.hpp"
 #include "Array.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class TreeNode : public object
     {
         TreeNode* parent;
-        Array<TreeNode*> ownership;
+        Array<TreeNode*> ownedPointers;
 
         public:
             string name;
             Array<TreeNode *> children;
 
-            TreeNode(string name);
+            TreeNode(in string name);
             virtual ~TreeNode();
-            virtual TreeNode &getChild(int32_t index) const;
+            virtual TreeNode &getChild(in int32_t index) const;
             int32_t numberOfChildren() const;
             // Go one level up
             virtual TreeNode &getParent() const;
@@ -71,7 +73,7 @@ namespace simplex
                 return (DerivedTreeNodeType&)addChildNode(node, true);
             }
             // Ownership can not be taken for objects created on the stack
-            virtual TreeNode &addChildNode(TreeNode *node, bool takeOnOwnership);
+            virtual TreeNode &addChildNode(in ownership TreeNode *node, in bool takeOnOwnership);
 
             int32_t getLevel() const;
 
@@ -80,12 +82,14 @@ namespace simplex
             // Delete this TreeNode and all children, returns parent
             void deleteNode();
             // Delete child node
-            virtual TreeNode &deleteChild(TreeNode *childPtr);
+            virtual TreeNode &deleteChild(in ownership TreeNode *childPtr);
             // Remove this TreeNode from Parent (must have a parent)
             virtual TreeNode *removeNode();
             // Remove a child from parent and return it's address
-            virtual TreeNode *removeChild(TreeNode *childPtr);
+            virtual TreeNode *removeChild(out ownership TreeNode *childPtr);
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_TREENODE_HPP

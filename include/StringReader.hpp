@@ -36,6 +36,8 @@
 #include "StreamReader.hpp"
 #include "string.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class StringReader : public StreamReader
@@ -44,13 +46,15 @@ namespace simplex
         uint32_t position;
         
 		public:
-        StringReader(const string& data);
-        virtual bool readString(string& str, uint32_t numberOfCharacters);
-        virtual bool readType(void* value, size_t typeSize);
-        virtual bool readLine(string &str);
-        virtual void rewind(uint32_t numberOfCharaters);
+        StringReader(in const string& data);
+        virtual bool readString(out string& str, in uint32_t numberOfCharacters);
+        virtual bool readType(out void* value, in size_t typeSize);
+        virtual bool readLine(out string &str);
+        virtual void rewind(in uint32_t numberOfCharaters);
         virtual void rewind();
 	};
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_STRINGREADER_HPP

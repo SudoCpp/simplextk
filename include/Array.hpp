@@ -39,6 +39,9 @@
 #include <string>
 #include "Exception.hpp"
 
+//Must Be Last
+#include "FormattingDecorations.hpp"
+
 #define __class__ "simplex::Array"
 
 namespace simplex
@@ -53,14 +56,14 @@ namespace simplex
         template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
         Array() : deletePointersOnDestruction{false}, isACopy{false} {}
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
-        Array(bool deletePointersOnDestruction) : deletePointersOnDestruction{deletePointersOnDestruction},
+        Array(in bool deletePointersOnDestruction) : deletePointersOnDestruction{deletePointersOnDestruction},
         isACopy{false} {}
-        Array(::std::initializer_list<ArrayMemberType> iList);
-        Array(int32_t arraySize, char *characterArray[]);
-        Array(int32_t arraySize, ArrayMemberType nativeArray[]);
-        Array(::std::vector<ArrayMemberType> vectorObject);
+        Array(in ::std::initializer_list<ArrayMemberType> iList);
+        Array(in int32_t arraySize, in char *characterArray[]);
+        Array(in int32_t arraySize, in ArrayMemberType nativeArray[]);
+        Array(in ::std::vector<ArrayMemberType> vectorObject);
 
-        Array(const Array& original)
+        Array(in const Array& original)
         {
             // If a copy is made for example for a function, don't delete pointers when copy is destroyed
             deletePointersOnDestruction = false;
@@ -68,7 +71,7 @@ namespace simplex
             isACopy = true;
             array_ = original.array_;
         }
-        Array &operator=(const Array &original)
+        Array &operator=(in const Array &original)
         {
             // If a copy is made for example for a function, don't delete pointers when copy is destroyed
             deletePointersOnDestruction = false;
@@ -77,7 +80,7 @@ namespace simplex
             array_ = original.array_;
             return *this;
         }
-        Array(Array&& original) noexcept
+        Array(in Array&& original) noexcept
         {
             // If a copy is made for example for a function, don't delete pointers when copy is destroyed
             deletePointersOnDestruction = false;
@@ -85,7 +88,7 @@ namespace simplex
             isACopy = false;
             array_ = original.array_;
         }
-        Array &operator=(Array&& original) noexcept
+        Array &operator=(in Array&& original) noexcept
         {
             // If a copy is made for example for a function, don't delete pointers when copy is destroyed
             deletePointersOnDestruction = false;
@@ -102,30 +105,30 @@ namespace simplex
         }
 
         // Operators
-        ArrayMemberType operator[](int32_t index) const;
-        ArrayMemberType &operator[](int32_t index);
+        ArrayMemberType operator[](in int32_t index) const;
+        ArrayMemberType &operator[](in int32_t index);
 
         // Methods
-        Array<ArrayMemberType> &add(ArrayMemberType &value) noexcept;
-        Array<ArrayMemberType> &add(ArrayMemberType &&value) noexcept;
-        Array<ArrayMemberType> &add(ArrayMemberType *value) noexcept;
-        Array<ArrayMemberType> &add(ArrayMemberType value, int32_t index);
-        Array<ArrayMemberType> &add(::std::initializer_list<ArrayMemberType> iList) noexcept;
+        Array<ArrayMemberType> &add(in ArrayMemberType &value) noexcept;
+        Array<ArrayMemberType> &add(in ArrayMemberType &&value) noexcept;
+        Array<ArrayMemberType> &add(in ArrayMemberType *value) noexcept;
+        Array<ArrayMemberType> &add(in ArrayMemberType value, int32_t index);
+        Array<ArrayMemberType> &add(in ::std::initializer_list<ArrayMemberType> iList) noexcept;
         //Just having a signature with Array<ArrayMemberType> would try to automatically 
         //create an empty array of the correct type when the wrong type was being added.
         template <typename T = ArrayMemberType>
-        Array<T> &add(Array<T> arrayValues) noexcept
+        Array<T> &add(in Array<T> arrayValues) noexcept
         {
             array_.insert(array_.end(), arrayValues.begin(), arrayValues.end());
             return *this;
         }
-        Array<ArrayMemberType> &add(::std::vector<ArrayMemberType> arrayValues) noexcept;
+        Array<ArrayMemberType> &add(in ::std::vector<ArrayMemberType> arrayValues) noexcept;
 
-        static Array<ArrayMemberType> FromVector(::std::vector<ArrayMemberType> vectorObject) noexcept;
+        static Array<ArrayMemberType> FromVector(in ::std::vector<ArrayMemberType> vectorObject) noexcept;
         std::vector<ArrayMemberType> toVector() const noexcept;
 
-        ArrayMemberType &at(int32_t index);
-        ArrayMemberType at(int32_t index) const;
+        ArrayMemberType &at(in int32_t index);
+        ArrayMemberType at(in int32_t index) const;
 
         template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
         Array<ArrayMemberType> &clear() noexcept
@@ -135,7 +138,7 @@ namespace simplex
         }
 
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
-        Array<ArrayMemberType> &clear(bool deletePointers) noexcept
+        Array<ArrayMemberType> &clear(in bool deletePointers) noexcept
         {
             if(deletePointers)
                 internalPointerDelete();
@@ -150,18 +153,18 @@ namespace simplex
             return clear();
         }
 
-        Array<ArrayMemberType> getPartialArray(int32_t start) const;
-        Array<ArrayMemberType> getPartialArray(int32_t start, int32_t count) const;
+        Array<ArrayMemberType> getPartialArray(in int32_t start) const;
+        Array<ArrayMemberType> getPartialArray(in int32_t start, in int32_t count) const;
         
-        bool contains(const ArrayMemberType& value) const;
-        int32_t containsCount(const ArrayMemberType& value) const;
-        int32_t indexOf(const ArrayMemberType& value) const;
-        int32_t lastIndexOf(const ArrayMemberType& value) const;
+        bool contains(in const ArrayMemberType& value) const;
+        int32_t containsCount(in const ArrayMemberType& value) const;
+        int32_t indexOf(in const ArrayMemberType& value) const;
+        int32_t lastIndexOf(in const ArrayMemberType& value) const;
         ArrayMemberType pop();
         Array<ArrayMemberType>& push(ArrayMemberType& value);
         
         template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
-        Array<ArrayMemberType> &remove(const ArrayMemberType &value) noexcept
+        Array<ArrayMemberType> &remove(in const ArrayMemberType &value) noexcept
         {
             int32_t arraySize = size();
             for (int32_t loop = 0; loop < arraySize; loop++)
@@ -175,7 +178,7 @@ namespace simplex
         }
 
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
-        Array<ArrayMemberType> &remove(const ArrayMemberType &value, bool deletePointers) noexcept
+        Array<ArrayMemberType> &remove(in const ArrayMemberType &value, in bool deletePointers) noexcept
         {
             int32_t arraySize = size();
             for (int32_t loop = 0; loop < arraySize; loop++)
@@ -196,7 +199,7 @@ namespace simplex
         }
 
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
-        Array<ArrayMemberType> &removeAll(bool deletePointers) noexcept
+        Array<ArrayMemberType> &removeAll(in bool deletePointers) noexcept
         {
             if (deletePointers && isACopy)
                 throw Exception("You are attempting to delete all the pointers from this Array, but this Array is a copy. When the original is cleaned up, it will probably attempt to double delete and create a memory error.", __ExceptionParams__);
@@ -207,13 +210,13 @@ namespace simplex
         }
 
         template <typename T = ArrayMemberType, std::enable_if_t<!std::is_pointer<T>::value, bool> = true>
-        Array<ArrayMemberType> &removeAt(int32_t index)
+        Array<ArrayMemberType> &removeAt(in int32_t index)
         {
             array_.erase(array_.begin() + index);
             return *this;
         }
         template <typename T = ArrayMemberType, std::enable_if_t<std::is_pointer<T>::value, bool> = true>
-        Array<ArrayMemberType> &removeAt(int32_t index, bool deletePointer)
+        Array<ArrayMemberType> &removeAt(in int32_t index, in bool deletePointer)
         {
             if (deletePointer && isACopy)
                 throw Exception("You are attempting to delete a pointer from this Array, but this Array is a copy. When the original is cleaned up, it will probably attempt to double delete and create a memory error.", __ExceptionParams__);
@@ -223,7 +226,7 @@ namespace simplex
             return *this;
         }
         
-        Array<ArrayMemberType>& reserveSpace(size_t spaceToReserve);
+        Array<ArrayMemberType>& reserveSpace(in size_t spaceToReserve);
         
         Array<ArrayMemberType>& reverse();
         Array<ArrayMemberType>& reverseSort();
@@ -505,5 +508,7 @@ namespace simplex
 }
 
 #undef __class__
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_ARRAY_HPP

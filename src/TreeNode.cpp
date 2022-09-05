@@ -37,7 +37,7 @@
 
 namespace simplex
 {
-        TreeNode::TreeNode(string name) : parent{nullptr}, ownership{true}, name{name}, children{false} {}
+        TreeNode::TreeNode(string name) : parent{nullptr}, ownedPointers{true}, name{name}, children{false} {}
         TreeNode::~TreeNode()
         {}
         
@@ -103,7 +103,7 @@ namespace simplex
                 node->parent = this;
                 children.add(node);
                 if(takeOnOwnership)
-                    ownership.add(node);
+                    ownedPointers.add(node);
                 return *node;
             }
             else
@@ -137,7 +137,7 @@ namespace simplex
         TreeNode& TreeNode::deleteChild(TreeNode* childPtr)
         {
             removeChild(childPtr);
-            if(ownership.contains(childPtr))
+            if(ownedPointers.contains(childPtr))
                 delete childPtr;
             return *this;
         }

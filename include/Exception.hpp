@@ -40,6 +40,8 @@
 #include <exception>
 #include "string.hpp"
 
+#include "FormattingDecorations.hpp"
+
 #define __ExceptionParams__ __FILE__, __LINE__, __class__, __func__
 
 namespace simplex
@@ -60,7 +62,7 @@ namespace simplex
         const string text;
 
     public:
-        Exception(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName);
+        Exception(in const string text, in const char* fileName, in const int32_t lineNumber, in const char* className, in const char* methodName);
         virtual ~Exception() = default;
         virtual const char* what() const throw ();
         string toString() const noexcept;
@@ -69,23 +71,25 @@ namespace simplex
 	class IndexOutOfBoundsException : public Exception
 	{
 		public:
-            IndexOutOfBoundsException(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName);
+            IndexOutOfBoundsException(in const string text, in const char* fileName, in const int32_t lineNumber, in const char* className, in const char* methodName);
             virtual ~IndexOutOfBoundsException() = default;
 	};
 
 	class NotImplementedException : public Exception
 	{
 		public:
-            NotImplementedException(const char* fileName, const int32_t lineNumber, const char* className, const char* methodName);
+            NotImplementedException(in const char* fileName, in const int32_t lineNumber, in const char* className, in const char* methodName);
             virtual ~NotImplementedException() = default;
 	};
 
 	class NullException : public Exception
 	{
 		public:
-            NullException(const string text, const char* fileName, const int32_t lineNumber, const char* className, const char* methodName);
+            NullException(in const string text, in const char* fileName, in const int32_t lineNumber, in const char* className, in const char* methodName);
             virtual ~NullException() = default;
 	};
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_EXCEPTION_HPP

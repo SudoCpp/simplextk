@@ -39,6 +39,8 @@
 #include "Exception.hpp"
 #include "Array.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class DatabaseException : public Exception
@@ -55,14 +57,14 @@ namespace simplex
     {
         public:
         const string statementQuery;
-        DatabaseStatement(const string& statementQuery) 
+        DatabaseStatement(in const string& statementQuery) 
         : statementQuery{statementQuery}
         {}
         virtual ~DatabaseStatement() = default;
-        virtual DatabaseStatement& bind(const string& text) = 0;
-        virtual DatabaseStatement& bind(int32_t number) = 0;
-        virtual DatabaseStatement& bind(double number) = 0;
-        virtual DatabaseStatement& bind(const char* blob, int32_t blobSize) = 0;
+        virtual DatabaseStatement& bind(in const string& text) = 0;
+        virtual DatabaseStatement& bind(in int32_t number) = 0;
+        virtual DatabaseStatement& bind(in double number) = 0;
+        virtual DatabaseStatement& bind(in const char* blob, in int32_t blobSize) = 0;
         //Relying on RVO 
         virtual DataTable execute() = 0;
     };
@@ -74,7 +76,7 @@ namespace simplex
         string password;
         string databaseAddress;
         string databaseName;
-        DatabaseCredentials(const string& username, const string& password,
+        DatabaseCredentials(in const string& username, in const string& password,
          const string& databaseAddress, const string& databaseName) 
         : username{username}, password{password}, databaseAddress{databaseAddress}, databaseName{databaseName} 
         {}
@@ -84,20 +86,22 @@ namespace simplex
     {
         DatabaseCredentials credentials;
         public:
-        Database(const DatabaseCredentials& connectionSettings) 
+        Database(in const DatabaseCredentials& connectionSettings) 
         : credentials{connectionSettings}, statements{true}
         {}
         virtual ~Database() {}
         
-        virtual DataTable query(const string& sqlQuery) = 0;
-        virtual DatabaseStatement& prepare(const string& sqlQuery) = 0;
+        virtual DataTable query(in const string& sqlQuery) = 0;
+        virtual DatabaseStatement& prepare(in const string& sqlQuery) = 0;
         virtual Array<string> getTableNames() = 0;
-        virtual Array<string> getColumnNames(const string& tableName) = 0;
-        virtual string getColumnType(const string& tableName, const string& columnName) = 0;
+        virtual Array<string> getColumnNames(in const string& tableName) = 0;
+        virtual string getColumnType(in const string& tableName, in const string& columnName) = 0;
 
         protected:
         Array<DatabaseStatement*> statements;
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_DATABASE_HPP

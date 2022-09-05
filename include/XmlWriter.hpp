@@ -38,6 +38,8 @@
 #include "string.hpp"
 #include "Dictionary.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     enum class XmlEncoding
@@ -49,16 +51,16 @@ namespace simplex
     class XmlWriter : public object
     {
         public:
-        XmlWriter(StreamWriter& stream);
+        XmlWriter(in StreamWriter& stream);
         ~XmlWriter();
         void close();
-        void createElement(string elementName);
+        void createElement(in string elementName);
         void createEndElement();
-        void addAttribute(const string& attributeName, const string& attributeValue);
-        void addAttributes(const Dictionary<string, string>& attributes);
-        void addValue(const string& value);
-        void writeXMLDeclaration(const string &versionNumber, XmlEncoding encoding);
-        void addXMLString(const string &xml);
+        void addAttribute(in const string& attributeName, in const string& attributeValue);
+        void addAttributes(in const Dictionary<string, string>& attributes);
+        void addValue(in const string& value);
+        void writeXMLDeclaration(in const string &versionNumber, in XmlEncoding encoding);
+        void addXMLString(in const string &xml);
 
     private:
         StreamWriter &stream;
@@ -71,5 +73,6 @@ namespace simplex
     };
 }
 
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_XMLWRITER_HPP

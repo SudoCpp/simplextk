@@ -30,40 +30,20 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SIMPLEX_STREAMWRITER_HPP
-#define SIMPLEX_STREAMWRITER_HPP
-
-#include "object.hpp"
-#include "string.hpp"
-#include <string.h>
-#include "Array.hpp"
-
-#include "FormattingDecorations.hpp"
-
-namespace simplex
-{
-    class StreamWriter : public object
-	{
-        protected:
-            string data;
-        
-		public:
-			virtual void writeLine(in const string& toWrite)
-            {
-                write(toWrite + "\n");
-            }
-			virtual void write(in const string& toWrite) = 0;
-			// Not a template to force method to children.
-            virtual void writeType(in void* value, in size_t typeSize) = 0;
-            virtual void writeAllLines(in const Array<string>& lines)
-            {
-                for(string line : lines)
-                    writeLine(line);
-            }
-            virtual ~StreamWriter() = default;
-	};
-}
-
-#include "EndFormattingDecorations.hpp"
-
-#endif // SIMPLEX_STREAMWRITER_HPP
+#ifndef __FORMATTINGDECORATIONS_HPP__
+#define __FORMATTINGDECORATIONS_HPP__
+#define in
+#define inout
+#define out
+#define nullable
+#define ownership
+#define slots
+//This needs to be set to the definition of the include all header
+#ifdef SIMPLEXTK_HPP
+#define internal private
+#else
+#define internal public
+#endif
+#else
+#error "FormattingDecorations must be included after all other includes or last includer needs to include EndFormattingDecorations at the end."
+#endif //__FORMATTINGDECORATIONS_HPP__

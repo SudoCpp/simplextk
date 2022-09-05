@@ -38,12 +38,14 @@
 #include "string.hpp"
 #include "Dictionary.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class XmlReader : public object
     {
         public:
-        XmlReader(StreamReader& stream);
+        XmlReader(in StreamReader& stream);
         bool read();
 
         string name;
@@ -53,7 +55,7 @@ namespace simplex
         bool isValue;
         
         private:
-        void addAttribute(string name, string value);
+        void addAttribute(in string name, in string value);
 
         StreamReader& stream;
         bool inElement;
@@ -68,5 +70,7 @@ namespace simplex
         bool nextIsEnd;
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_XMLREADER_HPP

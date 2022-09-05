@@ -37,6 +37,8 @@
 #include "Array.hpp"
 #include "Exception.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     template<typename KeyType, typename ValueType>
@@ -52,11 +54,11 @@ namespace simplex
         Dictionary(::std::initializer_list<::std::pair<KeyType const, ValueType>> bracedPairs);
 
         //Operators
-        ValueType operator [](const KeyType& key) const;
-        ValueType& operator [](const KeyType& key);
+        ValueType operator [](in const KeyType& key) const;
+        ValueType& operator [](in const KeyType& key);
 
         //Methods
-        Dictionary<KeyType, ValueType>& add(KeyType key, ValueType value);
+        Dictionary<KeyType, ValueType>& add(in KeyType key, in ValueType value);
         Dictionary<KeyType, ValueType>&  add(::std::initializer_list<::std::pair<KeyType, ValueType>> bracedPairs);
         ValueType& at(const KeyType& key);
         ValueType at(const KeyType& key) const;
@@ -72,7 +74,7 @@ namespace simplex
         Array<ValueType> values() const;
 
         //Standard c++ aliases
-        Dictionary<KeyType, ValueType>& insert(KeyType key, ValueType value);
+        Dictionary<KeyType, ValueType>& insert(in KeyType key, in ValueType value);
         int32_t size() const;
 
         auto begin() const
@@ -250,5 +252,7 @@ namespace simplex
 }
 
 #undef __class__
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_DICTIONARY_HPP

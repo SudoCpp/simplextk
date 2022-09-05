@@ -35,19 +35,23 @@
 
 #include <cstdint>
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class string;
     namespace Console
 	{
-        string Prompt(const string& toWrite);
-        string Read(uint32_t numberOfCharacters);
+        string Prompt(in const string& toWrite);
+        string Read(in uint32_t numberOfCharacters);
         string ReadLine();
-        void WriteLine(const string& toWrite);
-        void Write(const string& toWrite);
-        void WriteErrorLine(const string& toWrite);
-        void WriteError(const string& toWrite);
+        void WriteLine(in const string& toWrite);
+        void Write(in const string& toWrite);
+        void WriteErrorLine(in const string& toWrite);
+        void WriteError(in const string& toWrite);
 	};
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_CONSOLE_HPP

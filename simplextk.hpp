@@ -45,7 +45,6 @@
 #include "include/FileReader.hpp"
 #include "include/FileSystem.hpp"
 #include "include/FileWriter.hpp"
-#include "include/Internal.hpp"
 #include "include/Logger.hpp"
 #include "include/Math.hpp"
 #include "include/object.hpp"
@@ -66,5 +65,4 @@
 #include "include/XmlReader.hpp"
 #include "include/XmlWriter.hpp"
 
-#undef _internal
 #endif //SIMPLEXTK_HPP

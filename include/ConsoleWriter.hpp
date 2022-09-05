@@ -35,6 +35,8 @@
 
 #include "StreamWriter.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class string;
@@ -42,9 +44,11 @@ namespace simplex
     class ConsoleWriter : public StreamWriter
     {
         public:
-        virtual void write(const string& toWrite);
-        virtual void writeType(void* value, size_t typeSize);
+        virtual void write(in const string& toWrite);
+        virtual void writeType(in void* value, in size_t typeSize);
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_CONSOLEWRITER_HPP

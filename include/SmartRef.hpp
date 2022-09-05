@@ -36,6 +36,8 @@
 #include "object.hpp"
 #include "Array.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     template<typename classType>
@@ -81,7 +83,7 @@ namespace simplex
     template<typename classType>
     SmartRef<classType>::SmartRef() : managed(false) {}
     template<typename classType>
-    SmartRef<classType>::SmartRef(classType* pointer) : pointer(pointer), managed(true) {}
+    SmartRef<classType>::SmartRef(in ownership classType* pointer) : pointer(pointer), managed(true) {}
 
     template<typename classType>
     SmartRef<classType>::~SmartRef()
@@ -97,14 +99,14 @@ namespace simplex
     }
 
     template<typename classType>
-    classType* SmartRef<classType>::stopManaging()
+    ownership classType* SmartRef<classType>::stopManaging()
     {
         managed = false;
         return pointer;
     }
 
     template<typename classType>
-    classType& SmartRef<classType>::startManaging(classType* pointer)
+    classType& SmartRef<classType>::startManaging(in ownership classType* pointer)
     {
         if(!managed)
         {
@@ -120,5 +122,7 @@ namespace simplex
 }
 
 #undef __class__
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_SMARTREF_HPP

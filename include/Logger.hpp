@@ -39,6 +39,8 @@
 
 #define __class__ "simplex::Logger"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     #define __LoggerLocationInformation__ string{" In file: '"} + __FILE__ + "' on line: '" + __LINE__ + "'"
@@ -67,9 +69,9 @@ namespace simplex
         static bool loggerRunning;
         static Logger* instance;
 
-        Logger(StreamWriter* stream, bool takeOnOwnership);
-        Logger(StreamWriter* debugStream, StreamWriter* infoStream, StreamWriter* warningStream, 
-            StreamWriter* errorStream, StreamWriter* fatalErrorStream, bool takeOnOwnership);
+        Logger(inout ownership StreamWriter* stream, in bool takeOnOwnership);
+        Logger(inout ownership StreamWriter* debugStream, inout ownership StreamWriter* infoStream, inout ownership StreamWriter* warningStream, 
+            inout ownership StreamWriter* errorStream, inout ownership StreamWriter* fatalErrorStream, in bool takeOnOwnership);
 
         public:
         static LoggerLevel DisplayLevel;
@@ -78,22 +80,22 @@ namespace simplex
         virtual ~Logger();
 
         // Specify each stream for each logging type. Creating with pointers means logger will take over ownership
-        static void CreateLogger(StreamWriter* debugStream, StreamWriter* infoStream, 
-            StreamWriter* warningStream, StreamWriter* errorStream, StreamWriter* fatalErrorStream, 
-            LoggerLevel displayLevel = LoggerLevel::On);
+        static void CreateLogger(inout ownership StreamWriter* debugStream, inout ownership StreamWriter* infoStream, 
+            inout ownership StreamWriter* warningStream, inout ownership StreamWriter* errorStream, inout ownership StreamWriter* fatalErrorStream, 
+            in LoggerLevel displayLevel = LoggerLevel::On);
         // Specify each stream for each logging type. Creating with references means you manage steam memory.
-        static void CreateLogger(StreamWriter& debugStream, StreamWriter& infoStream, 
-            StreamWriter& warningStream, StreamWriter& errorStream, StreamWriter& fatalErrorStream, 
-            LoggerLevel displayLevel = LoggerLevel::On);
+        static void CreateLogger(inout StreamWriter& debugStream, inout StreamWriter& infoStream, 
+            inout StreamWriter& warningStream, inout StreamWriter& errorStream, inout StreamWriter& fatalErrorStream, 
+            in LoggerLevel displayLevel = LoggerLevel::On);
         // Specify one stream for all the logging to take place on. Creating with pointer means it will take over ownership.
-        static void CreateLogger(StreamWriter* stream, LoggerLevel displayLevel = LoggerLevel::On);
+        static void CreateLogger(inout ownership StreamWriter* stream, in LoggerLevel displayLevel = LoggerLevel::On);
         // Specify one stream for all the logging to take place on. Creating with reerences means you manage stream memory.
-        static void CreateLogger(StreamWriter& stream, LoggerLevel displayLevel = LoggerLevel::On);
-        static void LogDebug(const string& message);
-        static void LogInfo(const string& message);
-        static void LogWarning(const string& message);
-        static void LogError(const string& message);
-        static void LogFatalError(const string& message);
+        static void CreateLogger(inout StreamWriter& stream, in LoggerLevel displayLevel = LoggerLevel::On);
+        static void LogDebug(in const string& message);
+        static void LogInfo(in const string& message);
+        static void LogWarning(in const string& message);
+        static void LogError(in const string& message);
+        static void LogFatalError(in const string& message);
         static void UnpauseLogger();
         static void PauseLogger();
 
@@ -101,5 +103,7 @@ namespace simplex
         static string GetDateTime();
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 #undef __class__
 #endif //SIMPLEX_LOGGER_HPP

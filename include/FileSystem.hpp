@@ -36,27 +36,31 @@
 #include "string.hpp"
 #include "Array.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     namespace FileSystem
     {
         extern string PathSeparator;
-        void CopyFile(const string& filePath, const string& newFilePath);
-        void CreateDirectory(const string& fullPath);
-        void DeleteDirectory(const string& filePath);
-        void DeleteFile(const string& filePath);
-        bool Exists(const string &path);
-        Array<string> GetDirectories(const string& fullPath);
-        string GetExtension(const string& fullPath);
-        string GetFileName(string fullPath);
-        string GetFileNameWithoutExtension(string fullPath);
-        string GetFilePath(string fullPath);
-        string GetFilePathUpOneLevel(string fullPath);
-        Array<string> GetFiles(const string& fullPath);
-        bool IsDirectory(string fullPath);
-        void MoveFile(const string& oldFilePath, const string& newFilePath);
-        void RenameFile(const string& oldFilePath, const string& newFilePath);
+        void CopyFile(in const string& filePath, in const string& newFilePath);
+        void CreateDirectory(in const string& fullPath);
+        void DeleteDirectory(in const string& filePath);
+        void DeleteFile(in const string& filePath);
+        bool Exists(in const string &path);
+        Array<string> GetDirectories(in const string& fullPath);
+        string GetExtension(in const string& fullPath);
+        string GetFileName(in string fullPath);
+        string GetFileNameWithoutExtension(in string fullPath);
+        string GetFilePath(in string fullPath);
+        string GetFilePathUpOneLevel(in string fullPath);
+        Array<string> GetFiles(in const string& fullPath);
+        bool IsDirectory(in string fullPath);
+        void MoveFile(in const string& oldFilePath, in const string& newFilePath);
+        void RenameFile(in const string& oldFilePath, in const string& newFilePath);
     }
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif //SIMPLEX_FILESYSTEM_HPP
