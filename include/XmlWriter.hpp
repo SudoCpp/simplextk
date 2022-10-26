@@ -48,10 +48,24 @@ namespace simplex
         utf16
     };
 
-    class XmlWriter : public object
+    class XmlWriterSettings : public object
     {
         public:
+            string xmlVersionNumber;
+            XmlEncoding xmlEncoding;
+            string indentionCharacters;
+            bool valueOnNewLine;
+
+            XmlWriterSettings() 
+                : xmlVersionNumber{"1.0"}, xmlEncoding{XmlEncoding::utf8}, 
+                indentionCharacters{"\t"}, valueOnNewLine{true} {}
+    };
+
+    class XmlWriter : public object
+    {
+    public:
         XmlWriter(in StreamWriter& stream);
+        XmlWriter(in StreamWriter& stream, in XmlWriterSettings settings);
         ~XmlWriter();
         void close();
         void createElement(in string elementName);
@@ -59,17 +73,20 @@ namespace simplex
         void addAttribute(in const string& attributeName, in const string& attributeValue);
         void addAttributes(in const Dictionary<string, string>& attributes);
         void addValue(in const string& value);
-        void writeXMLDeclaration(in const string &versionNumber, in XmlEncoding encoding);
+        void writeXMLDeclaration();
         void addXMLString(in const string &xml);
 
     private:
+        XmlWriterSettings settings;
         StreamWriter &stream;
         uint16_t levelDeep;
         bool creatingElement;
         string buffer;
         Array<string> elements;
+        bool valueAddedToElement;
 
         void writeBuffer();
+        string indentation();
     };
 }
 

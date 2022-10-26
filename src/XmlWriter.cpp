@@ -39,7 +39,8 @@
 
 namespace simplex
 {
-    XmlWriter::XmlWriter(StreamWriter &stream) : stream(stream), levelDeep{0}, creatingElement{false} {}
+    XmlWriter::XmlWriter(StreamWriter &stream) : settings{}, stream(stream), levelDeep{0}, creatingElement{false}, valueAddedToElement{false} {}
+    XmlWriter::XmlWriter(StreamWriter &stream, XmlWriterSettings settings) : settings{settings}, stream(stream), levelDeep{0}, creatingElement{false}, valueAddedToElement{false} {}
 
     XmlWriter::~XmlWriter() { close(); }
 
@@ -54,7 +55,7 @@ namespace simplex
         if (creatingElement)
             writeBuffer();
         creatingElement = true;
-        buffer = string{'\t', levelDeep} + "<" + elementName;
+        buffer = indentation() + "<" + elementName;
         levelDeep++;
         elements.push(elementName);
     }
@@ -71,7 +72,15 @@ namespace simplex
             elements.pop();
         }
         else if (elements.size() > 0)
-            stream.writeLine(string{'\t', levelDeep} + "</" + elements.pop() + ">");
+        {
+            if(!settings.valueOnNewLine && valueAddedToElement)
+            {
+                stream.writeLine("</" + elements.pop() + ">");
+                valueAddedToElement = false;
+            }
+            else
+                stream.writeLine(indentation() + "</" + elements.pop() + ">");
+        }
         else
             throw IndexOutOfBoundsException{"No elements left to end.", __ExceptionParams__};
     }
@@ -92,9 +101,24 @@ namespace simplex
 
     void XmlWriter::addValue(const string &value)
     {
-        if (creatingElement)
-            writeBuffer();
-        stream.writeLine(string{'\t', levelDeep} + value);
+        if(settings.valueOnNewLine)
+        {
+            if (creatingElement)
+                writeBuffer();
+            stream.writeLine(indentation() + value);
+        }
+        else
+        {
+            if(creatingElement)
+            {
+                buffer += ">";
+                stream.write(buffer);
+                creatingElement = false;
+                buffer = "";
+            }
+            stream.write(value);
+            valueAddedToElement = true;
+        }
     }
 
     void XmlWriter::writeBuffer()
@@ -105,9 +129,17 @@ namespace simplex
         buffer = "";
     }
 
-    void XmlWriter::writeXMLDeclaration(const string &versionNumber, XmlEncoding encoding)
+    string XmlWriter::indentation()
     {
-        stream.writeLine("<?xml version=\"" + versionNumber + "\" encoding=\"" + (encoding == XmlEncoding::utf8 ? "utf-8" : "utf-16") + "\" ?>");
+        string indentation = "";
+        for (int loop = 0; loop < levelDeep; loop++)
+            indentation += settings.indentionCharacters;
+        return indentation;
+    }
+
+    void XmlWriter::writeXMLDeclaration()
+    {
+        stream.writeLine("<?xml version=\"" + settings.xmlVersionNumber + "\" encoding=\"" + (settings.xmlEncoding == XmlEncoding::utf8 ? "utf-8" : "utf-16") + "\" ?>");
     }
 
     void XmlWriter::addXMLString(const string &xml)
