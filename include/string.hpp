@@ -89,7 +89,9 @@ namespace simplex
         friend bool operator>(const string& leftHandSide, const string& rightHandSide);
         friend bool operator>=(const string& leftHandSide, const string& rightHandSide);
         string& operator+=(const string& rightHandSide);
+        string& operator+=(char rightHandSide);
         string& operator=(const string& rightHandSide);
+        char operator[](uint32_t index);
 
         //Outputs
         ::std::string toStdString() const noexcept;

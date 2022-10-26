@@ -97,14 +97,28 @@ namespace simplex
 
     string& string::operator+=(const string& rightHandSide)
     {
-        this->data += rightHandSide.data;
+        data += rightHandSide.data;
         return *this;
     }
 
-    string& string::operator=(const string& rightHandSide)
+    string& string::operator+=(char rightHandSide)
     {
-        this->data = rightHandSide.data;
+        data += rightHandSide;
         return *this;
+    }
+
+    string &string::operator=(const string &rightHandSide)
+    {
+        data = rightHandSide.data;
+        return *this;
+    }
+
+    char string::operator[](uint32_t index)
+    {
+        if(index >= length())
+            throw IndexOutOfBoundsException("Character index is out of bounds from string.", __ExceptionParams__);
+        else
+            return data[index];
     }
 
     string string::FromSingleCharacter(char character)
