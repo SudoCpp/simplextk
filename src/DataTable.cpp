@@ -32,6 +32,8 @@
 
 #include "DataTable.hpp"
 #include "Exception.hpp"
+#include "FileReader.hpp"
+#include "FileWriter.hpp"
 
 namespace simplex
 {
@@ -148,7 +150,8 @@ namespace simplex
     }
     DataTable& DataTable::addColumn(string columnName)
     {
-        for(auto row : rows)
+        columnNames.add(columnName);
+        for (auto row : rows)
             row->addColumn(columnName);
         return *this;
     }
@@ -160,6 +163,14 @@ namespace simplex
     {
         return *rows[index];
     }
+    Array<string> DataTable::getColumnNames() const
+    {
+        return columnNames;
+    }
+    Array<DataRow *> DataTable::getRows()
+    {
+        return rows;
+    }
     DataRow DataTable::operator[](int32_t index) const
     {
         return getRow(index);
@@ -168,5 +179,82 @@ namespace simplex
     {
         return getRow(index);
     }
-    #undef __class__
+    DataTable& DataTable::exportToCSV(StreamWriter& writer)
+    {
+        int numCols = columnNames.size();
+        for (int loop = 0; loop < numCols; loop++)
+            writer.write(convertToCSV(columnNames[loop], loop));
+        writer.write("\n");
+        
+        for (DataRow *row : rows)
+        {
+            for(int loop = 0; loop < numCols; loop++)
+                writer.write(convertToCSV(row->getCell(columnNames[loop]), loop));
+            writer.write("\n");
+        }
+        return *this;
+    }
+    DataTable *DataTable::ImportFromCSV(StreamReader &reader)
+    {
+        DataTable *table = new DataTable{};
+        string line;
+        Array<string> fields{};
+        bool headerComplete = false;
+        string fieldValue = "";
+        bool inQuote = false;
+        bool lastCharacterQuote = false;
+        string quotedText = "";
+        while (reader.readLine(line))
+        {
+            int lineLength = line.length();
+            for (int loop = 0; loop < lineLength; loop++)
+            {
+                if (line[loop] == '"' && lastCharacterQuote)
+                {
+                    inQuote = !inQuote;
+                    lastCharacterQuote = false;
+                    fieldValue += '"';
+                }
+                else if(line[loop] == '"')
+                {
+                    inQuote = !inQuote;
+                    lastCharacterQuote = true;
+                } 
+                else 
+                {
+                    lastCharacterQuote = false;
+                    if (line[loop] == ',' && !inQuote)
+                    {
+                        fields.add(fieldValue);
+                        fieldValue = "";
+                    }
+                    else
+                        fieldValue += line[loop];
+                }
+            }
+            fields.add(fieldValue);
+            fieldValue = "";
+
+            if(!headerComplete)
+            {
+                headerComplete = true;
+                for(string field : fields)
+                    table->addColumn(field);
+            }
+            else
+                table->addRow(fields);
+            fields.clear();
+        }
+        return table;
+    }
+    string DataTable::convertToCSV(string field, int loop)
+    {
+        field = field.replace("\"", "\"\"");
+        if (field.contains(","))
+            field = "\"" + field + "\"";
+        if (loop != 0)
+            field = "," + field;
+        return field;
+    }
+#undef __class__
 }

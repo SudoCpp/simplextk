@@ -37,6 +37,8 @@
 #include "string.hpp"
 #include "Dictionary.hpp"
 #include "Array.hpp"
+#include "StreamReader.hpp"
+#include "StreamWriter.hpp"
 
 #include "FormattingDecorations.hpp"
 
@@ -78,10 +80,18 @@ namespace simplex
         DataTable& addRow(in const DataRow& row);
         DataTable& addRow(in const Array<string>& values);
         DataTable& addColumn(in string columnName);
+        Array<string> getColumnNames() const;
         DataRow& getRow(in int32_t index);
         DataRow getRow(in int32_t index) const;
+        Array<DataRow *> getRows();
         DataRow operator[](in int32_t index) const;
         DataRow& operator[](in int32_t index);
+        DataTable& exportToCSV(inout StreamWriter &writer);
+
+        static DataTable *ImportFromCSV(inout StreamReader& reader);
+
+        private:
+            string convertToCSV(in string field, int loop);
     };
 }
 
