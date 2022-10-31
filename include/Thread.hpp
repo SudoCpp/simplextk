@@ -66,7 +66,7 @@ namespace simplex
         virtual ~Thread()
         {
             if(thread->joinable())
-                thread->join();
+                thread->detach();
             delete thread;
         }
 
