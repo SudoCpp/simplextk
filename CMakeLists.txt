@@ -36,6 +36,7 @@ set(SourceFiles
     src/StringReader.cpp
     src/StringWriter.cpp
     src/SupportsSignals.cpp
+    src/ThreadManager.cpp
     src/TreeNode.cpp
     src/XmlReader.cpp
     # src/XmlTreeNode.cpp
@@ -52,6 +53,7 @@ set(SourceFiles
 
             if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 target_link_libraries(${PROJECT_NAME} "-lstdc++fs")
+                target_link_libraries(${PROJECT_NAME} "-lpthread")
             endif()
 
             # Include files for this project

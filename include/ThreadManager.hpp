@@ -30,41 +30,29 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SIMPLEXTK_HPP
-#define SIMPLEXTK_HPP
+#ifndef SIMPLEX_THREADMANAGER_HPP
+#define SIMPLEX_THREADMANAGER_HPP
 
-#include "include/Array.hpp"
-#include "include/Console.hpp"
-#include "include/ConsoleReader.hpp"
-#include "include/ConsoleWriter.hpp"
-#include "include/Database.hpp"
-#include "include/DataTable.hpp"
-#include "include/DateTime.hpp"
-#include "include/Dictionary.hpp"
-#include "include/Exception.hpp"
-#include "include/FileReader.hpp"
-#include "include/FileSystem.hpp"
-#include "include/FileWriter.hpp"
-#include "include/Logger.hpp"
-#include "include/Math.hpp"
-#include "include/object.hpp"
-#include "include/Primitive.hpp"
-#include "include/Signal.hpp"
-#include "include/Singleton.hpp"
-#include "include/SingletonManager.hpp"
-#include "include/SmartRef.hpp"
-#include "include/StreamReader.hpp"
-#include "include/StreamWriter.hpp"
-#include "include/string.hpp"
-#include "include/StringReader.hpp"
-#include "include/StringWriter.hpp"
-#include "include/SupportsSignals.hpp"
-#include "include/Thread.hpp"
-#include "include/ThreadManager.hpp"
-#include "include/TreeNode.hpp"
-#include "include/Tuple.hpp"
-#include "include/TypeArray.hpp"
-#include "include/XmlReader.hpp"
-#include "include/XmlWriter.hpp"
+#include "Array.hpp"
+#include "Singleton.hpp"
 
-#endif //SIMPLEXTK_HPP
+namespace simplex
+{
+    class ThreadBase;
+    class ThreadManager : public Singleton
+    {
+        friend class ThreadBase;
+
+        Array<ThreadBase*> threads;
+        ThreadManager();
+        static ThreadManager* managerInstance;
+
+        static void RegisterInstance(ThreadBase* instance);
+        static void UnregisterInstance(ThreadBase* instance);
+
+        public:
+        virtual ~ThreadManager();
+    };
+}
+
+#endif // SIMPLEX_THREADMANAGER_HPP

@@ -30,41 +30,42 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SIMPLEXTK_HPP
-#define SIMPLEXTK_HPP
+#include "ThreadManager.hpp"
+#include "Thread.hpp"
 
-#include "include/Array.hpp"
-#include "include/Console.hpp"
-#include "include/ConsoleReader.hpp"
-#include "include/ConsoleWriter.hpp"
-#include "include/Database.hpp"
-#include "include/DataTable.hpp"
-#include "include/DateTime.hpp"
-#include "include/Dictionary.hpp"
-#include "include/Exception.hpp"
-#include "include/FileReader.hpp"
-#include "include/FileSystem.hpp"
-#include "include/FileWriter.hpp"
-#include "include/Logger.hpp"
-#include "include/Math.hpp"
-#include "include/object.hpp"
-#include "include/Primitive.hpp"
-#include "include/Signal.hpp"
-#include "include/Singleton.hpp"
-#include "include/SingletonManager.hpp"
-#include "include/SmartRef.hpp"
-#include "include/StreamReader.hpp"
-#include "include/StreamWriter.hpp"
-#include "include/string.hpp"
-#include "include/StringReader.hpp"
-#include "include/StringWriter.hpp"
-#include "include/SupportsSignals.hpp"
-#include "include/Thread.hpp"
-#include "include/ThreadManager.hpp"
-#include "include/TreeNode.hpp"
-#include "include/Tuple.hpp"
-#include "include/TypeArray.hpp"
-#include "include/XmlReader.hpp"
-#include "include/XmlWriter.hpp"
+namespace simplex
+{
+    ThreadManager* ThreadManager::managerInstance = nullptr;
 
-#endif //SIMPLEXTK_HPP
+    ThreadBase::ThreadBase()
+    {
+        ThreadManager::RegisterInstance(this);
+    }
+
+    ThreadBase::~ThreadBase()
+    {
+        ThreadManager::UnregisterInstance(this);
+    }
+
+    ThreadManager::ThreadManager() : threads{true}
+    { }
+
+    void ThreadManager::RegisterInstance(ThreadBase* instance)
+    {
+        if(managerInstance == nullptr)
+            managerInstance = new ThreadManager();
+        managerInstance->threads.add(instance);
+    }
+
+    void ThreadManager::UnregisterInstance(ThreadBase* instance)
+    {
+        if(managerInstance == nullptr)
+            managerInstance = new ThreadManager();
+        managerInstance->threads.remove(instance, false);
+    }
+
+    ThreadManager::~ThreadManager()
+    { 
+
+    }
+}
