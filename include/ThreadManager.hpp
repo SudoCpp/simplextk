@@ -83,6 +83,7 @@ namespace simplex
 
         public:
         virtual ~ThreadManager();
+        static void SetSettings(const ThreadManagerSettings& settings);
         static void WaitForAllThreadsToFinish(bool preventQueuedThreadsFromStarting = false);
 
         private:
@@ -90,7 +91,6 @@ namespace simplex
         void startThread(ThreadBase* thread);
         static void RegisterInstance(ThreadBase* instance);
         static void UnregisterInstance(ThreadBase* instance);
-        static void SetSettings(const ThreadManagerSettings& settings);
         static void ThreadFinished(ThreadBase* instance);
     };
 }
