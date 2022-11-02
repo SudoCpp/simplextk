@@ -48,7 +48,8 @@ namespace simplex
     {
         if(managerInstance == nullptr)
             managerInstance = new ThreadManager();
-        managerInstance->threads.add(instance);
+        if(!managerInstance->threads.contains(instance))
+            managerInstance->threads.add(instance);
         managerInstance->queuedThreads.add(instance);
         managerInstance->evaluateThreadStatus();
     }

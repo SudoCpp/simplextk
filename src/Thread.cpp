@@ -82,7 +82,14 @@ namespace simplex
 
     void ThreadBase::startThread()
     {
-        thread = new std::thread(&ThreadBase::internalRunner, this);
+        if(thread == nullptr)
+            thread = new std::thread(&ThreadBase::internalRunner, this);
+        else
+        {
+            waitForFinish();
+            delete thread;
+            thread = new std::thread(&ThreadBase::internalRunner, this);
+        }
     }
 
     void ThreadBase::startSingle()
