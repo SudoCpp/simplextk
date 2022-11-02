@@ -77,15 +77,15 @@ namespace simplex
     {
         public:
         template<typename ThreadClassType>
-        Thread(in void(ThreadClassType::*method)(Args...), inout ThreadClassType* classInstance, in Args... args);
+        Thread(in void(ThreadClassType::*method)(Args...), inout ThreadClassType& classInstance, in Args... args);
         Thread(in std::function<void(Args...)> func, in Args... args);
         virtual ~Thread() {}
     };
 
     template<typename ... Args>
     template<typename ThreadClassType>
-    Thread<Args...>::Thread(void(ThreadClassType::*method)(Args...), ThreadClassType* classInstance, Args... args) 
-        : ThreadBase{classInstance, std::bind(method, classInstance, args...)}
+    Thread<Args...>::Thread(void(ThreadClassType::*method)(Args...), ThreadClassType& classInstance, Args... args) 
+        : ThreadBase{&classInstance, std::bind(method, &classInstance, args...)}
     { }
 
     template<typename ... Args>
