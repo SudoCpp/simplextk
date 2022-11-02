@@ -36,6 +36,7 @@
 #include <thread>
 #include "object.hpp"
 #include "ThreadManager.hpp"
+#include "Signal.hpp"
 
 #include "FormattingDecorations.hpp"
 
@@ -43,45 +44,54 @@ namespace simplex
 {
     class ThreadBase : public object
     {
+        friend class ThreadManager;
+
+        void* instanceAddress;
+        bool hasBeenStarted;
+        std::function<void()> func;
+        std::thread* thread;
+
+        public :
+        bool isFinished;
+
         public:
-        ThreadBase();
+        ThreadBase(in void* instance, in std::function<void()> func);
         virtual ~ThreadBase();
+
+        Signal<> started;
+        Signal<> finished;
+
+        void start();
+        void waitForFinish();
+
+        private:
+        void startThread();
+        void startSingle();
+
+        private:
+        void internalRunner();
     };
 
     template<typename ... Args>
     class Thread : public ThreadBase
     {
-        std::function<void(Args...)> func;
-
         public:
-        bool isFinished;
-
-        private:
-        std::thread* thread;
-
-        public:
-        Thread(std::function<void(Args...)> func, Args... args) : func{func}, isFinished{false}, thread{new std::thread{std::bind(&Thread::threadRunner, this, args...)}}
-        { }
-
-        virtual ~Thread()
-        {
-            if(thread->joinable())
-                thread->detach();
-            delete thread;
-        }
-
-        void threadRunner(Args... args)
-        {
-            isFinished = false;
-            func(args...);
-            isFinished = true;
-        }
-
-        void waitForFinish()
-        {
-            thread->join();
-        }
+        template<typename ThreadClassType>
+        Thread(in void(ThreadClassType::*method)(Args...), inout ThreadClassType* classInstance, in Args... args);
+        Thread(in std::function<void(Args...)> func, in Args... args);
+        virtual ~Thread() {}
     };
+
+    template<typename ... Args>
+    template<typename ThreadClassType>
+    Thread<Args...>::Thread(void(ThreadClassType::*method)(Args...), ThreadClassType* classInstance, Args... args) 
+        : ThreadBase{classInstance, std::bind(method, classInstance, args...)}
+    { }
+
+    template<typename ... Args>
+    Thread<Args...>::Thread(std::function<void(Args...)> func, Args... args) 
+        : ThreadBase{nullptr, std::bind(func, args...)}
+    { }
 }
 
 #include "EndFormattingDecorations.hpp"

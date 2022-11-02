@@ -35,23 +35,63 @@
 
 #include "Array.hpp"
 #include "Singleton.hpp"
+#include <mutex>
 
 namespace simplex
 {
+    class ThreadManagerSettings
+    {
+        public:
+        bool multiThreadedProgram;
+        //Excluding the main thread that the program is running on
+        //0 means unlimited, 
+        uint32_t maximumNumberConcurrentThreads;
+
+        //Mark this as true if you want one instance of a class to only be running at one time.
+        //Example:
+        // class Car;
+        // Car car1{};
+        // Car car2{};
+        // Thread<Car> car1Thread1(&Car::method1, car1);
+        // Thread<Car> car1Thread2(&Car::method2, car1); //Will not run until after car1Thread1 finishes.
+        // Thread<Car> car2Thread1(&Car::method1, car2); //Different instance of Car will run immediately.
+        bool oneThreadPerClassInstance;
+        // If oneThreadPerClassInstance is true, this will great global functions (non-member functions) as if they
+        // are in one instance. 
+        bool globalFunctionsInOneInstance;
+
+        ThreadManagerSettings() 
+            : multiThreadedProgram{true}, maximumNumberConcurrentThreads{0}, 
+            oneThreadPerClassInstance{false}, globalFunctionsInOneInstance{false}
+        {}
+    };
+
     class ThreadBase;
     class ThreadManager : public Singleton
     {
         friend class ThreadBase;
 
         Array<ThreadBase*> threads;
+        Array<ThreadBase*> queuedThreads;
+        Array<ThreadBase*> activeThreads;
+        ThreadManagerSettings settings;
+        std::mutex threadMutex;
         ThreadManager();
         static ThreadManager* managerInstance;
-
-        static void RegisterInstance(ThreadBase* instance);
-        static void UnregisterInstance(ThreadBase* instance);
+        bool noNewThreads;
+        bool gettingCaughtUp;
 
         public:
         virtual ~ThreadManager();
+        static void WaitForAllThreadsToFinish(bool preventQueuedThreadsFromStarting = false);
+
+        private:
+        void evaluateThreadStatus();
+        void startThread(ThreadBase* thread);
+        static void RegisterInstance(ThreadBase* instance);
+        static void UnregisterInstance(ThreadBase* instance);
+        static void SetSettings(const ThreadManagerSettings& settings);
+        static void ThreadFinished(ThreadBase* instance);
     };
 }
 

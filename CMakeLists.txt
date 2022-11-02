@@ -36,6 +36,7 @@ set(SourceFiles
     src/StringReader.cpp
     src/StringWriter.cpp
     src/SupportsSignals.cpp
+    src/Thread.cpp
     src/ThreadManager.cpp
     src/TreeNode.cpp
     src/XmlReader.cpp
