@@ -48,6 +48,7 @@ namespace simplex
     {
         while (elements.size() > 0)
             createEndElement();
+        stream.writeBuffer();
     }
 
     void XmlWriter::createElement(string elementName)

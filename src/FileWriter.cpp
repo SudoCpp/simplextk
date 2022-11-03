@@ -49,19 +49,25 @@ namespace simplex
 
     FileWriter::~FileWriter()
     {
+        writeBuffer();
         fclose(file);
     }
 
     void FileWriter::write(const string& toWrite)
     {
         data+=toWrite;
-        const char* temp = toWrite.toCString();
-        fwrite(temp, sizeof(char), toWrite.length(), file);
     }
 
     void FileWriter::writeType(void* value, size_t typeSize)
     {
         NotImplementedException(__ExceptionParams__);
+    }
+
+    void FileWriter::writeBuffer()
+    {
+        const char* temp = data.toCString();
+        fwrite(temp, sizeof(char), data.length(), file);
+        data = "";
     }
 }
 

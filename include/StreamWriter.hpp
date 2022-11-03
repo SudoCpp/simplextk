@@ -61,6 +61,7 @@ namespace simplex
                     writeLine(line);
             }
             virtual ~StreamWriter() = default;
+            virtual void writeBuffer() = 0;
 	};
 }
 

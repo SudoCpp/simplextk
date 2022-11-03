@@ -53,6 +53,7 @@ namespace simplex
             virtual ~FileWriter();
             virtual void write(in const string &toWrite);
             virtual void writeType(in void *value, size_t typeSize);
+            virtual void writeBuffer();
     };
 }
 

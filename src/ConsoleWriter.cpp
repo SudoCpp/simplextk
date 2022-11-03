@@ -50,6 +50,9 @@ namespace simplex
     {
         NotImplementedException(__ExceptionParams__);
     }
+
+    void ConsoleWriter::writeBuffer()
+    { }
 }
 
 #undef __class__

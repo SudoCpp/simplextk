@@ -46,6 +46,7 @@ namespace simplex
         void write(in const string& toWrite);
         string toString();
         virtual void writeType(in void* value, in size_t typeSize);
+        virtual void writeBuffer();
     };
 }
 

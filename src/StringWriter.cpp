@@ -52,6 +52,9 @@ namespace simplex
     {
         NotImplementedException(__ExceptionParams__);
     }
+
+    void StringWriter::writeBuffer()
+    { } //data written instantly.
 }
 
 #undef __class__
