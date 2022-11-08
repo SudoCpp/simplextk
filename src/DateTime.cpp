@@ -32,126 +32,147 @@
 
 #include "DateTime.hpp"
 #include <ctime>
+#include <chrono>
+
+using namespace std::chrono;
 
 namespace simplex
 {
-	int32_t DateTime::LocalSecond()
-	{
-		return DateTime::getLocal()->tm_sec;
-	}
-
-	int32_t DateTime::LocalMinute()
-	{
-		return DateTime::getLocal()->tm_min;
-	}
-
-	int32_t DateTime::Local24Hour()
-	{
-		return DateTime::getLocal()->tm_hour;
-	}
-
-	int32_t DateTime::Local12Hour()
-	{
-		int32_t hour = DateTime::getLocal()->tm_hour % 12;
-		return (hour == 0) ? 12 : hour;
-	}
-
-	int32_t DateTime::LocalAmPm()
-	{
-		return DateTime::getLocal()->tm_hour / 12;
-	}
-
-	int32_t DateTime::LocalDay()
-	{
-		return DateTime::getLocal()->tm_mday;
-	}
-
-	int32_t DateTime::LocalMonth()
-	{
-		return DateTime::getLocal()->tm_mon + 1;
-	}
-
-	int32_t DateTime::LocalYYYY()
-	{
-		return DateTime::getLocal()->tm_year + 1900;
-	}
-
-	int32_t DateTime::LocalYY()
-	{
-		return (DateTime::getLocal()->tm_year + 1900) % 100;
-	}
-
-	int32_t DateTime::CurrentCentury()
-	{
-		return (DateTime::getLocal()->tm_year + 1900) / 100 + 1;
-	}
-
-	bool DateTime::IsDST()
-	{
-		return (bool)DateTime::getLocal()->tm_isdst;
-	}
-
-	int32_t DateTime::UtcSecond()
-	{
-		return DateTime::getUtc()->tm_sec;
-	}
-
-	int32_t DateTime::UtcMinute()
-	{
-		return DateTime::getUtc()->tm_min;
-	}
-
-	int32_t DateTime::Utc24Hour()
-	{
-		return DateTime::getUtc()->tm_hour;
-	}
-
-	int32_t DateTime::Utc12Hour()
-	{
-		int32_t hour = DateTime::getUtc()->tm_hour % 12;
-		return (hour == 0) ? 12 : hour;
-	}
-
-	int32_t DateTime::UtcAmPm()
-	{
-		return DateTime::getUtc()->tm_hour / 12;
-	}
-
-	int32_t DateTime::UtcDay()
-	{
-		return DateTime::getUtc()->tm_mday;
-	}
-
-	int32_t DateTime::UtcMonth()
-	{
-		return DateTime::getUtc()->tm_mon + 1;
-	}
-
-	int32_t DateTime::UtcYYYY()
-	{
-		return DateTime::getUtc()->tm_year + 1900;
-	}
-
-	int32_t DateTime::UtcYY()
-	{
-		return (DateTime::getUtc()->tm_year + 1900) % 100;
-	}
-
-	tm* DateTime::getLocal()
+	DateTime::DateTime()
 	{
 		time_t rawtime;
-		struct tm * timeinfo;
-		time(&rawtime);
-		timeinfo = localtime(&rawtime);
-		return timeinfo;
-	}
-
-	tm* DateTime::getUtc()
-	{
-		time_t rawtime;
-		struct tm * timeinfo;
+		struct tm* timeinfo;
 		time(&rawtime);
 		timeinfo = gmtime(&rawtime);
-		return timeinfo;
+
+		localSec = timeinfo->tm_sec;
+		localMin = timeinfo->tm_min;
+		localHour = timeinfo->tm_hour;
+		localMday = timeinfo->tm_mday;
+		localMon = timeinfo->tm_mon;
+		localYear = timeinfo->tm_year;
+		localWday = timeinfo->tm_wday;
+		localYday = timeinfo->tm_yday;
+		dst = timeinfo->tm_isdst;
+		secOffUTC = timeinfo->tm_gmtoff;
+		timeAbbrv = string{timeinfo->tm_zone};
+
+		timeinfo = localtime(&rawtime);
+
+		utcSec = timeinfo->tm_sec;
+		utcMin = timeinfo->tm_min;
+		utcHour = timeinfo->tm_hour;
+		utcMday = timeinfo->tm_mday;
+		utcMon = timeinfo->tm_mon;
+		utcYear = timeinfo->tm_year;
+		utcWday = timeinfo->tm_wday;
+		utcYday = timeinfo->tm_yday;
 	}
+
+	int32_t DateTime::localSecond()
+	{
+		return localSec;
+	}
+
+	int32_t DateTime::localMinute()
+	{
+		return localMin;
+	}
+
+	int32_t DateTime::local24Hour()
+	{
+		return localHour;
+	}
+
+	int32_t DateTime::local12Hour()
+	{
+		int32_t hour = localHour % 12;
+		return (hour == 0) ? 12 : hour;
+	}
+
+	int32_t DateTime::localAmPm()
+	{
+		return localHour / 12;
+	}
+
+	int32_t DateTime::localDay()
+	{
+		return localMday;
+	}
+
+	int32_t DateTime::localMonth()
+	{
+		return localMon + 1;
+	}
+
+	int32_t DateTime::localYYYY()
+	{
+		return localYear + 1900;
+	}
+
+	int32_t DateTime::localYY()
+	{
+		return (localYear + 1900) % 100;
+	}
+
+	int32_t DateTime::currentCentury()
+	{
+		return (localYear + 1900) / 100 + 1;
+	}
+
+	bool DateTime::isDST()
+	{
+		return dst;
+	}
+
+	uint8_t DateTime::utcSecond()
+	{
+		return utcSec;
+	}
+
+	uint8_t DateTime::utcMinute()
+	{
+		return utcMin;
+	}
+
+	uint8_t DateTime::utc24Hour()
+	{
+		return utcHour;
+	}
+
+	uint8_t DateTime::utc12Hour()
+	{
+		int32_t hour = utcHour % 12;
+		return (hour == 0) ? 12 : hour;
+	}
+
+	uint8_t DateTime::utcAmPm()
+	{
+		return utcHour / 12;
+	}
+
+	uint8_t DateTime::utcDay()
+	{
+		return utcMday;
+	}
+
+	uint8_t DateTime::utcMonth()
+	{
+		return utcMon + 1;
+	}
+
+	uint16_t DateTime::utcYYYY()
+	{
+		return utcYear + 1900;
+	}
+
+	uint8_t DateTime::utcYY()
+	{
+		return (utcYear + 1900) % 100;
+	}
+
+	// uint64_t DateTime::ticks()
+	// {
+	// 	return clock();
+	// }
 }

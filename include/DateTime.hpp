@@ -34,40 +34,46 @@
 #define SIMPLEX_DATETIME_HPP
 
 #include <cstdint>
+#include "string.hpp"
 
-struct tm;
 namespace simplex
 {
 	class DateTime
 	{
+		uint16_t localYday, localYear, utcYday, utcYear;
+		uint8_t localSec, localMin, localHour, localMday, localMon, localWday;
+		uint8_t utcSec, utcMin, utcHour, utcMday, utcMon, utcWday;
+		bool dst;
+		long int secOffUTC;
+		string timeAbbrv;
+
 		public:
-			static int32_t LocalSecond();
-			static int32_t LocalMinute();
-			static int32_t Local24Hour();
-			static int32_t Local12Hour();
-			static int32_t LocalAmPm();
-			static int32_t LocalDay();
-			static int32_t LocalMonth();
-			static int32_t LocalYY();
-			static int32_t LocalYYYY();
-			static bool IsDST();
+			int32_t localSecond();
+			int32_t localMinute();
+			int32_t local24Hour();
+			int32_t local12Hour();
+			int32_t localAmPm();
+			int32_t localDay();
+			int32_t localMonth();
+			int32_t localYY();
+			int32_t localYYYY();
+			bool isDST();
 
-			static int32_t UtcSecond();
-			static int32_t UtcMinute();
-			static int32_t Utc24Hour();
-			static int32_t Utc12Hour();
-			static int32_t UtcAmPm();
-			static int32_t UtcDay();
-			static int32_t UtcMonth();
-			static int32_t UtcYY();
-			static int32_t UtcYYYY();
+			uint8_t utcSecond();
+			uint8_t utcMinute();
+			uint8_t utc24Hour();
+			uint8_t utc12Hour();
+			uint8_t utcAmPm();
+			uint8_t utcDay();
+			uint8_t utcMonth();
+			uint8_t utcYY();
+			uint16_t utcYYYY();
 
-			static int32_t CurrentCentury();
+			int32_t currentCentury();
 
-		private:
-			DateTime() {}
-			static struct tm* getLocal();
-			static struct tm* getUtc();
+			//uint64_t ticks();
+
+			DateTime();
 	};
 }
 #endif //SIMPLEX_DATETIME_HPP

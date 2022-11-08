@@ -115,12 +115,13 @@ namespace simplex
 
     string Logger::GetDateTime()
     {
-        return string::FromNumber(DateTime::LocalMonth()) + "/" + 
-        string::FromNumber(DateTime::LocalDay()) + " " + 
-        string::FromNumber(DateTime::Local12Hour()) + ":" + 
-        string::FromNumber(DateTime::LocalMinute()) + ":" + 
-        string::FromNumber(DateTime::LocalSecond()) + " " + 
-        ((DateTime::LocalAmPm() == 0) ? "AM" : "PM");
+        DateTime date{};
+        return string::FromNumber(date.localMonth()) + "/" + 
+        string::FromNumber(date.localDay()) + " " + 
+        string::FromNumber(date.local12Hour()) + ":" + 
+        string::FromNumber(date.localMinute()) + ":" + 
+        string::FromNumber(date.localSecond()) + " " + 
+        ((date.localAmPm() == 0) ? "AM" : "PM");
     }
 
     void Logger::LogDebug(const string& message)
