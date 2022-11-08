@@ -51,6 +51,8 @@ namespace simplex
         FileReader(in const string& fileName);
         virtual ~FileReader();
         virtual bool readString(out string &str, in uint32_t numberOfCharacters);
+        // Not a template to force method to children.
+        // void* will accept any type of pointer.
         virtual bool readType(out void *value, in size_t typeSize);
         virtual bool readLine(out string &str);
         virtual void rewind(in uint32_t numberOfCharacters);

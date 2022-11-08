@@ -52,6 +52,8 @@ namespace simplex
             FileWriter(in const string& filePath);
             virtual ~FileWriter();
             virtual void write(in const string &toWrite);
+            // Not a template to force method to children.
+            // void* will accept any type of pointer.
             virtual void writeType(in void *value, size_t typeSize);
             virtual void writeBuffer();
     };

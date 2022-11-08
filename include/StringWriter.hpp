@@ -45,6 +45,8 @@ namespace simplex
         public:
         void write(in const string& toWrite);
         string toString();
+        // Not a template to force method to children.
+        // void* will accept any type of pointer.
         virtual void writeType(in void* value, in size_t typeSize);
         virtual void writeBuffer();
     };

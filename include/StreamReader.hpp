@@ -45,7 +45,8 @@ namespace simplex
 	{
 		public:
         virtual bool readString(out string& str, in uint32_t numberOfCharacters) = 0;
-        // Not a template so that abstraction is emforced
+        // Not a template so that abstraction is enforced
+        // void* will accept any type of pointer.
         virtual bool readType(out void* value, in size_t typeSize) = 0;
         virtual bool readLine(out string& str) = 0;
         virtual void rewind(in uint32_t numberOfCharacters) = 0;

@@ -54,6 +54,7 @@ namespace simplex
             }
 			virtual void write(in const string& toWrite) = 0;
 			// Not a template to force method to children.
+            // void* will accept any type of pointer.
             virtual void writeType(in void* value, in size_t typeSize) = 0;
             virtual void writeAllLines(in const Array<string>& lines)
             {
