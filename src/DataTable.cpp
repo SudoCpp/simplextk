@@ -319,5 +319,37 @@ namespace simplex
             field = "," + field;
         return field;
     }
+    string DataTable::DataCellTypeAsString(DataCellType type)
+    {
+        if(type == DataCellType::Uint8_t)
+            return "uint8_t";
+        else if(type == DataCellType::Uint16_t)
+            return "uint16_t";
+        else if(type == DataCellType::Uint32_t)
+            return "uint32_t";
+        else if(type == DataCellType::Uint64_t)
+            return "uint64_t";
+        else if(type == DataCellType::Int8_t)
+            return "int8_t";
+        else if(type == DataCellType::Int16_t)
+            return "int16_t";
+        else if(type == DataCellType::Int32_t)
+            return "int32_t";
+        else if(type == DataCellType::Int64_t)
+            return "int64_t";
+        else if(type == DataCellType::Float)
+            return "float";
+        else if(type == DataCellType::Double)
+            return "double";
+        else if(type == DataCellType::LongDouble)
+            return "long double";
+        else if(type == DataCellType::String)
+            return "string";
+        else if(type == DataCellType::Pointer)
+            return "void*";
+        else
+            return "not set";
+    }
+
 #undef __class__
 }

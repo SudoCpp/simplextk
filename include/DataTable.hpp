@@ -82,7 +82,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'uint8_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
                 addRow(args...);
@@ -106,7 +106,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'uint16_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -131,7 +131,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'uint32_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -156,7 +156,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'uint64_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -181,7 +181,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'int8_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -206,7 +206,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'int16_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -231,7 +231,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'int32_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -256,7 +256,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'int64_t') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -281,7 +281,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'float') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -306,7 +306,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'double') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -331,7 +331,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'long double') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -356,7 +356,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'string') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -381,7 +381,7 @@ namespace simplex
                 else
                 {
                     tempCells.clear();
-                    throw Exception("Trying to add a cell with wrong type to DataRow.", __ExceptionParams__);
+                    throw Exception("Trying to add a cell (index location '" + string::FromNumber(tempCellsSize) + "' and type 'string') with wrong type to DataRow. Type expected is '" + DataCellTypeAsString(columnTypes[tempCellsSize]) + "'.", __ExceptionParams__);
                 }
 
 
@@ -412,6 +412,7 @@ namespace simplex
 
         private:
             string convertToCSV(in string field, int loop);
+            static string DataCellTypeAsString(DataCellType type);
     };
     #undef __class__
 }
