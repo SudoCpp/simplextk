@@ -37,96 +37,125 @@
 
 namespace simplex
 {
-    #define __class__ "simplex::DataRow"
-
-    DataRow::DataRow(Dictionary<string, string> columnsAndData) : columns{columnsAndData} {}
-    DataRow::DataRow(Array<string> columnNames)
-    {
-        for(auto name : columnNames)
-            columns.add(name, "");
-    }
-    DataRow::DataRow(Array<string> columnNames, Array<string> columnValues)
-    {
-        if(columnNames.size() == columnValues.size())
-        {
-            int32_t numberColumns = columnNames.size();
-            for(int32_t loop = 0; loop < numberColumns; loop++)
-                columns.add(columnNames[loop], columnValues[loop]);
-        }
-        else
-            throw Exception("Mismatch: There are not the same amount of columns and values.", __ExceptionParams__);
-    }
-    DataRow::DataRow(){}
-
-    Array<string> DataRow::getColumnNames()
-    {
-        return columnNames;
-    }
-
-    DataRow& DataRow::addColumn(string name)
-    {
-        return addColumn(name, "");
-    }
-
-    DataRow& DataRow::addColumn(string name, string value)
-    {
-        if(!columnNames.contains(name))
-        {
-            columnNames.add(name);
-            columns.add(name, value);
-            return *this;
-        }
-        else
-            throw Exception("Column Names must be unique. A column name '" + name + "' already exists.", __ExceptionParams__);
-    }
-
-    string& DataRow::getCell(string name)
-    {
-        return columns[name];
-    }
-
-    string& DataRow::getCell(int32_t index)
-    {
-        if(columnNames.size() > index)
-            return columns.at(columnNames[index]);
-        else
-            throw IndexOutOfBoundsException("Unable to get cell, index out of bounds.", __ExceptionParams__);
-    }
-
-    string DataRow::getCell(string name) const
-    {
-        return columns[name];
-    }
-
-    string DataRow::getCell(int32_t index) const
-    {
-        if(columnNames.size() > index)
-            return columns.at(columnNames[index]);
-        else
-            throw IndexOutOfBoundsException("Unable to get cell, index out of bounds.", __ExceptionParams__);
-    }
-
-    string DataRow::operator[](int32_t index) const
-    {
-        return getCell(index);
-    }
-
-    string& DataRow::operator[](int32_t index)
-    {
-        return getCell(index);
-    }
-
-    string DataRow::operator[](string columnName) const
-    {
-        return getCell(columnName);
-    }
-    
-    string& DataRow::operator[](string columnName)
-    {
-        return getCell(columnName);
-    }
-    #undef __class__
     #define __class__ "simplex::DataTable"
+ template<>
+    DataTable& DataTable::addColumn<void*>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Pointer);
+        for (auto row : rows)
+            row->addColumn<void*>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<uint8_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Uint8_t);
+        for (auto row : rows)
+            row->addColumn<uint8_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<uint16_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Uint16_t);
+        for (auto row : rows)
+            row->addColumn<uint16_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<uint32_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Uint32_t);
+        for (auto row : rows)
+            row->addColumn<uint32_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<uint64_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Uint64_t);
+        for (auto row : rows)
+            row->addColumn<uint64_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<int8_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Int8_t);
+        for (auto row : rows)
+            row->addColumn<int8_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<int16_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Int16_t);
+        for (auto row : rows)
+            row->addColumn<int16_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<int32_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Int32_t);
+        for (auto row : rows)
+            row->addColumn<int32_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<int64_t>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Int64_t);
+        for (auto row : rows)
+            row->addColumn<int64_t>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<float>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Float);
+        for (auto row : rows)
+            row->addColumn<float>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<double>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::Double);
+        for (auto row : rows)
+            row->addColumn<double>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<long double>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::LongDouble);
+        for (auto row : rows)
+            row->addColumn<long double>(columnName);
+        return *this;
+    }
+    template<>
+    DataTable& DataTable::addColumn<string>(string columnName)
+    {
+        columnNames.add(columnName);
+        columnTypes.add(DataCellType::String);
+        for (auto row : rows)
+            row->addColumn<string>(columnName);
+        return *this;
+    }
+
     DataTable::DataTable() : rows{true} {}
     DataTable::DataTable(Array<string> columnNames) : rows{true}, columnNames{columnNames} {}
     DataTable::~DataTable()
@@ -134,26 +163,60 @@ namespace simplex
 
     DataTable& DataTable::addRow(DataRow* row)
     {
-        rows.add(row);
-        return *this;
+        if (row->columnTypes.size() == columnTypes.size())
+        {
+            uint8_t numColumnTypes = columnTypes.size();
+            for(int loop = 0; loop < numColumnTypes; loop++)
+                if(row->columnTypes[loop] != columnTypes[loop])
+                    throw Exception("Column types don't match between row and DataTable.", __ExceptionParams__);
+            rows.add(row);
+            return *this;
+        }
+        else
+            throw Exception("Row doesn't have enough columns to match DataTable.", __ExceptionParams__);
     }
     DataTable& DataTable::addRow(const DataRow& row)
     {
-        DataRow* temp = new DataRow{row};
-        rows.add(temp);
-        return *this;
+        if (row.columnTypes.size() == columnTypes.size())
+        {
+            uint8_t numColumnTypes = columnTypes.size();
+            for(int loop = 0; loop < numColumnTypes; loop++)
+                if(row.columnTypes[loop] != columnTypes[loop])
+                    throw Exception("Column types don't match between row and DataTable.", __ExceptionParams__);
+            DataRow* temp = new DataRow{row};
+            rows.add(temp);
+            return *this;
+        }
+        else
+            throw Exception("Row doesn't have enough columns to match DataTable.", __ExceptionParams__);
     }
-    DataTable& DataTable::addRow(const Array<string>& values)
+    DataTable& DataTable::addRow(const Array<DataCell>& values)
     {
-        rows.add(new DataRow{columnNames, values});
-        return *this;
-    }
-    DataTable& DataTable::addColumn(string columnName)
-    {
-        columnNames.add(columnName);
-        for (auto row : rows)
-            row->addColumn(columnName);
-        return *this;
+        if (values.size() == columnTypes.size())
+        {
+            uint8_t numColumnTypes = columnTypes.size();
+            for(int loop = 0; loop < numColumnTypes; loop++)
+                if(values[loop].type != columnTypes[loop])
+                {
+                    tempCells.clear();
+                    throw Exception("DataCell types don't match types in DataTable.", __ExceptionParams__);
+                }
+            try
+            {
+                rows.add(new DataRow{columnNames, values});
+            }
+            catch (Exception ex)
+            {
+                tempCells.clear();
+                throw;
+            }
+            return *this;
+        }
+         else
+         {
+            tempCells.clear();
+            throw Exception("Number of DataCells in array don't match DataTable.", __ExceptionParams__);
+         }
     }
     DataRow& DataTable::getRow(int32_t index)
     {
@@ -189,7 +252,7 @@ namespace simplex
         for (DataRow *row : rows)
         {
             for(int loop = 0; loop < numCols; loop++)
-                writer.write(convertToCSV(row->getCell(columnNames[loop]), loop));
+                writer.write(convertToCSV(row->getCell(columnNames[loop]).getValue<string>(), loop));
             writer.write("\n");
         }
         return *this;
@@ -239,7 +302,7 @@ namespace simplex
             {
                 headerComplete = true;
                 for(string field : fields)
-                    table->addColumn(field);
+                    table->addColumn<string>(field);
             }
             else
                 table->addRow(fields);

@@ -21,6 +21,8 @@ set(SourceFiles
     src/Console.cpp
     src/ConsoleReader.cpp
     src/ConsoleWriter.cpp
+    src/DataCell.cpp
+    src/DataRow.cpp
     src/DataTable.cpp
     src/DateTime.cpp
     # src/DynamicLibrary.cpp
