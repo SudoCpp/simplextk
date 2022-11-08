@@ -38,6 +38,8 @@
 #include "include/ConsoleReader.hpp"
 #include "include/ConsoleWriter.hpp"
 #include "include/Database.hpp"
+#include "include/DataCell.hpp"
+#include "include/DataRow.hpp"
 #include "include/DataTable.hpp"
 #include "include/DateTime.hpp"
 #include "include/Dictionary.hpp"

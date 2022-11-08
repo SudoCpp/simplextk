@@ -30,10 +30,8 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "DataTable.hpp"
+#include "DataRow.hpp"
 #include "Exception.hpp"
-#include "FileReader.hpp"
-#include "FileWriter.hpp"
 
 namespace simplex
 {
