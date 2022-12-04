@@ -46,9 +46,10 @@ namespace simplex
     class DataTable;
     class DataRow : public object
     {
-        friend class DataTable;
         Dictionary<string, DataCell> columns;
         Array<string> columnNames;
+
+        internal:
         Array<DataCellType> columnTypes;
 
         public:

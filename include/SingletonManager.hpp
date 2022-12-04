@@ -36,18 +36,22 @@
 #include "Array.hpp"
 #include "Singleton.hpp"
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class SingletonManager
     {
-        friend class Singleton;
-
         static Array<Singleton*> singletons;
+
+        internal:
         static void RegisterInstance(Singleton* instance);
 
         public:
         ~SingletonManager();
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_SINGLETONMANAGER_HPP

@@ -63,8 +63,6 @@ namespace simplex
     class DataTable;
     class DataCell : public object
     {
-        friend class DataTable;
-
         union
         {
             void* data;
@@ -80,6 +78,8 @@ namespace simplex
             uint8_t decimalPrecision;
         };
         string String;
+        
+        internal:
         DataCellType type;
 
         public:

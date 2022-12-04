@@ -30,71 +30,28 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SIMPLEX_THREAD_HPP
-#define SIMPLEX_THREAD_HPP
+#ifndef SIMPLEX_MEMORYBLOCK_HPP
+#define SIMPLEX_MEMORYBLOCK_HPP
 
-#include <thread>
 #include "object.hpp"
-#include "ThreadManager.hpp"
-#include "Signal.hpp"
-
+#include "stdlib.h"
 #include "FormattingDecorations.hpp"
 
 namespace simplex
 {
-    class ThreadBase : public object
+    class MemoryBlock : public object
     {
-        internal:
-        void* instanceAddress;
-
-        private:
-        bool hasBeenStarted;
-        std::function<void()> func;
-        std::thread* thread;
-
-        public :
-        bool isFinished;
-
+        char* data;
+        size_t sizeInBytes;
+        uint32_t location;
         public:
-        ThreadBase(in void* instance, in std::function<void()> func);
-        virtual ~ThreadBase();
-
-        Signal<> started;
-        Signal<> finished;
-
-        void start();
-        void waitForFinish();
-
-        internal:
-        void startThread();
-        void startSingle();
-
-        private:
-        void internalRunner();
+        MemoryBlock(in ownership void* pointer, in size_t sizeInBytes) : data{(char*)pointer}, sizeInBytes{sizeInBytes} {}
+        MemoryBlock(in size_t sizeInBytes) : data{(char*)malloc(sizeInBytes)}, sizeInBytes{sizeInBytes} {}
+        virtual ~MemoryBlock() { free(data); }
+        
     };
-
-    template<typename ... Args>
-    class Thread : public ThreadBase
-    {
-        public:
-        template<typename ThreadClassType>
-        Thread(in void(ThreadClassType::*method)(Args...), inout ThreadClassType& classInstance, in Args... args);
-        Thread(in std::function<void(Args...)> func, in Args... args);
-        virtual ~Thread() {}
-    };
-
-    template<typename ... Args>
-    template<typename ThreadClassType>
-    Thread<Args...>::Thread(void(ThreadClassType::*method)(Args...), ThreadClassType& classInstance, Args... args) 
-        : ThreadBase{&classInstance, std::bind(method, &classInstance, args...)}
-    { }
-
-    template<typename ... Args>
-    Thread<Args...>::Thread(std::function<void(Args...)> func, Args... args) 
-        : ThreadBase{nullptr, std::bind(func, args...)}
-    { }
 }
 
 #include "EndFormattingDecorations.hpp"
 
-#endif //SIMPLEX_THREAD_HPP
+#endif //SIMPLEX_MEMORYBLOCK_HPP

@@ -37,6 +37,8 @@
 #include "Singleton.hpp"
 #include <mutex>
 
+#include "FormattingDecorations.hpp"
+
 namespace simplex
 {
     class ThreadManagerSettings
@@ -69,8 +71,6 @@ namespace simplex
     class ThreadBase;
     class ThreadManager : public Singleton
     {
-        friend class ThreadBase;
-
         Array<ThreadBase*> threads;
         Array<ThreadBase*> queuedThreads;
         Array<ThreadBase*> activeThreads;
@@ -89,10 +89,14 @@ namespace simplex
         private:
         void evaluateThreadStatus();
         void startThread(ThreadBase* thread);
+
+        internal:
         static void RegisterInstance(ThreadBase* instance);
         static void UnregisterInstance(ThreadBase* instance);
         static void ThreadFinished(ThreadBase* instance);
     };
 }
+
+#include "EndFormattingDecorations.hpp"
 
 #endif // SIMPLEX_THREADMANAGER_HPP
