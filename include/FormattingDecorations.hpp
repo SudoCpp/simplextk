@@ -40,9 +40,9 @@
 #define slots
 //This needs to be set to the definition of the include all header
 #ifdef SIMPLEXTK_HPP
-#define internal private
+#define _internal private
 #else
-#define internal public
+#define _internal public
 #endif
 #else
 #error "FormattingDecorations must be included after all other includes or last includer needs to include EndFormattingDecorations at the end."
