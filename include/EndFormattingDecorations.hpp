@@ -37,6 +37,6 @@
 #undef nullable
 #undef ownership
 #undef slots
-#undef internal
+#undef _internal
 #undef __FORMATTINGDECORATIONS_HPP__
 #endif //__FORMATTINGDECORATIONS_HPP__
