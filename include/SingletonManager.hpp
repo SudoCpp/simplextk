@@ -44,7 +44,7 @@ namespace simplex
     {
         static Array<Singleton*> singletons;
 
-        internal:
+        _internal:
         static void RegisterInstance(Singleton* instance);
 
         public:

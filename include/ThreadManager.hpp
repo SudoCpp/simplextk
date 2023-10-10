@@ -90,7 +90,7 @@ namespace simplex
         void evaluateThreadStatus();
         void startThread(ThreadBase* thread);
 
-        internal:
+        _internal:
         static void RegisterInstance(ThreadBase* instance);
         static void UnregisterInstance(ThreadBase* instance);
         static void ThreadFinished(ThreadBase* instance);

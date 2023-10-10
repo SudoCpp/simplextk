@@ -49,7 +49,7 @@ namespace simplex
         Dictionary<string, DataCell> columns;
         Array<string> columnNames;
 
-        internal:
+        _internal:
         Array<DataCellType> columnTypes;
 
         public:

@@ -79,7 +79,7 @@ namespace simplex
         };
         string String;
         
-        internal:
+        _internal:
         DataCellType type;
 
         public:

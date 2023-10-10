@@ -44,7 +44,7 @@ namespace simplex
 {
     class ThreadBase : public object
     {
-        internal:
+        _internal:
         void* instanceAddress;
 
         private:
@@ -65,7 +65,7 @@ namespace simplex
         void start();
         void waitForFinish();
 
-        internal:
+        _internal:
         void startThread();
         void startSingle();
 
