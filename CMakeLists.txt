@@ -5,7 +5,7 @@ project(simplextk VERSION 2.8.0)
 # none
 set (CMAKE_CXX_STANDARD 17)
 
-set(ProjectType SHARED) #options are SHARED and STATIC
+set(ProjectType STATIC) #options are SHARED and STATIC
 
 set(Packages
 
