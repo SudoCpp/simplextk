@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.8.0)
 project(simplextk VERSION 2.8.0)
 
 #Debian Packages required
