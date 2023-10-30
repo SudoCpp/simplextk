@@ -50,7 +50,7 @@ namespace simplex
         //Valid slot objects that signal can call
         std::vector<SupportsSignals*> linkedSlotObjects; //Used by Signal
 
-        bool vecContains(const std::vector<SupportsSignals*>& vec, SupportsSignals* value);
+        bool vecContains(const std::vector<SupportsSignals*>& vec, SupportsSignals* value) const;
         void vecRemove(std::vector<SupportsSignals*>& vec, SupportsSignals* value);
 
         // Called by signal, so slot can tell it when slot is destructing
@@ -65,7 +65,7 @@ namespace simplex
         void addSlot(SupportsSignals *slotObj);
 
         // Signal calls this to check if slot is still valid.
-        bool slotInstanceStillExists(SupportsSignals *slotObj);
+        bool slotInstanceStillExists(SupportsSignals *slotObj) const;
 
     public:
         SupportsSignals();

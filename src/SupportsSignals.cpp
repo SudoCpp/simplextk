@@ -49,7 +49,7 @@ namespace simplex
             slotObj->removeSignal(this);
     }
 
-    bool SupportsSignals::vecContains(const std::vector<SupportsSignals*>& vec, SupportsSignals* value)
+    bool SupportsSignals::vecContains(const std::vector<SupportsSignals*>& vec, SupportsSignals* value) const
     {
         return (::std::find(vec.begin(), vec.end(), value) != vec.end()) ? true : false;
     }
@@ -89,7 +89,7 @@ namespace simplex
             linkedSlotObjects.push_back(slotObj);
     }
 
-    bool SupportsSignals::slotInstanceStillExists(SupportsSignals* slotObj)
+    bool SupportsSignals::slotInstanceStillExists(SupportsSignals* slotObj) const
     {
         return vecContains(linkedSlotObjects, slotObj);
     }

@@ -57,11 +57,17 @@ namespace simplex
         virtual ~Signal() = default;
         
         void emit(Args... args);
+        void emit(Args... args) const;
         uint32_t connect(std::function<void(Args...)> slot);
         Signal<Args...>& disconnect(uint32_t handle);
-        template<typename SlotClassType>
+        
         //If this signal is emitted then call this method from this instance.
+        template<typename SlotClassType>
         uint32_t connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
+        
+        template<typename SlotClassType>
+        uint32_t connect(void(SlotClassType::*slot)(Args...) const, const SlotClassType* slotInstance);
+        
         //If this signal is emitted then emit it again with the following signal
         uint32_t connect(Signal<Args...>* signal);
     };
@@ -93,10 +99,49 @@ namespace simplex
     }
 
     template<typename ... Args>
+    void Signal<Args...>::emit(Args... args) const
+    {
+        Array<uint32_t> slotParentKeys = slotParents.keys();
+        for(uint32_t key : slotParentKeys)
+            if(slotParents[key] == nullptr)
+            {
+                std::function<void(Args...)> bound = std::bind(slots[key], args...);
+                bound(args...);
+            }
+            else if(slotInstanceStillExists(slotParents[key]))
+            {
+                std::function<void(Args...)> bound = std::bind(slots[key], args...);
+                bound(args...);
+            }
+            else
+            { //This instance has died and slots need to be removed.
+                slots.removeByKey(key);
+                slotParents.removeByKey(key);
+            }
+    }
+
+    template<typename ... Args>
     uint32_t Signal<Args...>::connect(std::function<void(Args...)> slot)
     {
         slotParents.add(currentKey, nullptr);
         slots.add(currentKey, slot);
+        currentKey++;
+        return (currentKey-1);
+    }
+
+    template<typename ... Args>
+    template<typename SlotClassType>
+    uint32_t Signal<Args...>::connect(void(SlotClassType::*slot)(Args...) const, const SlotClassType* slotInstance)
+    {
+        static_assert(std::is_base_of<SupportsSignals, SlotClassType>::value, "Slot class must be derived from SupportsSignals");
+        SupportsSignals* castedInstance = (SupportsSignals*)slotInstance;
+        addSlot(castedInstance);
+        castedInstance->addSignal(this); //Log this instance so when slot instance destructs it can alert signal parent
+        slotParents.add(currentKey, castedInstance);
+        slots.add(currentKey, [=](Args... args) 
+        { 
+            (slotInstance->*slot)(args...); 
+        });
         currentKey++;
         return (currentKey-1);
     }
