@@ -59,8 +59,8 @@ namespace simplex
         ThreadBase(in void* instance, in std::function<void()> func);
         virtual ~ThreadBase();
 
-        Signal<void> started;
-        Signal<void> finished;
+        Signal<> started;
+        Signal<> finished;
 
         void start();
         void waitForFinish();

@@ -45,10 +45,10 @@ namespace simplex
 {
     using namespace std::placeholders;
 
-    template<typename ReturnType, typename ... Args>
+    template<typename ... Args>
     class Signal : public object
     {
-        mutable Dictionary<uint32_t, std::function<ReturnType(Args...)>> slots;
+        mutable Dictionary<uint32_t, std::function<void(Args...)>> slots;
         mutable Dictionary<uint32_t, SupportsSignals*> slotParents;
         mutable uint32_t currentKey;
         public:
@@ -58,26 +58,26 @@ namespace simplex
         
         void emit(Args... args);
         void emit(Args... args) const;
-        uint32_t connect(std::function<ReturnType(Args...)> slot);
-        Signal<ReturnType, Args...>& disconnect(uint32_t handle);
+        uint32_t connect(std::function<void(Args...)> slot);
+        Signal<Args...>& disconnect(uint32_t handle);
         
         //If this signal is emitted then call this method from this instance.
         template<typename SlotClassType>
-        uint32_t connect(ReturnType(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
+        uint32_t connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance);
         
         template<typename SlotClassType>
-        uint32_t connect(ReturnType(SlotClassType::*slot)(Args...) const, const SlotClassType* slotInstance);
+        uint32_t connect(void(SlotClassType::*slot)(Args...) const, const SlotClassType* slotInstance);
         
         //If this signal is emitted then emit it again with the following signal
-        uint32_t connect(Signal<ReturnType, Args...>* signal);
+        uint32_t connect(Signal<Args...>* signal);
     };
 
-    template<typename ReturnType, typename ... Args>
-    Signal<ReturnType, Args...>::Signal() : currentKey{0}
+    template<typename ... Args>
+    Signal<Args...>::Signal() : currentKey{0}
     {}
 
-    template<typename ReturnType, typename ... Args>
-    void Signal<ReturnType, Args...>::emit(Args... args)
+    template<typename ... Args>
+    void Signal<Args...>::emit(Args... args)
     {
         Array<uint32_t> slotParentKeys = slotParents.keys();
         for(uint32_t key : slotParentKeys)
@@ -98,8 +98,8 @@ namespace simplex
             }
     }
 
-    template<typename ReturnType, typename ... Args>
-    void Signal<ReturnType, Args...>::emit(Args... args) const
+    template<typename ... Args>
+    void Signal<Args...>::emit(Args... args) const
     {
         Array<uint32_t> slotParentKeys = slotParents.keys();
         for(uint32_t key : slotParentKeys)
@@ -120,8 +120,8 @@ namespace simplex
             }
     }
 
-    template<typename ReturnType, typename ... Args>
-    uint32_t Signal<ReturnType, Args...>::connect(std::function<ReturnType(Args...)> slot)
+    template<typename ... Args>
+    uint32_t Signal<Args...>::connect(std::function<void(Args...)> slot)
     {
         slotParents.add(currentKey, nullptr);
         slots.add(currentKey, slot);
@@ -129,9 +129,9 @@ namespace simplex
         return (currentKey-1);
     }
 
-    template<typename ReturnType, typename ... Args>
+    template<typename ... Args>
     template<typename SlotClassType>
-    uint32_t Signal<ReturnType, Args...>::connect(ReturnType(SlotClassType::*slot)(Args...) const, const SlotClassType* slotInstance)
+    uint32_t Signal<Args...>::connect(void(SlotClassType::*slot)(Args...) const, const SlotClassType* slotInstance)
     {
         static_assert(std::is_base_of<SupportsSignals, SlotClassType>::value, "Slot class must be derived from SupportsSignals");
         SupportsSignals* castedInstance = (SupportsSignals*)slotInstance;
@@ -146,9 +146,9 @@ namespace simplex
         return (currentKey-1);
     }
 
-    template<typename ReturnType, typename ... Args>
+    template<typename ... Args>
     template<typename SlotClassType>
-    uint32_t Signal<ReturnType, Args...>::connect(ReturnType(SlotClassType::*slot)(Args...), SlotClassType* slotInstance)
+    uint32_t Signal<Args...>::connect(void(SlotClassType::*slot)(Args...), SlotClassType* slotInstance)
     {
         static_assert(std::is_base_of<SupportsSignals, SlotClassType>::value, "Slot class must be derived from SupportsSignals");
         SupportsSignals* castedInstance = (SupportsSignals*)slotInstance;
@@ -163,14 +163,14 @@ namespace simplex
         return (currentKey-1);
     }
 
-    template<typename ReturnType, typename ... Args>
-    uint32_t Signal<ReturnType, Args...>::connect(Signal<ReturnType, Args...>* signal)
+    template<typename ... Args>
+    uint32_t Signal<Args...>::connect(Signal<Args...>* signal)
     {
-        return connect(&Signal<ReturnType, Args...>::emit, signal);
+        return connect(&Signal<Args...>::emit, signal);
     }
 
-    template<typename ReturnType, typename ... Args>
-    Signal<ReturnType, Args...>& Signal<ReturnType, Args...>::disconnect(uint32_t handle)
+    template<typename ... Args>
+    Signal<Args...>& Signal<Args...>::disconnect(uint32_t handle)
     {
         slots.removeByKey(handle);
         slotParents.removeByKey(handle);

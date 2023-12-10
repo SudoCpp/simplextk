@@ -38,7 +38,7 @@ static int32_t effected = 0;
 // class NoSupportSignals
 // {
 //     public:
-//     simplex::Signal<void> sig;
+//     simplex::Signal<> sig;
 //     NoSupportSignals() : sig{this}{}
 // };
 
@@ -54,7 +54,7 @@ static int32_t effected = 0;
 class SignallingClass
 {
     public:
-    simplex::Signal<void> sig;
+    simplex::Signal<> sig;
 };
 
 class SlotClass : public simplex::SupportsSignals
