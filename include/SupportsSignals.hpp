@@ -38,11 +38,11 @@
 
 namespace simplex
 {
-    template<typename ...Args> class Signal;
+    template<typename ReturnType, typename ...Args> class Signal;
     
     class SupportsSignals
     {
-        template<typename ... Args>
+        template<typename ReturnType, typename ... Args>
         friend class Signal;
 
         //Signals that call this slot object
